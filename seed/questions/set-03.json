@@ -1,0 +1,514 @@
+{
+  "set_code": "SET-03",
+  "name": "Exam Set 03",
+  "aptitude": [
+    {
+      "code": "APT-S03-01",
+      "category": "Quantitative Aptitude",
+      "topic": "Percentage",
+      "difficulty": "Easy",
+      "question": "A factory produced 2,400 units in March. Quality control found that 15% of the units were defective. How many units were NOT defective?",
+      "options": {
+        "A": "1,960",
+        "B": "2,040",
+        "C": "2,160",
+        "D": "2,100"
+      },
+      "correct": "B",
+      "explanation": "Non-defective = 85% of 2,400 = 0.85 x 2,400 = 2,040 units.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-02",
+      "category": "Quantitative Aptitude",
+      "topic": "Profit and Loss",
+      "difficulty": "Medium",
+      "question": "A warehouse buys 50 cartons of goods at Rs. 480 per carton. It sells 40 cartons at Rs. 600 each and the remaining 10 cartons at Rs. 420 each. What is the overall profit percentage?",
+      "options": {
+        "A": "17.5%",
+        "B": "15%",
+        "C": "20%",
+        "D": "16.25%"
+      },
+      "correct": "A",
+      "explanation": "CP = 50 x 480 = Rs. 24,000. SP = 40 x 600 + 10 x 420 = 24,000 + 4,200 = Rs. 28,200. Profit = 4,200, so profit % = 4,200/24,000 x 100 = 17.5%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-03",
+      "category": "Quantitative Aptitude",
+      "topic": "Simple Interest",
+      "difficulty": "Easy",
+      "question": "A logistics company takes a loan of Rs. 45,000 to buy a forklift at a simple interest rate of 8% per annum. What is the total interest payable after 3 years?",
+      "options": {
+        "A": "Rs. 9,600",
+        "B": "Rs. 11,200",
+        "C": "Rs. 10,800",
+        "D": "Rs. 12,000"
+      },
+      "correct": "C",
+      "explanation": "SI = P x R x T / 100 = 45,000 x 8 x 3 / 100 = Rs. 10,800.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-04",
+      "category": "Quantitative Aptitude",
+      "topic": "Time and Work",
+      "difficulty": "Medium",
+      "question": "Worker A can complete a packing order alone in 12 days and worker B can complete it alone in 18 days. They work together for 4 days, after which A leaves. How many more days will B take to finish the remaining work?",
+      "options": {
+        "A": "6 days",
+        "B": "7 days",
+        "C": "9 days",
+        "D": "8 days"
+      },
+      "correct": "D",
+      "explanation": "Combined rate = 1/12 + 1/18 = 5/36 per day. In 4 days they finish 20/36 = 5/9. Remaining = 4/9. B alone needs (4/9) x 18 = 8 days.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-05",
+      "category": "Quantitative Aptitude",
+      "topic": "Time Speed Distance",
+      "difficulty": "Hard",
+      "question": "A courier van leaves a depot at 9:00 AM travelling at 45 km/h. A second van leaves the same depot at 10:20 AM on the same route travelling at 60 km/h. At what time will the second van catch up with the first?",
+      "options": {
+        "A": "1:40 PM",
+        "B": "2:00 PM",
+        "C": "2:20 PM",
+        "D": "3:00 PM"
+      },
+      "correct": "C",
+      "explanation": "By 10:20 AM the first van has travelled 45 x (80/60) = 60 km. Relative speed = 60 - 45 = 15 km/h. Time to catch up = 60/15 = 4 hours, so 10:20 AM + 4 h = 2:20 PM.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-06",
+      "category": "Quantitative Aptitude",
+      "topic": "Age Problems",
+      "difficulty": "Medium",
+      "question": "The sum of the present ages of a supervisor and a trainee is 50 years. Five years ago, the supervisor's age was three times the trainee's age. What is the supervisor's present age?",
+      "options": {
+        "A": "35 years",
+        "B": "30 years",
+        "C": "36 years",
+        "D": "40 years"
+      },
+      "correct": "A",
+      "explanation": "Let trainee = T, supervisor = 50 - T. Then (50 - T) - 5 = 3(T - 5), so 45 - T = 3T - 15, giving T = 15. Supervisor = 50 - 15 = 35 years.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-07",
+      "category": "Quantitative Aptitude",
+      "topic": "Number System (LCM)",
+      "difficulty": "Easy",
+      "question": "Three machines in a plant need servicing every 12, 18 and 30 days respectively. If all three were serviced today, after how many days will they next be serviced on the same day?",
+      "options": {
+        "A": "90 days",
+        "B": "120 days",
+        "C": "360 days",
+        "D": "180 days"
+      },
+      "correct": "D",
+      "explanation": "The answer is the LCM of 12, 18 and 30. 12 = 2^2 x 3, 18 = 2 x 3^2, 30 = 2 x 3 x 5, so LCM = 2^2 x 3^2 x 5 = 180 days.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-08",
+      "category": "Quantitative Aptitude",
+      "topic": "Probability",
+      "difficulty": "Medium",
+      "question": "Two fair six-sided dice are rolled together. What is the probability that the sum of the numbers shown is a prime number?",
+      "options": {
+        "A": "5/12",
+        "B": "1/3",
+        "C": "7/18",
+        "D": "17/36"
+      },
+      "correct": "A",
+      "explanation": "Prime sums possible: 2 (1 way), 3 (2), 5 (4), 7 (6), 11 (2) = 15 favourable outcomes out of 36. Probability = 15/36 = 5/12.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-09",
+      "category": "Logical Reasoning",
+      "topic": "Number Series",
+      "difficulty": "Easy",
+      "question": "Find the next number in the series: 3, 8, 15, 24, 35, ?",
+      "options": {
+        "A": "46",
+        "B": "48",
+        "C": "49",
+        "D": "50"
+      },
+      "correct": "B",
+      "explanation": "Each term is n^2 - 1 for n = 2, 3, 4, 5, 6. The next term is 7^2 - 1 = 48. (Differences 5, 7, 9, 11, 13 also confirm it.)",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-10",
+      "category": "Logical Reasoning",
+      "topic": "Coding-Decoding",
+      "difficulty": "Easy",
+      "question": "In a certain code language, CARGO is written as ECTIQ. How will STOCK be written in the same code?",
+      "options": {
+        "A": "UVQEM",
+        "B": "UVPEM",
+        "C": "TUQEM",
+        "D": "UWQEM"
+      },
+      "correct": "A",
+      "explanation": "Each letter is moved two places forward in the alphabet: C->E, A->C, R->T, G->I, O->Q. Applying the same to STOCK: S->U, T->V, O->Q, C->E, K->M, giving UVQEM.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-11",
+      "category": "Logical Reasoning",
+      "topic": "Blood Relations",
+      "difficulty": "Medium",
+      "question": "Pointing to a boy in a photograph, Arun (a man) said, \"He is the son of the only daughter of my paternal grandfather's only son.\" How is the boy related to Arun?",
+      "options": {
+        "A": "Brother",
+        "B": "Nephew",
+        "C": "Cousin",
+        "D": "Son"
+      },
+      "correct": "B",
+      "explanation": "Arun's paternal grandfather's only son is Arun's father. The only daughter of Arun's father is Arun's sister. The son of Arun's sister is Arun's nephew.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-12",
+      "category": "Logical Reasoning",
+      "topic": "Direction Sense",
+      "difficulty": "Medium",
+      "question": "A security guard starts from the main gate and walks 8 m north. He turns right and walks 4 m, turns right again and walks 20 m, and then turns left and walks 5 m. What is the straight-line distance between his final position and the main gate?",
+      "options": {
+        "A": "13 m",
+        "B": "21 m",
+        "C": "15 m",
+        "D": "17 m"
+      },
+      "correct": "C",
+      "explanation": "Taking the gate as origin: north 8 -> (0, 8); right (east) 4 -> (4, 8); right (south) 20 -> (4, -12); left (east) 5 -> (9, -12). Distance = sqrt(9^2 + 12^2) = sqrt(225) = 15 m.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-13",
+      "category": "Logical Reasoning",
+      "topic": "Seating Arrangement",
+      "difficulty": "Hard",
+      "question": "Five colleagues P, Q, R, S and T sit in a row facing north. R sits exactly in the middle. Q and T are both immediate neighbours of R, and T is to the left of R. P is not at the left end. Who sits second from the right end?",
+      "options": {
+        "A": "T",
+        "B": "Q",
+        "C": "P",
+        "D": "R"
+      },
+      "correct": "B",
+      "explanation": "R is in seat 3 (of 1-5, left to right). T and Q are neighbours of R with T on the left, so T = 2 and Q = 4. Seats 1 and 5 remain for P and S; P is not at the left end, so P = 5 and S = 1. Order: S, T, R, Q, P. Second from the right is Q.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-14",
+      "category": "Logical Reasoning",
+      "topic": "Statement and Conclusion (Syllogism)",
+      "difficulty": "Medium",
+      "question": "Statements: All supervisors are graduates. Some graduates are engineers.\nConclusions: I. Some graduates are supervisors. II. Some supervisors are engineers.\nWhich conclusion(s) logically follow from the statements?",
+      "options": {
+        "A": "Only conclusion I follows",
+        "B": "Only conclusion II follows",
+        "C": "Both conclusions I and II follow",
+        "D": "Neither conclusion follows"
+      },
+      "correct": "A",
+      "explanation": "Since all supervisors are graduates, some graduates must be supervisors, so I follows. The engineers who are graduates may or may not include any supervisors, so II does not necessarily follow.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-15",
+      "category": "Numerical Reasoning",
+      "topic": "Overtime Pay",
+      "difficulty": "Easy",
+      "question": "A machine operator is paid Rs. 150 per hour for the first 40 hours in a week and 1.5 times the hourly rate for every hour beyond 40. If the operator works 46 hours in a week, what is the total weekly pay?",
+      "options": {
+        "A": "Rs. 6,900",
+        "B": "Rs. 7,200",
+        "C": "Rs. 7,650",
+        "D": "Rs. 7,350"
+      },
+      "correct": "D",
+      "explanation": "Regular pay = 40 x 150 = Rs. 6,000. Overtime rate = 1.5 x 150 = Rs. 225; overtime pay = 6 x 225 = Rs. 1,350. Total = Rs. 7,350.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-16",
+      "category": "Numerical Reasoning",
+      "topic": "Currency Conversion",
+      "difficulty": "Medium",
+      "question": "A company must pay a supplier invoice of USD 2,500. The bank converts at 1 USD = Rs. 83.20 and adds a service charge of 1.5% on the converted rupee amount. What is the total cost to the company in rupees?",
+      "options": {
+        "A": "Rs. 2,09,560",
+        "B": "Rs. 2,11,200",
+        "C": "Rs. 2,11,120",
+        "D": "Rs. 2,12,480"
+      },
+      "correct": "C",
+      "explanation": "Converted amount = 2,500 x 83.20 = Rs. 2,08,000. Service charge = 1.5% of 2,08,000 = Rs. 3,120. Total = Rs. 2,11,120.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-17",
+      "category": "Numerical Reasoning",
+      "topic": "Shift Scheduling",
+      "difficulty": "Hard",
+      "question": "A plant operates 24 hours a day, 7 days a week, using three 8-hour shifts per day. Every shift requires exactly 12 operators. If each operator can work at most 5 shifts per week, what is the minimum number of operators the plant must employ?",
+      "options": {
+        "A": "50",
+        "B": "51",
+        "C": "52",
+        "D": "36"
+      },
+      "correct": "B",
+      "explanation": "Shifts per week = 3 x 7 = 21. Operator-shifts needed = 21 x 12 = 252. Each operator covers at most 5 shifts, so 252/5 = 50.4, which must be rounded up to 51 operators.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-18",
+      "category": "Data Interpretation",
+      "topic": "Table - Monthly Production",
+      "difficulty": "Medium",
+      "question": "The table shows the monthly production of two plants from January to June. What was the average monthly production of Plant X over these six months?",
+      "table": {
+        "headers": [
+          "Month",
+          "Plant X (units)",
+          "Plant Y (units)"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "420",
+            "400"
+          ],
+          [
+            "Feb",
+            "450",
+            "410"
+          ],
+          [
+            "Mar",
+            "480",
+            "390"
+          ],
+          [
+            "Apr",
+            "440",
+            "460"
+          ],
+          [
+            "May",
+            "500",
+            "470"
+          ],
+          [
+            "Jun",
+            "530",
+            "490"
+          ]
+        ]
+      },
+      "options": {
+        "A": "460 units",
+        "B": "475 units",
+        "C": "480 units",
+        "D": "470 units"
+      },
+      "correct": "D",
+      "explanation": "Total for Plant X = 420 + 450 + 480 + 440 + 500 + 530 = 2,820. Average = 2,820 / 6 = 470 units.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-19",
+      "category": "Data Interpretation",
+      "topic": "Table - Monthly Production",
+      "difficulty": "Medium",
+      "question": "The table shows the monthly production of two plants from January to June. By what percentage did Plant Y's production increase from January to June?",
+      "table": {
+        "headers": [
+          "Month",
+          "Plant X (units)",
+          "Plant Y (units)"
+        ],
+        "rows": [
+          [
+            "Jan",
+            "420",
+            "400"
+          ],
+          [
+            "Feb",
+            "450",
+            "410"
+          ],
+          [
+            "Mar",
+            "480",
+            "390"
+          ],
+          [
+            "Apr",
+            "440",
+            "460"
+          ],
+          [
+            "May",
+            "500",
+            "470"
+          ],
+          [
+            "Jun",
+            "530",
+            "490"
+          ]
+        ]
+      },
+      "options": {
+        "A": "18.4%",
+        "B": "20%",
+        "C": "22.5%",
+        "D": "24.5%"
+      },
+      "correct": "C",
+      "explanation": "Plant Y rose from 400 to 490, an increase of 90 units. Percentage increase = 90/400 x 100 = 22.5%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S03-20",
+      "category": "Data Interpretation",
+      "topic": "Table - Expense Breakdown",
+      "difficulty": "Hard",
+      "question": "The table shows a department's annual expenses. Next year, travel cost will be reduced by one-third and training cost will be increased by 40%, while all other heads stay the same. By what percentage will the total annual expense decrease?",
+      "table": {
+        "headers": [
+          "Expense head",
+          "Annual cost (Rs. lakh)"
+        ],
+        "rows": [
+          [
+            "Salaries",
+            "48"
+          ],
+          [
+            "Rent",
+            "12"
+          ],
+          [
+            "Utilities",
+            "6"
+          ],
+          [
+            "Travel",
+            "9"
+          ],
+          [
+            "Training",
+            "5"
+          ]
+        ]
+      },
+      "options": {
+        "A": "1.5%",
+        "B": "2%",
+        "C": "0.8%",
+        "D": "1.25%"
+      },
+      "correct": "D",
+      "explanation": "Current total = 48 + 12 + 6 + 9 + 5 = Rs. 80 lakh. New travel = 9 x 2/3 = 6 (down 3); new training = 5 x 1.4 = 7 (up 2). Net change = -1, new total = 79. Decrease = 1/80 x 100 = 1.25%.",
+      "marks": 1
+    }
+  ],
+  "communication": [
+    {
+      "code": "COM-S03-01",
+      "category": "Adaptability",
+      "question": "Describe a time when your workplace, team or course of study went through a major change, such as a new process, system or reporting structure. How did you react at first, what steps did you take to adapt, and what was the outcome for you and your work?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-02",
+      "category": "Teamwork",
+      "question": "Describe a conflict that arose between members of a team you were part of. What was the disagreement about, what role did you play in resolving it, and what did the team do differently afterwards?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-03",
+      "category": "Workplace Communication",
+      "question": "Tell us about a time you had to persuade a colleague, manager or group to accept an idea or approach they were initially unsure about. How did you present your case, how did you handle their objections, and what was the result?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-04",
+      "category": "Career Goals",
+      "question": "Describe a specific professional or academic goal you set for yourself. Why did you choose it, how did you plan and track your progress, what obstacles did you face, and how did you finally achieve it?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-05",
+      "category": "Ethics & Professionalism",
+      "question": "Imagine you have access to confidential business information, and a friendly colleague from another department casually asks you about it. How would you respond, and what general practices do you follow to protect confidential information at work?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-06",
+      "category": "Leadership",
+      "question": "Describe a situation in which you had to give constructive feedback to a peer about their work or behaviour. How did you prepare, how did you deliver the message, and how did the peer respond?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-07",
+      "category": "Customer Handling",
+      "question": "A customer insists on a delivery date or result that you know is not realistic. Explain how you would handle this conversation, how you would set clear expectations, and how you would keep the customer's trust while doing so.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-08",
+      "category": "Self-presentation",
+      "question": "Many roles involve tasks that are repetitive, such as data entry, quality checks or routine reporting. Describe how you stay motivated, focused and accurate when your work becomes repetitive, using an example from your own experience.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-09",
+      "category": "Time Management",
+      "question": "Explain how you prepare for an important meeting, presentation or review. Describe the steps you take beforehand, how you organise your points and materials, and how you make sure the meeting achieves its purpose.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S03-10",
+      "category": "Career Goals",
+      "question": "Why are you interested in this role and in our organisation? Explain what attracts you to the work, which of your skills and experiences make you a good fit, and how you see this role supporting your professional growth.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    }
+  ]
+}

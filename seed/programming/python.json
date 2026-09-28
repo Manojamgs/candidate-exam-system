@@ -1,0 +1,1489 @@
+{
+  "language": "python",
+  "label": "Python",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-PYTHON-S1-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function count_vowels(text) that returns the number of vowels (a, e, i, o, u)       in the string text. The check must be case-insensitive. Return 0 for an empty string.",
+          "reference_solution": "def count_vowels(text):\n    count = 0\n    for ch in text.lower():\n        if ch in \"aeiou\":\n            count += 1\n    return count",
+          "evaluation_points": [
+            "Counts a, e, i, o, u only (y is not a vowel)",
+            "Case-insensitive (upper-case vowels counted)",
+            "Returns 0 for an empty string",
+            "Returns an int, not a list or string"
+          ],
+          "test_cases": [
+            {
+              "input": "count_vowels('Invoice')",
+              "expected": "4"
+            },
+            {
+              "input": "count_vowels('RHYTHM')",
+              "expected": "0"
+            },
+            {
+              "input": "count_vowels('')",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-02",
+          "topic": "Variables & Types",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "This program divides two integers with the /, // and % operators and checks a float comparison. What does it print? Write the exact output line by line, then briefly explain why each line is produced.",
+          "starter_code": "a = 7\nb = 2\nprint(a / b)\nprint(a // b)\nprint(a % b)\nprint(type(a / b).__name__)\nprint(a * 1.0 == 7)",
+          "reference_solution": "Output:\n3.5\n3\n1\nfloat\nTrue\n\nExplanation: / is true division and always returns a float (3.5). // is floor division, which keeps             the int type for int operands (3). % gives the remainder (1). The type of a / b is float.             7.0 == 7 compares numeric values, so it is True.",
+          "evaluation_points": [
+            "States 3.5 for / (true division returns float)",
+            "States 3 for // and 1 for %",
+            "Identifies the result type as float",
+            "Explains that 7.0 == 7 is True because values are compared"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "3.5\n3\n1\nfloat\nTrue"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-03",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function shipping_fee(order_total) for an online store. Rules: an order total of       100 or more ships free (0); a total of 50 or more but below 100 costs 5; any lower total costs 10.       If order_total is negative, raise ValueError.",
+          "reference_solution": "def shipping_fee(order_total):\n    if order_total < 0:\n        raise ValueError(\"order_total cannot be negative\")\n    if order_total >= 100:\n        return 0\n    if order_total >= 50:\n        return 5\n    return 10",
+          "evaluation_points": [
+            "Boundary 100 is free and boundary 50 costs 5 (>= not >)",
+            "Totals below 50 cost 10",
+            "Negative totals raise ValueError",
+            "Conditions checked in a correct order"
+          ],
+          "test_cases": [
+            {
+              "input": "shipping_fee(100)",
+              "expected": "0"
+            },
+            {
+              "input": "shipping_fee(50)",
+              "expected": "5"
+            },
+            {
+              "input": "shipping_fee(49.99)",
+              "expected": "10"
+            },
+            {
+              "input": "shipping_fee(-1)",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-04",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function word_frequency(text) that returns a dictionary mapping each word to how       many times it appears. Words are separated by whitespace, comparison is case-insensitive       (store keys in lower case), and the punctuation characters . , ! ? must be stripped from the       start and end of each word. Ignore anything that becomes empty after stripping.",
+          "reference_solution": "def word_frequency(text):\n    counts = {}\n    for raw in text.split():\n        word = raw.strip(\".,!?\").lower()\n        if word:\n            counts[word] = counts.get(word, 0) + 1\n    return counts",
+          "evaluation_points": [
+            "Splits on any whitespace",
+            "Lower-cases words before counting",
+            "Strips . , ! ? from word edges",
+            "Skips tokens that are empty after stripping",
+            "Uses a dict with get/defaultdict or equivalent counting"
+          ],
+          "test_cases": [
+            {
+              "input": "word_frequency('Ship it. Ship it now!')",
+              "expected": "{'ship': 2, 'it': 2, 'now': 1}"
+            },
+            {
+              "input": "word_frequency('  ! ')",
+              "expected": "{}"
+            },
+            {
+              "input": "word_frequency('Yes? yes, YES')",
+              "expected": "{'yes': 3}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-05",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The function add_to_cart(item, cart) should add item to the given cart and return it; when       no cart is passed it should start a new, empty cart. Calling add_to_cart('pen') and then       add_to_cart('book') returns ['pen', 'book'] for the second call instead of ['book']. Explain the       bug and write the corrected function.",
+          "starter_code": "def add_to_cart(item, cart=[]):\n    cart.append(item)\n    return cart",
+          "reference_solution": "# Bug: the default list is created once, when the function is defined, and is shared by\n# every call that omits cart. Use None as the default and create a new list inside.\ndef add_to_cart(item, cart=None):\n    if cart is None:\n        cart = []\n    cart.append(item)\n    return cart",
+          "evaluation_points": [
+            "Identifies that default argument values are evaluated once at definition time",
+            "Uses None (or a sentinel) as the default and creates a new list inside the function",
+            "Still appends to and returns a cart that the caller passes in",
+            "Calls without a cart no longer share state"
+          ],
+          "test_cases": [
+            {
+              "input": "add_to_cart('pen'); add_to_cart('book')",
+              "expected": "['book']"
+            },
+            {
+              "input": "c = ['a']; add_to_cart('b', c); c",
+              "expected": "['a', 'b']"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-06",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function sort_employees(employees) where employees is a list of tuples       (name, department, salary). Return a new list sorted by department in ascending alphabetical       order and, within the same department, by salary from highest to lowest. Do not modify the       input list.",
+          "reference_solution": "def sort_employees(employees):\n    return sorted(employees, key=lambda e: (e[1], -e[2]))",
+          "evaluation_points": [
+            "Uses sorted() (or copies before sort) so the input is not modified",
+            "Primary key is department ascending",
+            "Secondary key is salary descending (e.g. negated in a tuple key)",
+            "Returns the full tuples, not just names"
+          ],
+          "test_cases": [
+            {
+              "input": "sort_employees([('Ann', 'IT', 5000), ('Bo', 'HR', 4000), ('Cy', 'IT', 7000)])",
+              "expected": "[('Bo', 'HR', 4000), ('Cy', 'IT', 7000), ('Ann', 'IT', 5000)]"
+            },
+            {
+              "input": "sort_employees([])",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-07",
+          "topic": "OOP Basics",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete the BankAccount class. deposit(amount) adds money and withdraw(amount) removes it;       both must raise ValueError if amount is not positive, and withdraw must raise ValueError if the       balance is insufficient. get_balance() returns the current balance. The balance starts at the       opening_balance passed to the constructor (default 0).",
+          "starter_code": "class BankAccount:\n    def __init__(self, owner, opening_balance=0):\n        # TODO: store owner and balance\n        pass\n\n    def deposit(self, amount):\n        # TODO\n        pass\n\n    def withdraw(self, amount):\n        # TODO\n        pass\n\n    def get_balance(self):\n        # TODO\n        pass",
+          "reference_solution": "class BankAccount:\n    def __init__(self, owner, opening_balance=0):\n        self.owner = owner\n        self.balance = opening_balance\n\n    def deposit(self, amount):\n        if amount <= 0:\n            raise ValueError(\"amount must be positive\")\n        self.balance += amount\n\n    def withdraw(self, amount):\n        if amount <= 0:\n            raise ValueError(\"amount must be positive\")\n        if amount > self.balance:\n            raise ValueError(\"insufficient funds\")\n        self.balance -= amount\n\n    def get_balance(self):\n        return self.balance",
+          "evaluation_points": [
+            "Stores owner and balance as instance attributes in __init__",
+            "deposit/withdraw reject non-positive amounts with ValueError",
+            "withdraw rejects amounts larger than the balance",
+            "Balance is unchanged when an error is raised",
+            "Uses self correctly in all methods"
+          ],
+          "test_cases": [
+            {
+              "input": "a = BankAccount('Ann', 100); a.deposit(50); a.withdraw(30); a.get_balance()",
+              "expected": "120"
+            },
+            {
+              "input": "a = BankAccount('Bo'); a.withdraw(1)",
+              "expected": "raises ValueError"
+            },
+            {
+              "input": "a = BankAccount('Cy', 10); a.deposit(0)",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-08",
+          "topic": "Arrays/Lists",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function second_largest(nums) that returns the second largest distinct value in a       list of integers. If there are fewer than two distinct values, return None. Do not sort the       list; solve it in a single pass.",
+          "reference_solution": "def second_largest(nums):\n    first = second = None\n    for n in nums:\n        if first is None or n > first:\n            if first is not None:\n                second = first\n            first = n\n        elif n != first and (second is None or n > second):\n            second = n\n    return second",
+          "evaluation_points": [
+            "Handles duplicates of the maximum (distinct values only)",
+            "Returns None for empty or single-valued lists",
+            "Works with negative numbers (does not assume 0 as a starting value)",
+            "Single pass without sorting"
+          ],
+          "test_cases": [
+            {
+              "input": "second_largest([4, 9, 2, 9, 7])",
+              "expected": "7"
+            },
+            {
+              "input": "second_largest([5, 5])",
+              "expected": "None"
+            },
+            {
+              "input": "second_largest([-3, -1, -2])",
+              "expected": "-2"
+            },
+            {
+              "input": "second_largest([])",
+              "expected": "None"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive function flatten(items) that takes a list which may contain integers and       other lists nested to any depth, and returns a single flat list of all integers in their       original left-to-right order. Example: [1, [2, [3, 4]], 5] -> [1, 2, 3, 4, 5].",
+          "reference_solution": "def flatten(items):\n    result = []\n    for item in items:\n        if isinstance(item, list):\n            result.extend(flatten(item))\n        else:\n            result.append(item)\n    return result",
+          "evaluation_points": [
+            "Uses recursion for nested lists",
+            "Handles any nesting depth and empty inner lists",
+            "Preserves left-to-right order",
+            "Uses isinstance (or type check) to detect lists",
+            "Returns a new list without modifying the input"
+          ],
+          "test_cases": [
+            {
+              "input": "flatten([1, [2, [3, 4]], 5])",
+              "expected": "[1, 2, 3, 4, 5]"
+            },
+            {
+              "input": "flatten([[], [[[]]], 7])",
+              "expected": "[7]"
+            },
+            {
+              "input": "flatten([])",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S1-10",
+          "topic": "Text Parsing",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function totals_by_customer(csv_text) that receives the contents of a small CSV       export as a single string. The first line is the header 'order_id,customer,amount'. Each       following line is one order. Return a dictionary mapping customer name to the total amount       of their orders, rounded to 2 decimals. Skip blank lines and any line that does not have       exactly 3 fields or whose amount is not a valid number. Strip whitespace around fields.",
+          "reference_solution": "def totals_by_customer(csv_text):\n    totals = {}\n    lines = csv_text.strip().splitlines()\n    for line in lines[1:]:\n        if not line.strip():\n            continue\n        parts = [p.strip() for p in line.split(\",\")]\n        if len(parts) != 3:\n            continue\n        try:\n            amount = float(parts[2])\n        except ValueError:\n            continue\n        customer = parts[1]\n        totals[customer] = totals.get(customer, 0) + amount\n    return {c: round(t, 2) for c, t in totals.items()}",
+          "evaluation_points": [
+            "Skips the header line",
+            "Ignores blank lines and lines with the wrong number of fields",
+            "Uses try/except (or equivalent) to skip invalid amounts",
+            "Accumulates totals per customer in a dict",
+            "Rounds totals to 2 decimals"
+          ],
+          "test_cases": [
+            {
+              "input": "totals_by_customer('order_id,customer,amount\\n1,Acme,10.50\\n2,Beta,5\\n3,Acme,4.25')",
+              "expected": "{'Acme': 14.75, 'Beta': 5.0}"
+            },
+            {
+              "input": "totals_by_customer('order_id,customer,amount\\n\\n1,Acme,abc\\n2,Beta\\n3, Beta , 2.5 ')",
+              "expected": "{'Beta': 2.5}"
+            },
+            {
+              "input": "totals_by_customer('order_id,customer,amount')",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-PYTHON-S2-01",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function sum_of_multiples(limit) that returns the sum of all positive integers       below limit that are divisible by 3 or by 5. Numbers divisible by both must be counted only       once. Return 0 if limit is 1 or less.",
+          "reference_solution": "def sum_of_multiples(limit):\n    total = 0\n    for n in range(1, limit):\n        if n % 3 == 0 or n % 5 == 0:\n            total += n\n    return total",
+          "evaluation_points": [
+            "Only numbers strictly below limit are included",
+            "Uses 'or' so multiples of 15 are counted once",
+            "Returns 0 for limit <= 1",
+            "Correct loop range"
+          ],
+          "test_cases": [
+            {
+              "input": "sum_of_multiples(10)",
+              "expected": "23"
+            },
+            {
+              "input": "sum_of_multiples(16)",
+              "expected": "60"
+            },
+            {
+              "input": "sum_of_multiples(1)",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-02",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function is_palindrome(text) that returns True if text reads the same forwards and       backwards when you ignore letter case and every character that is not a letter or digit,       otherwise False. An empty string counts as a palindrome.",
+          "reference_solution": "def is_palindrome(text):\n    cleaned = [ch.lower() for ch in text if ch.isalnum()]\n    return cleaned == cleaned[::-1]",
+          "evaluation_points": [
+            "Ignores case",
+            "Ignores spaces and punctuation (keeps only alphanumerics)",
+            "Compares against the reversed sequence (slicing or two pointers)",
+            "Returns a bool"
+          ],
+          "test_cases": [
+            {
+              "input": "is_palindrome('Never odd or even')",
+              "expected": "True"
+            },
+            {
+              "input": "is_palindrome('Level 2')",
+              "expected": "False"
+            },
+            {
+              "input": "is_palindrome('')",
+              "expected": "True"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-03",
+          "topic": "Arrays/Lists",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "This program assigns a list to a second name, then makes a slice copy, and appends to both. What does it print, and what do the identity checks show? Write the exact output line by line, then briefly explain why each line is produced.",
+          "starter_code": "a = [1, 2, 3]\nb = a\nb.append(4)\nc = a[:]\nc.append(5)\nprint(a)\nprint(b)\nprint(c)\nprint(a is b, a is c)",
+          "reference_solution": "Output:\n[1, 2, 3, 4]\n[1, 2, 3, 4]\n[1, 2, 3, 4, 5]\nTrue False\n\nExplanation: b = a does not copy the list; both names refer to the same object, so appending 4 through b             also changes a. a[:] creates a new (shallow) copy, so appending 5 to c does not affect a.             'is' checks identity: a and b are the same object, a and c are not.",
+          "evaluation_points": [
+            "a and b both print [1, 2, 3, 4]",
+            "c prints [1, 2, 3, 4, 5]",
+            "Explains that assignment creates an alias, not a copy",
+            "Explains that slicing makes a new list and 'is' compares identity"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "[1, 2, 3, 4]\n[1, 2, 3, 4]\n[1, 2, 3, 4, 5]\nTrue False"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-04",
+          "topic": "Sets",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function compare_customers(store_a, store_b) where each argument is a list of       customer names (possibly with repeats). Return a tuple (both, only_one) where both is a sorted       list of names that appear in both stores and only_one is a sorted list of names that appear in       exactly one of the stores. Each name appears at most once in each result list.",
+          "reference_solution": "def compare_customers(store_a, store_b):\n    a, b = set(store_a), set(store_b)\n    return sorted(a & b), sorted(a ^ b)",
+          "evaluation_points": [
+            "Converts lists to sets to remove duplicates",
+            "Uses intersection for 'both'",
+            "Uses symmetric difference (or equivalent) for 'only_one'",
+            "Returns sorted lists inside a tuple"
+          ],
+          "test_cases": [
+            {
+              "input": "compare_customers(['Ann', 'Bo', 'Ann'], ['Bo', 'Cy'])",
+              "expected": "(['Bo'], ['Ann', 'Cy'])"
+            },
+            {
+              "input": "compare_customers([], ['Zed'])",
+              "expected": "([], ['Zed'])"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-05",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The function remove_negatives(nums) should return a list with all negative numbers removed,       keeping the original order. For the input [-1, -2, 3, -4] it returns [-2, 3] instead of [3].       Explain why and write a corrected version that also does not change the list passed in.",
+          "starter_code": "def remove_negatives(nums):\n    for n in nums:\n        if n < 0:\n            nums.remove(n)\n    return nums",
+          "reference_solution": "# Bug: removing items from a list while iterating over it shifts the remaining items left,\n# so the loop skips the element right after each removal. Build a new list instead.\ndef remove_negatives(nums):\n    return [n for n in nums if n >= 0]",
+          "evaluation_points": [
+            "Explains that modifying a list during iteration makes the loop skip elements",
+            "Builds a new list (comprehension or loop with append) instead of removing in place",
+            "Keeps zero and positive values in original order",
+            "Does not mutate the caller's list"
+          ],
+          "test_cases": [
+            {
+              "input": "remove_negatives([-1, -2, 3, -4])",
+              "expected": "[3]"
+            },
+            {
+              "input": "remove_negatives([0, 5, -5])",
+              "expected": "[0, 5]"
+            },
+            {
+              "input": "x = [-1, 2]; remove_negatives(x); x",
+              "expected": "[-1, 2]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-06",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function group_by_department(employees) where employees is a list of dictionaries,       each with the keys 'name' and 'dept'. Return a dictionary mapping each department to a list of       employee names in that department, in the same order they appear in the input.",
+          "reference_solution": "def group_by_department(employees):\n    groups = {}\n    for emp in employees:\n        groups.setdefault(emp[\"dept\"], []).append(emp[\"name\"])\n    return groups",
+          "evaluation_points": [
+            "Creates a new list the first time a department is seen (setdefault/defaultdict/if-check)",
+            "Appends names, not whole dictionaries",
+            "Preserves input order within each department",
+            "Returns an empty dict for an empty input"
+          ],
+          "test_cases": [
+            {
+              "input": "group_by_department([{'name': 'Ann', 'dept': 'IT'}, {'name': 'Bo', 'dept': 'HR'}, {'name': 'Cy', 'dept': 'IT'}])",
+              "expected": "{'IT': ['Ann', 'Cy'], 'HR': ['Bo']}"
+            },
+            {
+              "input": "group_by_department([])",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-07",
+          "topic": "List Comprehensions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function transpose(matrix) that returns the transpose of a rectangular matrix given       as a list of rows (lists of equal length), so that row i of the result is column i of the input.       Use list comprehensions and do not use zip. An empty matrix returns [].",
+          "reference_solution": "def transpose(matrix):\n    if not matrix:\n        return []\n    return [[row[c] for row in matrix] for c in range(len(matrix[0]))]",
+          "evaluation_points": [
+            "Uses a nested list comprehension",
+            "Result has len(matrix[0]) rows and len(matrix) columns",
+            "Handles the empty matrix",
+            "Does not use zip as instructed"
+          ],
+          "test_cases": [
+            {
+              "input": "transpose([[1, 2, 3], [4, 5, 6]])",
+              "expected": "[[1, 4], [2, 5], [3, 6]]"
+            },
+            {
+              "input": "transpose([[7]])",
+              "expected": "[[7]]"
+            },
+            {
+              "input": "transpose([])",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-08",
+          "topic": "Inheritance",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete the Rectangle and Circle subclasses of Shape. Each subclass must call the parent       constructor with its name ('Rectangle' or 'Circle') and override area(). Rectangle takes width       and height; Circle takes radius (use math.pi). The inherited describe() method must then work       without changes, e.g. Rectangle(2, 3).describe() returns 'Rectangle with area 6.00'.",
+          "starter_code": "import math\n\nclass Shape:\n    def __init__(self, name):\n        self.name = name\n\n    def area(self):\n        raise NotImplementedError\n\n    def describe(self):\n        return f\"{self.name} with area {self.area():.2f}\"\n\nclass Rectangle(Shape):\n    # TODO: __init__(self, width, height) and area()\n    pass\n\nclass Circle(Shape):\n    # TODO: __init__(self, radius) and area()\n    pass",
+          "reference_solution": "import math\n\nclass Shape:\n    def __init__(self, name):\n        self.name = name\n\n    def area(self):\n        raise NotImplementedError\n\n    def describe(self):\n        return f\"{self.name} with area {self.area():.2f}\"\n\nclass Rectangle(Shape):\n    def __init__(self, width, height):\n        super().__init__(\"Rectangle\")\n        self.width = width\n        self.height = height\n\n    def area(self):\n        return self.width * self.height\n\nclass Circle(Shape):\n    def __init__(self, radius):\n        super().__init__(\"Circle\")\n        self.radius = radius\n\n    def area(self):\n        return math.pi * self.radius ** 2",
+          "evaluation_points": [
+            "Both subclasses inherit from Shape",
+            "Calls super().__init__ with the correct name",
+            "Overrides area() with the correct formula",
+            "describe() works through polymorphism without being rewritten"
+          ],
+          "test_cases": [
+            {
+              "input": "Rectangle(2, 3).describe()",
+              "expected": "'Rectangle with area 6.00'"
+            },
+            {
+              "input": "Circle(1).describe()",
+              "expected": "'Circle with area 3.14'"
+            },
+            {
+              "input": "isinstance(Circle(2), Shape)",
+              "expected": "True"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive function permutations(text) that returns a sorted list of all distinct       rearrangements of the characters in text. Do not use itertools. Duplicate characters must not       produce duplicate results, e.g. permutations('aab') returns ['aab', 'aba', 'baa'].       permutations('') returns [''].",
+          "reference_solution": "def permutations(text):\n    if len(text) <= 1:\n        return [text]\n    results = set()\n    for i, ch in enumerate(text):\n        for rest in permutations(text[:i] + text[i + 1:]):\n            results.add(ch + rest)\n    return sorted(results)",
+          "evaluation_points": [
+            "Correct base case for length 0 or 1",
+            "Recursive step fixes one character and permutes the rest",
+            "Removes duplicates (set or skip repeated characters)",
+            "Returns a sorted list",
+            "Does not use itertools"
+          ],
+          "test_cases": [
+            {
+              "input": "permutations('abc')",
+              "expected": "['abc', 'acb', 'bac', 'bca', 'cab', 'cba']"
+            },
+            {
+              "input": "permutations('aab')",
+              "expected": "['aab', 'aba', 'baa']"
+            },
+            {
+              "input": "permutations('')",
+              "expected": "['']"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S2-10",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Hard",
+          "question": "apply_discount(orders, pct) should return a NEW list of orders with each price reduced by       pct percent (rounded to 2 decimals), leaving the original orders untouched. After calling it,       the caller finds that the prices in the original list have also changed. Explain the bug and       fix it.",
+          "starter_code": "def apply_discount(orders, pct):\n    updated = orders.copy()\n    for order in updated:\n        order[\"price\"] = round(order[\"price\"] * (1 - pct / 100), 2)\n    return updated",
+          "reference_solution": "# Bug: orders.copy() is a shallow copy. The new list holds references to the same dict\n# objects, so changing order[\"price\"] changes the caller's dicts. Create new dicts.\ndef apply_discount(orders, pct):\n    updated = []\n    for order in orders:\n        new_order = dict(order)\n        new_order[\"price\"] = round(order[\"price\"] * (1 - pct / 100), 2)\n        updated.append(new_order)\n    return updated",
+          "evaluation_points": [
+            "Explains that list.copy() is shallow and the inner dicts are shared",
+            "Creates a new dict per order (dict(order), order.copy(), {**order} or deepcopy)",
+            "Original list and dicts are unchanged after the call",
+            "Discounted prices are correct and rounded"
+          ],
+          "test_cases": [
+            {
+              "input": "orders = [{'id': 1, 'price': 100.0}]; new = apply_discount(orders, 10); (orders[0]['price'], new[0]['price'])",
+              "expected": "(100.0, 90.0)"
+            },
+            {
+              "input": "apply_discount([{'id': 2, 'price': 19.99}], 25)",
+              "expected": "[{'id': 2, 'price': 14.99}]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-PYTHON-S3-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function letter_grade(score) that converts a numeric score from 0 to 100 into a       grade: 90 and above 'A', 80-89 'B', 70-79 'C', 60-69 'D', below 60 'F'. Raise ValueError if       score is below 0 or above 100.",
+          "reference_solution": "def letter_grade(score):\n    if score < 0 or score > 100:\n        raise ValueError(\"score must be between 0 and 100\")\n    if score >= 90:\n        return \"A\"\n    if score >= 80:\n        return \"B\"\n    if score >= 70:\n        return \"C\"\n    if score >= 60:\n        return \"D\"\n    return \"F\"",
+          "evaluation_points": [
+            "Validates the range and raises ValueError",
+            "Correct boundaries (90 is A, 89 is B, 60 is D)",
+            "Uses an if/elif chain in a sensible order",
+            "Returns the grade as a string"
+          ],
+          "test_cases": [
+            {
+              "input": "letter_grade(90)",
+              "expected": "'A'"
+            },
+            {
+              "input": "letter_grade(59)",
+              "expected": "'F'"
+            },
+            {
+              "input": "letter_grade(75)",
+              "expected": "'C'"
+            },
+            {
+              "input": "letter_grade(101)",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-02",
+          "topic": "Tuples",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function min_max(nums) that returns a tuple (smallest, largest) for a list of       numbers, using a single loop and without calling the built-in min(), max() or sorted().       Return None if the list is empty.",
+          "reference_solution": "def min_max(nums):\n    if not nums:\n        return None\n    low = high = nums[0]\n    for n in nums[1:]:\n        if n < low:\n            low = n\n        elif n > high:\n            high = n\n    return (low, high)",
+          "evaluation_points": [
+            "Returns a tuple in the order (smallest, largest)",
+            "Initialises from the first element, not 0",
+            "Returns None for an empty list",
+            "Does not use min/max/sorted"
+          ],
+          "test_cases": [
+            {
+              "input": "min_max([3, -1, 8, 2])",
+              "expected": "(-1, 8)"
+            },
+            {
+              "input": "min_max([5])",
+              "expected": "(5, 5)"
+            },
+            {
+              "input": "min_max([])",
+              "expected": "None"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-03",
+          "topic": "Strings",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Given the string \"Recruitment\", predict the result of each slice and string-method call below, and explain the slicing rules you used.",
+          "starter_code": "s = \"Recruitment\"\nprint(s[0:3])\nprint(s[-4:])\nprint(s[::3])\nprint(s.upper().count(\"T\"))\nprint(len(s), s.find(\"z\"))",
+          "reference_solution": "Output:\nRec\nment\nRrtn\n2\n11 -1\n\nExplanation: s[0:3] takes indexes 0-2 ('Rec'). s[-4:] takes the last four characters ('ment').             s[::3] takes every third character starting at index 0: indexes 0, 3, 6, 9 ('R', 'r', 't', 'n').             'RECRUITMENT' contains two 'T' characters. The string has 11 characters and find() returns -1             when the substring is not found.",
+          "evaluation_points": [
+            "Correct slices 'Rec' and 'ment'",
+            "Correct step slice 'Rrtn'",
+            "Counts 2 T characters after upper()",
+            "States len is 11 and find returns -1 for a missing substring"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "Rec\nment\nRrtn\n2\n11 -1"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-04",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function safe_ratios(pairs) that takes a list of (numerator, denominator) tuples and       returns a list with numerator / denominator for each pair. If a division fails because the       denominator is zero or a value is not a number, put None in that position instead of stopping.       Catch only ZeroDivisionError and TypeError.",
+          "reference_solution": "def safe_ratios(pairs):\n    results = []\n    for num, den in pairs:\n        try:\n            results.append(num / den)\n        except (ZeroDivisionError, TypeError):\n            results.append(None)\n    return results",
+          "evaluation_points": [
+            "Uses try/except inside the loop so one failure does not stop the rest",
+            "Catches ZeroDivisionError and TypeError specifically (no bare except)",
+            "Appends None for failures and keeps positions aligned",
+            "Unpacks each tuple correctly"
+          ],
+          "test_cases": [
+            {
+              "input": "safe_ratios([(10, 4), (1, 0), ('a', 2)])",
+              "expected": "[2.5, None, None]"
+            },
+            {
+              "input": "safe_ratios([])",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-05",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function compress(text) that performs run-length encoding: each run of the same       consecutive character is replaced by the character followed by the run length.       Example: 'aaabccdddd' -> 'a3b1c2d4'. An empty string returns ''.",
+          "reference_solution": "def compress(text):\n    if not text:\n        return \"\"\n    parts = []\n    current, count = text[0], 1\n    for ch in text[1:]:\n        if ch == current:\n            count += 1\n        else:\n            parts.append(f\"{current}{count}\")\n            current, count = ch, 1\n    parts.append(f\"{current}{count}\")\n    return \"\".join(parts)",
+          "evaluation_points": [
+            "Counts consecutive runs only (not total occurrences)",
+            "Emits the final run after the loop",
+            "Handles the empty string",
+            "Builds the result efficiently (list + join or equivalent)"
+          ],
+          "test_cases": [
+            {
+              "input": "compress('aaabccdddd')",
+              "expected": "'a3b1c2d4'"
+            },
+            {
+              "input": "compress('abab')",
+              "expected": "'a1b1a1b1'"
+            },
+            {
+              "input": "compress('')",
+              "expected": "''"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-06",
+          "topic": "Sorting/Searching",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "binary_search(items, target) should return the index of target in the sorted list items, or       -1 if it is not present. It fails to find some values, e.g. binary_search([1, 3, 5, 7], 7)       returns -1, and binary_search([4], 4) returns -1. Find and fix the bug.",
+          "starter_code": "def binary_search(items, target):\n    low, high = 0, len(items) - 1\n    while low < high:\n        mid = (low + high) // 2\n        if items[mid] == target:\n            return mid\n        if items[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
+          "reference_solution": "# Bug: with high = len(items) - 1 (inclusive bound) the loop must run while low <= high;\n# 'low < high' stops before checking the last remaining element.\ndef binary_search(items, target):\n    low, high = 0, len(items) - 1\n    while low <= high:\n        mid = (low + high) // 2\n        if items[mid] == target:\n            return mid\n        if items[mid] < target:\n            low = mid + 1\n        else:\n            high = mid - 1\n    return -1",
+          "evaluation_points": [
+            "Identifies the loop condition as the bug (inclusive high needs <=)",
+            "Keeps low = mid + 1 / high = mid - 1 so the loop terminates",
+            "Returns -1 for missing values and for an empty list",
+            "Finds the first and last elements"
+          ],
+          "test_cases": [
+            {
+              "input": "binary_search([1, 3, 5, 7], 7)",
+              "expected": "3"
+            },
+            {
+              "input": "binary_search([4], 4)",
+              "expected": "0"
+            },
+            {
+              "input": "binary_search([1, 3, 5, 7], 4)",
+              "expected": "-1"
+            },
+            {
+              "input": "binary_search([], 1)",
+              "expected": "-1"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-07",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function invert_mapping(mapping) that swaps keys and values of a dictionary. Because       several keys can share a value, the result maps each original value to a sorted list of the       original keys. Example: {'pen': 'office', 'mug': 'kitchen', 'stapler': 'office'} ->       {'office': ['pen', 'stapler'], 'kitchen': ['mug']}.",
+          "reference_solution": "def invert_mapping(mapping):\n    inverted = {}\n    for key, value in mapping.items():\n        inverted.setdefault(value, []).append(key)\n    for value in inverted:\n        inverted[value].sort()\n    return inverted",
+          "evaluation_points": [
+            "Iterates with items()",
+            "Collects keys into lists so repeated values are not overwritten",
+            "Sorts each list of keys",
+            "Does not modify the input dictionary"
+          ],
+          "test_cases": [
+            {
+              "input": "invert_mapping({'pen': 'office', 'mug': 'kitchen', 'stapler': 'office'})",
+              "expected": "{'office': ['pen', 'stapler'], 'kitchen': ['mug']}"
+            },
+            {
+              "input": "invert_mapping({})",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-08",
+          "topic": "OOP Basics",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete the Product class. __str__ must return the name followed by the price with two       decimals in brackets, e.g. 'Laptop ($999.50)'. Two products are equal (==) when their sku       values are equal, regardless of name or price. in_stock() returns True when quantity is       greater than 0.",
+          "starter_code": "class Product:\n    def __init__(self, sku, name, price, quantity=0):\n        self.sku = sku\n        self.name = name\n        self.price = price\n        self.quantity = quantity\n\n    def __str__(self):\n        # TODO\n        pass\n\n    def __eq__(self, other):\n        # TODO\n        pass\n\n    def in_stock(self):\n        # TODO\n        pass",
+          "reference_solution": "class Product:\n    def __init__(self, sku, name, price, quantity=0):\n        self.sku = sku\n        self.name = name\n        self.price = price\n        self.quantity = quantity\n\n    def __str__(self):\n        return f\"{self.name} (${self.price:.2f})\"\n\n    def __eq__(self, other):\n        if not isinstance(other, Product):\n            return NotImplemented\n        return self.sku == other.sku\n\n    def in_stock(self):\n        return self.quantity > 0",
+          "evaluation_points": [
+            "__str__ returns the exact required format with 2 decimals",
+            "__eq__ compares only sku",
+            "__eq__ handles comparison with a non-Product safely (NotImplemented or False)",
+            "in_stock returns a bool based on quantity"
+          ],
+          "test_cases": [
+            {
+              "input": "str(Product('A1', 'Laptop', 999.5))",
+              "expected": "'Laptop ($999.50)'"
+            },
+            {
+              "input": "Product('A1', 'Laptop', 999.5) == Product('A1', 'Notebook', 10)",
+              "expected": "True"
+            },
+            {
+              "input": "Product('B2', 'Mouse', 20, 0).in_stock()",
+              "expected": "False"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-09",
+          "topic": "Collections",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function is_balanced(text) that returns True if every bracket in text is correctly       matched and nested, otherwise False. Brackets are (), [] and {}; all other characters are       ignored. Example: 'calc(a[1] + {b})' -> True, '([)]' -> False, '((' -> False.",
+          "reference_solution": "def is_balanced(text):\n    pairs = {\")\": \"(\", \"]\": \"[\", \"}\": \"{\"}\n    stack = []\n    for ch in text:\n        if ch in \"([{\":\n            stack.append(ch)\n        elif ch in pairs:\n            if not stack or stack.pop() != pairs[ch]:\n                return False\n    return not stack",
+          "evaluation_points": [
+            "Uses a stack (list append/pop)",
+            "Checks that each closing bracket matches the most recent opening one",
+            "Returns False when a closing bracket appears with an empty stack",
+            "Returns False when opening brackets remain at the end",
+            "Ignores non-bracket characters"
+          ],
+          "test_cases": [
+            {
+              "input": "is_balanced('calc(a[1] + {b})')",
+              "expected": "True"
+            },
+            {
+              "input": "is_balanced('([)]')",
+              "expected": "False"
+            },
+            {
+              "input": "is_balanced('((')",
+              "expected": "False"
+            },
+            {
+              "input": "is_balanced('')",
+              "expected": "True"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S3-10",
+          "topic": "Text Parsing",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function parse_query(query) that parses a URL query string such as       'item=pen&qty=2&tag=red&tag=blue&note=' into a dictionary. Pairs are separated by '&' and       keys from values by the first '='. A key that appears once maps to its string value; a key       that appears more than once maps to a list of its values in order. Empty values are allowed       (''). Skip segments that contain no '='. Do not use urllib.",
+          "reference_solution": "def parse_query(query):\n    result = {}\n    for segment in query.split(\"&\"):\n        if \"=\" not in segment:\n            continue\n        key, value = segment.split(\"=\", 1)\n        if key in result:\n            if isinstance(result[key], list):\n                result[key].append(value)\n            else:\n                result[key] = [result[key], value]\n        else:\n            result[key] = value\n    return result",
+          "evaluation_points": [
+            "Splits on '&' and on the first '=' only",
+            "Skips segments without '='",
+            "Keeps empty values as ''",
+            "Converts a repeated key to a list and appends further values in order",
+            "Single occurrences stay plain strings"
+          ],
+          "test_cases": [
+            {
+              "input": "parse_query('item=pen&qty=2&tag=red&tag=blue&note=')",
+              "expected": "{'item': 'pen', 'qty': '2', 'tag': ['red', 'blue'], 'note': ''}"
+            },
+            {
+              "input": "parse_query('a=1=2&flag&a=3')",
+              "expected": "{'a': ['1=2', '3']}"
+            },
+            {
+              "input": "parse_query('')",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-PYTHON-S4-01",
+          "topic": "Arrays/Lists",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function running_totals(amounts) that returns a new list where each element is the       sum of all amounts up to and including that position. Example: [5, 3, 2] -> [5, 8, 10].       An empty list returns [].",
+          "reference_solution": "def running_totals(amounts):\n    totals = []\n    total = 0\n    for amount in amounts:\n        total += amount\n        totals.append(total)\n    return totals",
+          "evaluation_points": [
+            "Keeps a running sum across iterations",
+            "Each position includes the current element",
+            "Returns a new list of the same length",
+            "Handles the empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "running_totals([5, 3, 2])",
+              "expected": "[5, 8, 10]"
+            },
+            {
+              "input": "running_totals([-1, 1])",
+              "expected": "[-1, 0]"
+            },
+            {
+              "input": "running_totals([])",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-02",
+          "topic": "Sets",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function first_duplicate(items) that returns the first item in the list that has       already appeared earlier in the list (scanning left to right), or None if all items are       unique. Use a set to keep track of what you have seen.",
+          "reference_solution": "def first_duplicate(items):\n    seen = set()\n    for item in items:\n        if item in seen:\n            return item\n        seen.add(item)\n    return None",
+          "evaluation_points": [
+            "Uses a set for O(1) membership checks",
+            "Returns the first repeat encountered while scanning",
+            "Returns None when there are no duplicates",
+            "Single pass through the list"
+          ],
+          "test_cases": [
+            {
+              "input": "first_duplicate(['INV1', 'INV2', 'INV3', 'INV2', 'INV1'])",
+              "expected": "'INV2'"
+            },
+            {
+              "input": "first_duplicate([1, 2, 3])",
+              "expected": "None"
+            },
+            {
+              "input": "first_duplicate([])",
+              "expected": "None"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-03",
+          "topic": "Maps/Dictionaries",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "This program updates a stock dictionary using -=, setdefault() and get(), then tests membership. What does it print? Write the exact output line by line, then briefly explain why each line is produced.",
+          "starter_code": "stock = {\"pen\": 10, \"book\": 4}\nstock[\"pen\"] -= 3\nstock.setdefault(\"bag\", 0)\nstock.setdefault(\"book\", 99)\nprint(stock)\nprint(stock.get(\"lamp\", \"missing\"))\nprint(len(stock), \"book\" in stock, 4 in stock)",
+          "reference_solution": "Output:\n{'pen': 7, 'book': 4, 'bag': 0}\nmissing\n3 True False\n\nExplanation: pen is reduced from 10 to 7. setdefault adds 'bag' with 0 because it is missing, but does             nothing for 'book' because it already exists, so book stays 4. get() returns the default             'missing' for an absent key without adding it. There are 3 keys; 'in' checks keys, so             'book' in stock is True while 4 (a value) in stock is False.",
+          "evaluation_points": [
+            "Shows pen as 7 and book unchanged at 4",
+            "Explains setdefault only inserts missing keys",
+            "Explains get() returns the default without inserting",
+            "Explains that 'in' tests keys, not values"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "{'pen': 7, 'book': 4, 'bag': 0}\nmissing\n3 True False"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-04",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function top_products(sales, n) where sales is a list of (product_name, units_sold)       tuples. Return a list of the names of the n best-selling products, highest units first. If two       products sold the same number of units, order them alphabetically by name. If n is larger than       the number of products, return all of them.",
+          "reference_solution": "def top_products(sales, n):\n    ranked = sorted(sales, key=lambda s: (-s[1], s[0]))\n    return [name for name, units in ranked[:n]]",
+          "evaluation_points": [
+            "Sorts by units descending",
+            "Breaks ties alphabetically by name",
+            "Returns only names, limited to n",
+            "Slicing handles n larger than the list"
+          ],
+          "test_cases": [
+            {
+              "input": "top_products([('pen', 30), ('ink', 50), ('bag', 30), ('cap', 10)], 3)",
+              "expected": "['ink', 'bag', 'pen']"
+            },
+            {
+              "input": "top_products([('pen', 1)], 5)",
+              "expected": "['pen']"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-05",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "Each Team should have its own list of members, but after creating two teams and adding a       member to one of them, the member shows up in both teams. Explain the bug and fix the class.",
+          "starter_code": "class Team:\n    members = []\n\n    def __init__(self, name):\n        self.name = name\n\n    def add(self, person):\n        self.members.append(person)",
+          "reference_solution": "# Bug: members is a class attribute, so one list is shared by every Team instance.\n# Create the list per instance in __init__.\nclass Team:\n    def __init__(self, name):\n        self.name = name\n        self.members = []\n\n    def add(self, person):\n        self.members.append(person)",
+          "evaluation_points": [
+            "Identifies members as a class attribute shared by all instances",
+            "Moves initialisation of the list into __init__ as self.members",
+            "add() still appends to the instance list",
+            "Teams no longer affect each other"
+          ],
+          "test_cases": [
+            {
+              "input": "a = Team('A'); b = Team('B'); a.add('Ann'); (a.members, b.members)",
+              "expected": "(['Ann'], [])"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-06",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function camel_to_snake(name) that converts a camelCase or PascalCase identifier to       snake_case. Insert an underscore before each upper-case letter that is not the first character       and convert everything to lower case. Example: 'orderTotalAmount' -> 'order_total_amount',       'InvoiceId' -> 'invoice_id'.",
+          "reference_solution": "def camel_to_snake(name):\n    result = []\n    for i, ch in enumerate(name):\n        if ch.isupper() and i > 0:\n            result.append(\"_\")\n        result.append(ch.lower())\n    return \"\".join(result)",
+          "evaluation_points": [
+            "Adds '_' before upper-case letters except at position 0",
+            "Lower-cases all letters",
+            "Leaves already-lowercase names unchanged",
+            "Builds the string with join or equivalent"
+          ],
+          "test_cases": [
+            {
+              "input": "camel_to_snake('orderTotalAmount')",
+              "expected": "'order_total_amount'"
+            },
+            {
+              "input": "camel_to_snake('InvoiceId')",
+              "expected": "'invoice_id'"
+            },
+            {
+              "input": "camel_to_snake('total')",
+              "expected": "'total'"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-07",
+          "topic": "Generators",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a generator function chunked(items, size) that yields consecutive lists of at most size       elements from the list items. The last chunk may be shorter. Raise ValueError if size is less       than 1. Example: list(chunked([1, 2, 3, 4, 5], 2)) -> [[1, 2], [3, 4], [5]].",
+          "reference_solution": "def chunked(items, size):\n    if size < 1:\n        raise ValueError(\"size must be at least 1\")\n    for start in range(0, len(items), size):\n        yield items[start:start + size]",
+          "evaluation_points": [
+            "Uses yield (is a generator, not a function returning a full list)",
+            "Chunks have at most size elements",
+            "Includes the shorter final chunk",
+            "Validates size"
+          ],
+          "test_cases": [
+            {
+              "input": "list(chunked([1, 2, 3, 4, 5], 2))",
+              "expected": "[[1, 2], [3, 4], [5]]"
+            },
+            {
+              "input": "list(chunked([], 3))",
+              "expected": "[]"
+            },
+            {
+              "input": "list(chunked([1], 0))",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-08",
+          "topic": "Exceptions",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete call_with_retry(func, attempts). It must call func() (no arguments) up to attempts       times. As soon as a call succeeds, return its result. If a call raises an exception, try       again. If every attempt fails, re-raise the last exception. Raise ValueError if attempts is       less than 1.",
+          "starter_code": "def call_with_retry(func, attempts):\n    if attempts < 1:\n        raise ValueError(\"attempts must be at least 1\")\n    last_error = None\n    for _ in range(attempts):\n        # TODO: call func, return on success, remember the error on failure\n        pass\n    # TODO: all attempts failed",
+          "reference_solution": "def call_with_retry(func, attempts):\n    if attempts < 1:\n        raise ValueError(\"attempts must be at least 1\")\n    last_error = None\n    for _ in range(attempts):\n        try:\n            return func()\n        except Exception as exc:\n            last_error = exc\n    raise last_error",
+          "evaluation_points": [
+            "Returns immediately on the first successful call",
+            "Catches exceptions and retries up to attempts times",
+            "Re-raises the last exception after all attempts fail",
+            "Validates attempts",
+            "Does not swallow the error silently"
+          ],
+          "test_cases": [
+            {
+              "input": "calls = []; f = lambda: calls.append(1) or (len(calls) if len(calls) >= 3 else 1 / 0); call_with_retry(f, 5)",
+              "expected": "3"
+            },
+            {
+              "input": "calls = []; f = lambda: calls.append(1) or (len(calls) if len(calls) >= 3 else 1 / 0); call_with_retry(f, 2)",
+              "expected": "raises ZeroDivisionError"
+            },
+            {
+              "input": "call_with_retry(lambda: 'ok', 0)",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Implement merge_sort(nums), a recursive merge sort that returns a new sorted list (ascending)       and does not modify the input. Do not use sort() or sorted(). Write the merge step yourself.",
+          "reference_solution": "def merge_sort(nums):\n    if len(nums) <= 1:\n        return list(nums)\n    mid = len(nums) // 2\n    left = merge_sort(nums[:mid])\n    right = merge_sort(nums[mid:])\n    merged = []\n    i = j = 0\n    while i < len(left) and j < len(right):\n        if left[i] <= right[j]:\n            merged.append(left[i])\n            i += 1\n        else:\n            merged.append(right[j])\n            j += 1\n    merged.extend(left[i:])\n    merged.extend(right[j:])\n    return merged",
+          "evaluation_points": [
+            "Base case for lists of length 0 or 1",
+            "Splits the list and sorts both halves recursively",
+            "Merge step compares heads and appends remaining elements",
+            "Handles duplicates and negatives",
+            "Returns a new list without using sort/sorted"
+          ],
+          "test_cases": [
+            {
+              "input": "merge_sort([5, 2, 9, 1, 5, -3])",
+              "expected": "[-3, 1, 2, 5, 5, 9]"
+            },
+            {
+              "input": "merge_sort([])",
+              "expected": "[]"
+            },
+            {
+              "input": "x = [2, 1]; merge_sort(x); x",
+              "expected": "[2, 1]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S4-10",
+          "topic": "Inheritance",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a base class Employee(name) with a method monthly_pay() that raises       NotImplementedError, and two subclasses: SalariedEmployee(name, annual_salary), paid       annual_salary / 12 per month, and HourlyEmployee(name, hourly_rate, hours), paid hourly_rate       per hour for the first 160 hours and 1.5 times hourly_rate for every hour above 160. Then       write a function total_payroll(employees) that returns the sum of monthly_pay() for a list of       employees, rounded to 2 decimals.",
+          "reference_solution": "class Employee:\n    def __init__(self, name):\n        self.name = name\n\n    def monthly_pay(self):\n        raise NotImplementedError\n\nclass SalariedEmployee(Employee):\n    def __init__(self, name, annual_salary):\n        super().__init__(name)\n        self.annual_salary = annual_salary\n\n    def monthly_pay(self):\n        return self.annual_salary / 12\n\nclass HourlyEmployee(Employee):\n    def __init__(self, name, hourly_rate, hours):\n        super().__init__(name)\n        self.hourly_rate = hourly_rate\n        self.hours = hours\n\n    def monthly_pay(self):\n        regular = min(self.hours, 160)\n        overtime = max(self.hours - 160, 0)\n        return regular * self.hourly_rate + overtime * self.hourly_rate * 1.5\n\ndef total_payroll(employees):\n    return round(sum(e.monthly_pay() for e in employees), 2)",
+          "evaluation_points": [
+            "Subclasses inherit from Employee and call super().__init__",
+            "Each subclass overrides monthly_pay()",
+            "Overtime is applied only to hours above 160 at 1.5x",
+            "total_payroll relies on polymorphism, not type checks",
+            "Result rounded to 2 decimals"
+          ],
+          "test_cases": [
+            {
+              "input": "total_payroll([SalariedEmployee('Ann', 60000), HourlyEmployee('Bo', 20, 170)])",
+              "expected": "8500.0"
+            },
+            {
+              "input": "HourlyEmployee('Cy', 10, 100).monthly_pay()",
+              "expected": "1000"
+            },
+            {
+              "input": "total_payroll([])",
+              "expected": "0"
+            },
+            {
+              "input": "Employee('Di').monthly_pay()",
+              "expected": "raises NotImplementedError"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-PYTHON-S5-01",
+          "topic": "Variables & Types",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function format_duration(total_minutes) that converts a whole number of minutes into       a string of the form '<hours>h <minutes>m', where minutes always has two digits.       Example: 125 -> '2h 05m', 45 -> '0h 45m'. Raise ValueError for negative input.",
+          "reference_solution": "def format_duration(total_minutes):\n    if total_minutes < 0:\n        raise ValueError(\"minutes cannot be negative\")\n    hours, minutes = divmod(total_minutes, 60)\n    return f\"{hours}h {minutes:02d}m\"",
+          "evaluation_points": [
+            "Uses // and % (or divmod) correctly",
+            "Pads minutes to two digits",
+            "Exact output format with a space",
+            "Rejects negative input"
+          ],
+          "test_cases": [
+            {
+              "input": "format_duration(125)",
+              "expected": "'2h 05m'"
+            },
+            {
+              "input": "format_duration(45)",
+              "expected": "'0h 45m'"
+            },
+            {
+              "input": "format_duration(600)",
+              "expected": "'10h 00m'"
+            },
+            {
+              "input": "format_duration(-5)",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-02",
+          "topic": "List Comprehensions",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function long_words_upper(words, min_length) that returns a list containing, in       upper case, only the words whose length is at least min_length, in their original order. The       body of the function must be a single return statement with a list comprehension.",
+          "reference_solution": "def long_words_upper(words, min_length):\n    return [w.upper() for w in words if len(w) >= min_length]",
+          "evaluation_points": [
+            "Uses a single list comprehension with a filter condition",
+            "Uses >= (words of exactly min_length included)",
+            "Converts to upper case",
+            "Keeps original order"
+          ],
+          "test_cases": [
+            {
+              "input": "long_words_upper(['desk', 'chair', 'lamp', 'monitor'], 5)",
+              "expected": "['CHAIR', 'MONITOR']"
+            },
+            {
+              "input": "long_words_upper([], 3)",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-03",
+          "topic": "Functions",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "This program calls a function that has two default arguments, using positional and keyword arguments. What does each call print? Write the exact output line by line, then briefly explain why each line is produced.",
+          "starter_code": "def greet(name, greeting=\"Hello\", punct=\"!\"):\n    return f\"{greeting}, {name}{punct}\"\n\nprint(greet(\"Ana\"))\nprint(greet(\"Ben\", \"Hi\"))\nprint(greet(\"Cy\", punct=\"?\"))\nprint(greet(greeting=\"Hey\", name=\"Di\"))",
+          "reference_solution": "Output:\nHello, Ana!\nHi, Ben!\nHello, Cy?\nHey, Di!\n\nExplanation: Parameters not supplied use their defaults. The second positional argument fills greeting.             punct=\"?\" is a keyword argument, so greeting keeps its default. Keyword arguments can be given             in any order, so greeting=\"Hey\", name=\"Di\" works and punct defaults to '!'.",
+          "evaluation_points": [
+            "All four lines exactly correct",
+            "Explains default parameter values",
+            "Explains positional vs keyword arguments",
+            "Notes keyword arguments can be passed in any order"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "Hello, Ana!\nHi, Ben!\nHello, Cy?\nHey, Di!"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-04",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function merge_inventories(first, second) where each argument is a dictionary mapping       product name to quantity. Return a NEW dictionary containing every product from both, with       quantities added together for products present in both. Neither input dictionary may be       modified.",
+          "reference_solution": "def merge_inventories(first, second):\n    merged = dict(first)\n    for product, qty in second.items():\n        merged[product] = merged.get(product, 0) + qty\n    return merged",
+          "evaluation_points": [
+            "Copies the first dict instead of modifying it",
+            "Adds quantities for shared keys",
+            "Includes keys that appear in only one dict",
+            "Neither input is mutated"
+          ],
+          "test_cases": [
+            {
+              "input": "merge_inventories({'pen': 5, 'ink': 2}, {'ink': 3, 'pad': 1})",
+              "expected": "{'pen': 5, 'ink': 5, 'pad': 1}"
+            },
+            {
+              "input": "a = {'pen': 1}; merge_inventories(a, {'pen': 1}); a",
+              "expected": "{'pen': 1}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-05",
+          "topic": "Collections",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "This program makes a shallow copy and a deep copy of a dictionary that contains a list, then modifies the copies. What do the three dictionaries print? Write the exact output line by line, then briefly explain why each line is produced.",
+          "starter_code": "import copy\n\noriginal = {\"items\": [1, 2], \"total\": 3}\nshallow = original.copy()\ndeep = copy.deepcopy(original)\n\nshallow[\"items\"].append(99)\nshallow[\"total\"] = 0\ndeep[\"items\"].append(7)\n\nprint(original)\nprint(shallow)\nprint(deep)",
+          "reference_solution": "Output:\n{'items': [1, 2, 99], 'total': 3}\n{'items': [1, 2, 99], 'total': 0}\n{'items': [1, 2, 7], 'total': 3}\n\nExplanation: dict.copy() makes a shallow copy: a new outer dict whose values are the same objects, so             original and shallow share one 'items' list and appending 99 is visible in both. Assigning             shallow['total'] = 0 rebinds a key in the new dict only, so original keeps 3. deepcopy copies             the nested list too, so appending 7 affects only deep.",
+          "evaluation_points": [
+            "original shows 99 in items but total still 3",
+            "shallow shows total 0 and the shared list",
+            "deep shows only 7 appended",
+            "Explains shallow copy shares nested objects while deepcopy does not",
+            "Distinguishes mutating a shared list from reassigning a key"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the program as shown",
+              "expected": "{'items': [1, 2, 99], 'total': 3}\n{'items': [1, 2, 99], 'total': 0}\n{'items': [1, 2, 7], 'total': 3}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-06",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "reverse_words(sentence) should return the words of the sentence in reverse order separated by       single spaces, with no leading or trailing spaces. For 'close the  ticket' (note the double space)       it returns 'ticket  the close ' with an extra space in the middle and a trailing space. Fix it.",
+          "starter_code": "def reverse_words(sentence):\n    words = sentence.split(\" \")\n    result = \"\"\n    for w in words:\n        result = w + \" \" + result\n    return result",
+          "reference_solution": "# Bug: split(\" \") produces empty strings for repeated spaces, and prepending w + \" \" leaves\n# a trailing space. split() with no argument discards empty items; join adds single spaces.\ndef reverse_words(sentence):\n    return \" \".join(reversed(sentence.split()))",
+          "evaluation_points": [
+            "Explains that split(' ') keeps empty strings for consecutive spaces",
+            "Uses split() without arguments (or filters empties)",
+            "Removes the trailing space (join or strip)",
+            "Returns '' for an empty or blank sentence"
+          ],
+          "test_cases": [
+            {
+              "input": "reverse_words('close the  ticket')",
+              "expected": "'ticket the close'"
+            },
+            {
+              "input": "reverse_words('  one ')",
+              "expected": "'one'"
+            },
+            {
+              "input": "reverse_words('')",
+              "expected": "''"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-07",
+          "topic": "Sets",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function unique_visitors_per_day(visits) where visits is a list of (day, user_id)       tuples from a website log. The same user may visit several times per day. Return a dictionary       mapping each day to the number of distinct users who visited that day.",
+          "reference_solution": "def unique_visitors_per_day(visits):\n    users_by_day = {}\n    for day, user_id in visits:\n        users_by_day.setdefault(day, set()).add(user_id)\n    return {day: len(users) for day, users in users_by_day.items()}",
+          "evaluation_points": [
+            "Groups by day using a dict",
+            "Uses a set per day so repeat visits are counted once",
+            "Returns counts (ints), not the sets themselves",
+            "Handles an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "unique_visitors_per_day([('Mon', 1), ('Mon', 2), ('Mon', 1), ('Tue', 2)])",
+              "expected": "{'Mon': 2, 'Tue': 1}"
+            },
+            {
+              "input": "unique_visitors_per_day([])",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-08",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a class TaskQueue that processes support tickets in first-in, first-out order. It must       provide: enqueue(task) to add a task at the back; dequeue() to remove and return the task at the       front, raising IndexError('queue is empty') if there is none; peek() to return the front task       without removing it (None if empty); and __len__ so len(queue) returns the number of tasks.",
+          "reference_solution": "class TaskQueue:\n    def __init__(self):\n        self._items = []\n\n    def enqueue(self, task):\n        self._items.append(task)\n\n    def dequeue(self):\n        if not self._items:\n            raise IndexError(\"queue is empty\")\n        return self._items.pop(0)\n\n    def peek(self):\n        return self._items[0] if self._items else None\n\n    def __len__(self):\n        return len(self._items)",
+          "evaluation_points": [
+            "Stores items in an instance attribute created in __init__",
+            "FIFO order: dequeue returns the oldest task",
+            "dequeue on empty raises IndexError",
+            "peek does not remove and returns None when empty",
+            "Implements __len__"
+          ],
+          "test_cases": [
+            {
+              "input": "q = TaskQueue(); q.enqueue('T1'); q.enqueue('T2'); (q.dequeue(), q.peek(), len(q))",
+              "expected": "('T1', 'T2', 1)"
+            },
+            {
+              "input": "TaskQueue().dequeue()",
+              "expected": "raises IndexError"
+            },
+            {
+              "input": "TaskQueue().peek()",
+              "expected": "None"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "An organisation chart is stored as nested dictionaries: each node is {'name': str,       'reports': [list of nodes]}. Write a recursive function chart_stats(node) that returns a tuple       (headcount, levels), where headcount is the total number of people in the chart including the       root, and levels is the number of levels (a single person with no reports has 1 level).",
+          "reference_solution": "def chart_stats(node):\n    headcount = 1\n    deepest = 0\n    for child in node[\"reports\"]:\n        child_count, child_levels = chart_stats(child)\n        headcount += child_count\n        deepest = max(deepest, child_levels)\n    return headcount, deepest + 1",
+          "evaluation_points": [
+            "Recursive call on each report",
+            "Headcount sums the subtrees plus the node itself",
+            "Levels is 1 + the maximum levels among children",
+            "Leaf node returns (1, 1)",
+            "Returns a tuple"
+          ],
+          "test_cases": [
+            {
+              "input": "chart_stats({'name': 'CEO', 'reports': [{'name': 'CTO', 'reports': [{'name': 'Dev', 'reports': []}]}, {'name': 'CFO', 'reports': []}]})",
+              "expected": "(4, 3)"
+            },
+            {
+              "input": "chart_stats({'name': 'Solo', 'reports': []})",
+              "expected": "(1, 1)"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-PYTHON-S5-10",
+          "topic": "Text Parsing",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function parse_duration(text) that converts a duration string such as '1h 30m 15s'       into a total number of seconds (int). The string contains one or more space-separated tokens,       each a positive whole number followed by one unit letter: h (hours), m (minutes) or s (seconds).       Units may appear in any order, upper or lower case. Raise ValueError for an empty string or any       token that is not in this format (e.g. '10x', 'h', '1.5h').",
+          "reference_solution": "def parse_duration(text):\n    units = {\"h\": 3600, \"m\": 60, \"s\": 1}\n    tokens = text.split()\n    if not tokens:\n        raise ValueError(\"empty duration\")\n    total = 0\n    for token in tokens:\n        number, unit = token[:-1], token[-1].lower()\n        if unit not in units or not number.isdigit():\n            raise ValueError(f\"invalid token: {token}\")\n        total += int(number) * units[unit]\n    return total",
+          "evaluation_points": [
+            "Splits into tokens and separates the number from the unit letter",
+            "Maps units to seconds (h=3600, m=60, s=1), case-insensitive",
+            "Validates the number part is digits only",
+            "Raises ValueError for empty input and invalid tokens",
+            "Returns an int total"
+          ],
+          "test_cases": [
+            {
+              "input": "parse_duration('1h 30m 15s')",
+              "expected": "5415"
+            },
+            {
+              "input": "parse_duration('45S 2M')",
+              "expected": "165"
+            },
+            {
+              "input": "parse_duration('1.5h')",
+              "expected": "raises ValueError"
+            },
+            {
+              "input": "parse_duration('')",
+              "expected": "raises ValueError"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

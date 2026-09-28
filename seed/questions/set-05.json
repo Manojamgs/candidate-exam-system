@@ -1,0 +1,495 @@
+{
+  "set_code": "SET-05",
+  "name": "Exam Set 05",
+  "aptitude": [
+    {
+      "code": "APT-S05-01",
+      "category": "Quantitative Aptitude",
+      "topic": "Percentage Change (Successive)",
+      "difficulty": "Easy",
+      "question": "A hospital pharmacy raised the price of a medicine by 20%. A month later, the new price was reduced by 10%. What is the net percentage change in the price compared with the original price?",
+      "options": {
+        "A": "10% increase",
+        "B": "8% increase",
+        "C": "12% increase",
+        "D": "2% decrease"
+      },
+      "correct": "B",
+      "explanation": "Net multiplier = 1.20 × 0.90 = 1.08, so the price rose by 8%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-02",
+      "category": "Quantitative Aptitude",
+      "topic": "Profit and Loss",
+      "difficulty": "Medium",
+      "question": "An IT services firm buys a laptop for Rs. 20,000 and marks it at Rs. 25,000. It sells the laptop to a client after giving a 12% discount on the marked price. What is the profit percentage?",
+      "options": {
+        "A": "12%",
+        "B": "8%",
+        "C": "10%",
+        "D": "25%"
+      },
+      "correct": "C",
+      "explanation": "Selling price = 25,000 × 0.88 = Rs. 22,000. Profit = 22,000 − 20,000 = Rs. 2,000. Profit % = 2,000/20,000 × 100 = 10%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-03",
+      "category": "Quantitative Aptitude",
+      "topic": "Simple and Compound Interest",
+      "difficulty": "Medium",
+      "question": "A customer deposits Rs. 15,000 in a bank for 2 years at 10% per annum. What is the difference between the compound interest (compounded annually) and the simple interest earned?",
+      "options": {
+        "A": "Rs. 100",
+        "B": "Rs. 300",
+        "C": "Rs. 1,500",
+        "D": "Rs. 150"
+      },
+      "correct": "D",
+      "explanation": "SI = 15,000 × 10% × 2 = Rs. 3,000. CI = 15,000 × (1.1² − 1) = Rs. 3,150. Difference = Rs. 150 (shortcut: P × (r/100)² = 15,000 × 0.01 = 150).",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-04",
+      "category": "Quantitative Aptitude",
+      "topic": "Ratio and Partnership",
+      "difficulty": "Medium",
+      "question": "Three partners start a travel agency. Anil invests Rs. 40,000 for 12 months, Bina invests Rs. 60,000 for 6 months and Charu invests Rs. 30,000 for 12 months. If the total profit at the end of the year is Rs. 50,000, what is Bina's share?",
+      "options": {
+        "A": "Rs. 15,000",
+        "B": "Rs. 20,000",
+        "C": "Rs. 16,667",
+        "D": "Rs. 25,000"
+      },
+      "correct": "A",
+      "explanation": "Capital × time: Anil 4,80,000; Bina 3,60,000; Charu 3,60,000 → ratio 4 : 3 : 3. Bina's share = 3/10 × 50,000 = Rs. 15,000.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-05",
+      "category": "Quantitative Aptitude",
+      "topic": "Weighted Average",
+      "difficulty": "Easy",
+      "question": "In a school, Section A has 30 students with an average score of 72, and Section B has 20 students with an average score of 82. What is the average score of all 50 students combined?",
+      "options": {
+        "A": "77",
+        "B": "76",
+        "C": "75",
+        "D": "78"
+      },
+      "correct": "B",
+      "explanation": "Total = 30 × 72 + 20 × 82 = 2,160 + 1,640 = 3,800. Average = 3,800 / 50 = 76.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-06",
+      "category": "Quantitative Aptitude",
+      "topic": "Time and Work",
+      "difficulty": "Medium",
+      "question": "At an IT support centre, technician P is twice as efficient as technician Q. Working together, they complete a server migration in 12 days. How many days would Q take to complete the same migration alone?",
+      "options": {
+        "A": "24 days",
+        "B": "18 days",
+        "C": "36 days",
+        "D": "30 days"
+      },
+      "correct": "C",
+      "explanation": "Let Q do x units/day, P does 2x. Together 3x = 1/12, so x = 1/36. Q alone takes 36 days.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-07",
+      "category": "Quantitative Aptitude",
+      "topic": "Relative Speed (Trains)",
+      "difficulty": "Medium",
+      "question": "Two trains of lengths 150 m and 200 m run on parallel tracks in opposite directions at 54 km/h and 72 km/h respectively. How long do they take to cross each other completely?",
+      "options": {
+        "A": "10 seconds",
+        "B": "12 seconds",
+        "C": "14 seconds",
+        "D": "20 seconds"
+      },
+      "correct": "A",
+      "explanation": "Relative speed = 54 + 72 = 126 km/h = 126 × 5/18 = 35 m/s. Distance = 150 + 200 = 350 m. Time = 350/35 = 10 s.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-08",
+      "category": "Quantitative Aptitude",
+      "topic": "Number Systems (Unit Digit)",
+      "difficulty": "Hard",
+      "question": "What is the unit digit of 7^95?",
+      "options": {
+        "A": "7",
+        "B": "9",
+        "C": "1",
+        "D": "3"
+      },
+      "correct": "D",
+      "explanation": "Unit digits of powers of 7 repeat in the cycle 7, 9, 3, 1 (length 4). 95 = 4 × 23 + 3, so the unit digit matches 7³, which ends in 3.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-09",
+      "category": "Logical Reasoning",
+      "topic": "Number Series",
+      "difficulty": "Easy",
+      "question": "Find the next number in the series: 4, 10, 22, 46, 94, ?",
+      "options": {
+        "A": "188",
+        "B": "190",
+        "C": "192",
+        "D": "186"
+      },
+      "correct": "B",
+      "explanation": "Each term = previous term × 2 + 2: 94 × 2 + 2 = 190.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-10",
+      "category": "Logical Reasoning",
+      "topic": "Coding-Decoding",
+      "difficulty": "Medium",
+      "question": "In a certain code, each letter is replaced by the letter two places ahead of it in the English alphabet, so HOSPITAL is written as JQURKVCN. How is CLINIC written in that code?",
+      "options": {
+        "A": "ENKPKE",
+        "B": "EMKPKE",
+        "C": "ENJPJE",
+        "D": "DNKPKD"
+      },
+      "correct": "A",
+      "explanation": "Shift each letter by +2: C→E, L→N, I→K, N→P, I→K, C→E, giving ENKPKE.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-11",
+      "category": "Logical Reasoning",
+      "topic": "Blood Relations (Coded)",
+      "difficulty": "Hard",
+      "question": "In a code, 'P + Q' means P is the father of Q, 'P × Q' means P is the brother of Q, and 'P − Q' means P is the wife of Q. If A + B × C − D, how is D related to A?",
+      "options": {
+        "A": "Son",
+        "B": "Brother",
+        "C": "Nephew",
+        "D": "Son-in-law"
+      },
+      "correct": "D",
+      "explanation": "A is the father of B; B is the brother of C, so A is also C's father. C is the wife of D, so C is A's daughter and D is her husband, i.e. A's son-in-law.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-12",
+      "category": "Logical Reasoning",
+      "topic": "Direction Sense",
+      "difficulty": "Medium",
+      "question": "A courier walks 10 km north from the office, turns right and walks 6 km, then turns right again and walks 2 km. How far is the courier from the office now (straight-line distance)?",
+      "options": {
+        "A": "8 km",
+        "B": "12 km",
+        "C": "10 km",
+        "D": "18 km"
+      },
+      "correct": "C",
+      "explanation": "Net displacement: north 10 − 2 = 8 km, east 6 km. Distance = √(8² + 6²) = √100 = 10 km.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-13",
+      "category": "Logical Reasoning",
+      "topic": "Ranking and Order",
+      "difficulty": "Easy",
+      "question": "In a training batch of 45 trainees, Meera is ranked 16th from the top. What is her rank from the bottom?",
+      "options": {
+        "A": "30th",
+        "B": "29th",
+        "C": "31st",
+        "D": "28th"
+      },
+      "correct": "A",
+      "explanation": "Rank from bottom = total − rank from top + 1 = 45 − 16 + 1 = 30.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-14",
+      "category": "Logical Reasoning",
+      "topic": "Statement and Conclusion",
+      "difficulty": "Medium",
+      "question": "Statement: All staff of the billing department must attend the Monday review meeting. Karan is a member of the billing department. Conclusions: I. Karan must attend the Monday review meeting. II. Only billing department staff attend the Monday review meeting. Which conclusion(s) logically follow?",
+      "options": {
+        "A": "Only conclusion II follows",
+        "B": "Neither conclusion follows",
+        "C": "Only conclusion I follows",
+        "D": "Both conclusions follow"
+      },
+      "correct": "C",
+      "explanation": "Karan belongs to the billing department, so I follows directly. The statement does not say others are excluded from the meeting, so II does not follow.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-15",
+      "category": "Numerical Reasoning",
+      "topic": "Sales Commission",
+      "difficulty": "Medium",
+      "question": "A sales executive earns 5% commission on the first Rs. 2,00,000 of monthly sales and 8% on sales above Rs. 2,00,000. In a month her sales are Rs. 3,50,000. What is her total commission?",
+      "options": {
+        "A": "Rs. 28,000",
+        "B": "Rs. 22,000",
+        "C": "Rs. 17,500",
+        "D": "Rs. 24,000"
+      },
+      "correct": "B",
+      "explanation": "Commission = 5% of 2,00,000 + 8% of 1,50,000 = 10,000 + 12,000 = Rs. 22,000.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-16",
+      "category": "Numerical Reasoning",
+      "topic": "Tax on Invoice",
+      "difficulty": "Hard",
+      "question": "An IT vendor's invoice lists services worth Rs. 48,000. The client receives a 5% discount on this amount, and 18% tax is then charged on the discounted amount. What is the final invoice total?",
+      "options": {
+        "A": "Rs. 56,640",
+        "B": "Rs. 53,520",
+        "C": "Rs. 54,264",
+        "D": "Rs. 53,808"
+      },
+      "correct": "D",
+      "explanation": "Discounted amount = 48,000 × 0.95 = Rs. 45,600. Tax = 45,600 × 0.18 = Rs. 8,208. Total = 45,600 + 8,208 = Rs. 53,808.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-17",
+      "category": "Numerical Reasoning",
+      "topic": "Fuel Cost per Trip",
+      "difficulty": "Easy",
+      "question": "A travel agency van makes a 240 km round trip. The van gives a mileage of 12 km per litre and fuel costs Rs. 105 per litre. What is the fuel cost for the trip?",
+      "options": {
+        "A": "Rs. 2,100",
+        "B": "Rs. 2,520",
+        "C": "Rs. 1,890",
+        "D": "Rs. 2,400"
+      },
+      "correct": "A",
+      "explanation": "Fuel used = 240 / 12 = 20 litres. Cost = 20 × 105 = Rs. 2,100.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-18",
+      "category": "Data Interpretation",
+      "topic": "Table (Website Traffic)",
+      "difficulty": "Easy",
+      "question": "The table shows a company's website visitors and conversions by channel for one month. Which channel has the highest conversion rate (conversions ÷ visitors)?",
+      "table": {
+        "headers": [
+          "Channel",
+          "Visitors",
+          "Conversions"
+        ],
+        "rows": [
+          [
+            "Organic Search",
+            "12,000",
+            "360"
+          ],
+          [
+            "Paid Ads",
+            "8,000",
+            "320"
+          ],
+          [
+            "Social Media",
+            "6,000",
+            "90"
+          ],
+          [
+            "Email",
+            "4,000",
+            "200"
+          ]
+        ]
+      },
+      "options": {
+        "A": "Paid Ads",
+        "B": "Organic Search",
+        "C": "Email",
+        "D": "Social Media"
+      },
+      "correct": "C",
+      "explanation": "Rates: Organic 360/12,000 = 3%; Paid 320/8,000 = 4%; Social 90/6,000 = 1.5%; Email 200/4,000 = 5%. Email is highest.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-19",
+      "category": "Data Interpretation",
+      "topic": "Table (Website Traffic)",
+      "difficulty": "Medium",
+      "question": "Using the table of website visitors by channel, what percentage of the total visitors came from Paid Ads? (Round to two decimal places.)",
+      "table": {
+        "headers": [
+          "Channel",
+          "Visitors",
+          "Conversions"
+        ],
+        "rows": [
+          [
+            "Organic Search",
+            "12,000",
+            "360"
+          ],
+          [
+            "Paid Ads",
+            "8,000",
+            "320"
+          ],
+          [
+            "Social Media",
+            "6,000",
+            "90"
+          ],
+          [
+            "Email",
+            "4,000",
+            "200"
+          ]
+        ]
+      },
+      "options": {
+        "A": "32.99%",
+        "B": "26.67%",
+        "C": "25.00%",
+        "D": "36.36%"
+      },
+      "correct": "B",
+      "explanation": "Total visitors = 12,000 + 8,000 + 6,000 + 4,000 = 30,000. Paid Ads share = 8,000 / 30,000 × 100 = 26.67%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S05-20",
+      "category": "Data Interpretation",
+      "topic": "Table (Website Traffic)",
+      "difficulty": "Hard",
+      "question": "Using the table, suppose next month Social Media visitors increase by 50% and the Social Media conversion rate doubles, while all other channels stay exactly the same. What will be the total number of conversions across all channels?",
+      "table": {
+        "headers": [
+          "Channel",
+          "Visitors",
+          "Conversions"
+        ],
+        "rows": [
+          [
+            "Organic Search",
+            "12,000",
+            "360"
+          ],
+          [
+            "Paid Ads",
+            "8,000",
+            "320"
+          ],
+          [
+            "Social Media",
+            "6,000",
+            "90"
+          ],
+          [
+            "Email",
+            "4,000",
+            "200"
+          ]
+        ]
+      },
+      "options": {
+        "A": "1,060",
+        "B": "1,105",
+        "C": "1,240",
+        "D": "1,150"
+      },
+      "correct": "D",
+      "explanation": "Social: visitors = 6,000 × 1.5 = 9,000; rate = 1.5% × 2 = 3%; conversions = 270. Total = 360 + 320 + 270 + 200 = 1,150.",
+      "marks": 1
+    }
+  ],
+  "communication": [
+    {
+      "code": "COM-S05-01",
+      "category": "Self-presentation",
+      "question": "Describe the kind of work environment in which you do your best work. Explain which features of that environment matter most to you and why they help you perform well. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-02",
+      "category": "Adaptability",
+      "question": "Describe a time when something you worked on did not go as planned. What went wrong, what did you learn from the experience, and how have you applied that lesson since? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-03",
+      "category": "Teamwork",
+      "question": "Imagine your manager assigns you a task using an approach you believe is not the best one. How would you handle the situation while maintaining a good working relationship and still getting the work done? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-04",
+      "category": "Workplace Communication",
+      "question": "You are working on a project that will run for several months and involves multiple stakeholders. Explain how you would keep them informed about progress, risks and changes throughout the project. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-05",
+      "category": "Time Management",
+      "question": "Describe a situation in which you had to stay patient, for example while waiting for input from others that your own work depended on. How did you use the time productively and keep the work on schedule? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-06",
+      "category": "Problem Solving",
+      "question": "Suppose you receive instructions for a task that are incomplete or unclear, and the person who gave them is not immediately available. Describe how you would proceed to make sure you deliver what is actually needed. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-07",
+      "category": "Customer Handling",
+      "question": "Describe a time when you helped improve a customer's or service user's satisfaction. What was the situation, what specific actions did you take, and what was the result? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-08",
+      "category": "Self-presentation",
+      "question": "You are meeting a new client for the first time on behalf of your company. Write how you would introduce yourself and your role, and explain what impression you would aim to create. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-09",
+      "category": "Ethics & Professionalism",
+      "question": "Explain the role that honesty plays in building long-term business relationships with clients and colleagues. Support your view with an example of how honesty, or a lack of it, can affect trust. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S05-10",
+      "category": "Career Goals",
+      "question": "If you join our organisation, in which areas do you think your skills would add the most value during your first six months? Explain why, and describe how you would make that contribution visible. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    }
+  ]
+}

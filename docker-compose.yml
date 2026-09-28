@@ -1,0 +1,9 @@
+services:
+  exam:
+    build: .
+    ports: ["3000:3000"]
+    env_file: .env
+    volumes: ["exam-data:/app/data"]
+    restart: unless-stopped
+volumes:
+  exam-data:

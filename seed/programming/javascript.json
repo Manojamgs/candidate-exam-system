@@ -1,0 +1,1508 @@
+{
+  "language": "javascript",
+  "label": "JavaScript",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-JAVASCRIPT-S1-01",
+          "topic": "Variables & Scope",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "A function declares one variable with var and one with let inside an if block, then checks both with typeof outside the block. State the exact console output and explain the scoping rule behind each line.",
+          "starter_code": "function test() {\n  if (true) {\n    var a = 1;\n    let b = 2;\n  }\n  console.log(typeof a);\n  console.log(typeof b);\n}\ntest();",
+          "reference_solution": "Output:\nnumber\nundefined\n\nExplanation: 'var' is function-scoped, so 'a' is visible anywhere inside test() and holds the number 1. 'let' is block-scoped, so 'b' only exists inside the if block; outside it the identifier is not declared, and typeof on an undeclared identifier returns 'undefined' instead of throwing.",
+          "evaluation_points": [
+            "States the exact output: number then undefined",
+            "Explains var is function-scoped",
+            "Explains let is block-scoped",
+            "Notes typeof on an undeclared name returns \"undefined\" rather than throwing"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "number\nundefined"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-02",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function reverseWords(sentence) that returns the words of the sentence in reverse order, separated by single spaces. Words are separated by one or more spaces; leading/trailing spaces should be ignored. Example: reverseWords(\"hello big world\") returns \"world big hello\".",
+          "starter_code": "function reverseWords(sentence) {\n  // your code\n}",
+          "reference_solution": "function reverseWords(sentence) {\n  return sentence.trim().split(/\\s+/).reverse().join(' ');\n}",
+          "evaluation_points": [
+            "Splits on whitespace and handles multiple spaces",
+            "Ignores leading/trailing spaces (trim)",
+            "Reverses word order, not characters",
+            "Joins with single spaces"
+          ],
+          "test_cases": [
+            {
+              "input": "reverseWords(\"hello big world\")",
+              "expected": "\"world big hello\""
+            },
+            {
+              "input": "reverseWords(\"  one   two \")",
+              "expected": "\"two one\""
+            },
+            {
+              "input": "reverseWords(\"single\")",
+              "expected": "\"single\""
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-03",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function sumOfEvens(nums) that returns the sum of all even numbers in the array nums. Return 0 if there are none or the array is empty. Example: sumOfEvens([1, 2, 3, 4]) returns 6.",
+          "starter_code": "function sumOfEvens(nums) {\n  // your code\n}",
+          "reference_solution": "function sumOfEvens(nums) {\n  return nums.filter(n => n % 2 === 0).reduce((sum, n) => sum + n, 0);\n}",
+          "evaluation_points": [
+            "Correctly identifies even numbers (including negatives and 0)",
+            "Returns 0 for an empty array or no evens",
+            "Uses a loop or filter/reduce with an initial value of 0"
+          ],
+          "test_cases": [
+            {
+              "input": "sumOfEvens([1, 2, 3, 4])",
+              "expected": "6"
+            },
+            {
+              "input": "sumOfEvens([1, 3, 5])",
+              "expected": "0"
+            },
+            {
+              "input": "sumOfEvens([-2, 0, 7, 10])",
+              "expected": "8"
+            },
+            {
+              "input": "sumOfEvens([])",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-04",
+          "topic": "Objects",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function countOccurrences(words) that takes an array of strings and returns an object mapping each distinct word to the number of times it appears. Matching is case-sensitive. Example: countOccurrences([\"pen\", \"cup\", \"pen\"]) returns { pen: 2, cup: 1 }.",
+          "starter_code": "function countOccurrences(words) {\n  // your code\n}",
+          "reference_solution": "function countOccurrences(words) {\n  const counts = {};\n  for (const w of words) {\n    counts[w] = (counts[w] || 0) + 1;\n  }\n  return counts;\n}",
+          "evaluation_points": [
+            "Returns a plain object keyed by word",
+            "Initialises unseen keys correctly (no NaN)",
+            "Counts every occurrence",
+            "Returns {} for an empty array"
+          ],
+          "test_cases": [
+            {
+              "input": "countOccurrences([\"pen\", \"cup\", \"pen\"])",
+              "expected": "{ pen: 2, cup: 1 }"
+            },
+            {
+              "input": "countOccurrences([])",
+              "expected": "{}"
+            },
+            {
+              "input": "countOccurrences([\"a\", \"A\", \"a\"])",
+              "expected": "{ a: 2, A: 1 }"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-05",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The function findMax(nums) should return the largest number in a non-empty array of numbers, but it returns the wrong result for some inputs. Identify the bug and provide the corrected function.",
+          "starter_code": "function findMax(nums) {\n  let max = 0;\n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] > max) {\n      max = nums[i];\n    }\n  }\n  return max;\n}",
+          "reference_solution": "function findMax(nums) {\n  let max = nums[0];\n  for (let i = 1; i < nums.length; i++) {\n    if (nums[i] > max) {\n      max = nums[i];\n    }\n  }\n  return max;\n}\n// Bug: max started at 0, so an array of only negative numbers returned 0. Start from the first element instead.",
+          "evaluation_points": [
+            "Identifies that initialising max to 0 fails for all-negative arrays",
+            "Initialises max from nums[0] (or -Infinity)",
+            "Keeps correct behaviour for positive numbers"
+          ],
+          "test_cases": [
+            {
+              "input": "findMax([3, 9, 2])",
+              "expected": "9"
+            },
+            {
+              "input": "findMax([-5, -2, -8])",
+              "expected": "-2"
+            },
+            {
+              "input": "findMax([-1])",
+              "expected": "-1"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-06",
+          "topic": "Closures",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function makeCounter(start) that returns an object with three methods: increment() adds 1 and returns the new value, decrement() subtracts 1 and returns the new value, and value() returns the current value. The count must be private (not accessible as a property). If start is omitted, begin at 0. Each call to makeCounter must create an independent counter.",
+          "starter_code": "function makeCounter(start) {\n  // your code\n}",
+          "reference_solution": "function makeCounter(start = 0) {\n  let count = start;\n  return {\n    increment() { count += 1; return count; },\n    decrement() { count -= 1; return count; },\n    value() { return count; }\n  };\n}",
+          "evaluation_points": [
+            "Uses a closure variable to keep the count private",
+            "Defaults start to 0",
+            "increment/decrement return the updated value",
+            "Separate counters do not share state"
+          ],
+          "test_cases": [
+            {
+              "input": "const c = makeCounter(); c.increment(); c.increment(); c.decrement(); c.value()",
+              "expected": "1"
+            },
+            {
+              "input": "const c = makeCounter(10); c.increment()",
+              "expected": "11"
+            },
+            {
+              "input": "const a = makeCounter(); const b = makeCounter(); a.increment(); [a.value(), b.value(), a.count]",
+              "expected": "[1, 0, undefined]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-07",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function sortProducts(products) where products is an array of objects { name, price }. Return a NEW array sorted by price ascending; products with the same price are ordered by name alphabetically (A to Z). The original array must not be modified.",
+          "starter_code": "function sortProducts(products) {\n  // your code\n}",
+          "reference_solution": "function sortProducts(products) {\n  return [...products].sort((a, b) => a.price - b.price || a.name.localeCompare(b.name));\n}",
+          "evaluation_points": [
+            "Copies the array before sorting (does not mutate input)",
+            "Uses a numeric comparator (a.price - b.price), not the default string sort",
+            "Breaks ties by name alphabetically",
+            "Returns the sorted array"
+          ],
+          "test_cases": [
+            {
+              "input": "sortProducts([{ name: \"Pen\", price: 5 }, { name: \"Bag\", price: 20 }, { name: \"Cup\", price: 5 }])",
+              "expected": "[{ name: \"Cup\", price: 5 }, { name: \"Pen\", price: 5 }, { name: \"Bag\", price: 20 }]"
+            },
+            {
+              "input": "const p = [{ name: \"B\", price: 100 }, { name: \"A\", price: 9 }]; sortProducts(p); p[0].name",
+              "expected": "\"B\""
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-08",
+          "topic": "Types & Coercion",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Four console.log lines mix numbers and strings with +, -, == and ===. Write the exact output and explain the type coercion (or lack of it) on each line.",
+          "starter_code": "console.log(1 + \"2\");\nconsole.log(\"5\" - 2);\nconsole.log(0 == \"\");\nconsole.log(0 === \"\");",
+          "reference_solution": "Output:\n12\n3\ntrue\nfalse\n\nExplanation: + with a string operand does string concatenation, so 1 becomes \"1\" and the result is \"12\". The - operator only works on numbers, so \"5\" is converted to 5 and the result is 3. == performs type coercion: \"\" converts to the number 0, so 0 == \"\" is true. === compares without coercion and the types differ (number vs string), so it is false.",
+          "evaluation_points": [
+            "States the exact output: 12, 3, true, false",
+            "Explains + concatenates when one operand is a string",
+            "Explains - converts strings to numbers",
+            "Explains == coerces while === compares type and value"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "12\n3\ntrue\nfalse"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive function flatten(arr) that takes an array which may contain nested arrays to any depth and returns a new, single-level array with all values in their original order. Do not use Array.prototype.flat. Example: flatten([1, [2, [3, [4]], 5]]) returns [1, 2, 3, 4, 5].",
+          "starter_code": "function flatten(arr) {\n  // your code\n}",
+          "reference_solution": "function flatten(arr) {\n  const result = [];\n  for (const item of arr) {\n    if (Array.isArray(item)) {\n      result.push(...flatten(item));\n    } else {\n      result.push(item);\n    }\n  }\n  return result;\n}",
+          "evaluation_points": [
+            "Uses recursion for nested arrays of any depth",
+            "Uses Array.isArray to detect arrays",
+            "Preserves original order",
+            "Does not use .flat()",
+            "Handles empty nested arrays"
+          ],
+          "test_cases": [
+            {
+              "input": "flatten([1, [2, [3, [4]], 5]])",
+              "expected": "[1, 2, 3, 4, 5]"
+            },
+            {
+              "input": "flatten([[], [[]], 7])",
+              "expected": "[7]"
+            },
+            {
+              "input": "flatten([\"a\", [\"b\"]])",
+              "expected": "[\"a\", \"b\"]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S1-10",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function parseQuery(query) that parses a URL query string such as \"item=pen&qty=2&tag=a&tag=b\" into an object. Values are strings and must be URL-decoded (use decodeURIComponent). A key that appears more than once maps to an array of its values in order; a key that appears once maps to a single string. A key with no \"=\" gets the value \"\" (empty string). An empty input returns {}.",
+          "starter_code": "function parseQuery(query) {\n  // your code\n}",
+          "reference_solution": "function parseQuery(query) {\n  const result = {};\n  if (!query) return result;\n  for (const part of query.split(\"&\")) {\n    const idx = part.indexOf(\"=\");\n    const key = decodeURIComponent(idx === -1 ? part : part.slice(0, idx));\n    const value = idx === -1 ? \"\" : decodeURIComponent(part.slice(idx + 1));\n    if (key in result) {\n      result[key] = [].concat(result[key], value);\n    } else {\n      result[key] = value;\n    }\n  }\n  return result;\n}",
+          "evaluation_points": [
+            "Splits on \"&\" and then on the first \"=\"",
+            "Decodes keys/values with decodeURIComponent",
+            "Turns repeated keys into an array in order",
+            "Handles missing \"=\" and empty input"
+          ],
+          "test_cases": [
+            {
+              "input": "parseQuery(\"item=pen&qty=2\")",
+              "expected": "{ item: \"pen\", qty: \"2\" }"
+            },
+            {
+              "input": "parseQuery(\"tag=a&tag=b&tag=c\")",
+              "expected": "{ tag: [\"a\", \"b\", \"c\"] }"
+            },
+            {
+              "input": "parseQuery(\"name=John%20Doe&flag\")",
+              "expected": "{ name: \"John Doe\", flag: \"\" }"
+            },
+            {
+              "input": "parseQuery(\"\")",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-JAVASCRIPT-S2-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function gradeFor(score) that returns a letter grade for a numeric score from 0 to 100: \"A\" for 90 and above, \"B\" for 80-89, \"C\" for 70-79, \"D\" for 60-69 and \"F\" below 60.",
+          "starter_code": "function gradeFor(score) {\n  // your code\n}",
+          "reference_solution": "function gradeFor(score) {\n  if (score >= 90) return \"A\";\n  if (score >= 80) return \"B\";\n  if (score >= 70) return \"C\";\n  if (score >= 60) return \"D\";\n  return \"F\";\n}",
+          "evaluation_points": [
+            "Checks thresholds in the correct order",
+            "Boundary values (90, 80, 70, 60) map correctly",
+            "Returns \"F\" for scores below 60"
+          ],
+          "test_cases": [
+            {
+              "input": "gradeFor(95)",
+              "expected": "\"A\""
+            },
+            {
+              "input": "gradeFor(80)",
+              "expected": "\"B\""
+            },
+            {
+              "input": "gradeFor(69)",
+              "expected": "\"D\""
+            },
+            {
+              "input": "gradeFor(12)",
+              "expected": "\"F\""
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-02",
+          "topic": "Variables & Scope",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "This snippet pushes to an array declared with const and then tries to reassign it inside try/catch. Give the exact console output and explain what const does and does not prevent.",
+          "starter_code": "const items = [1, 2];\nitems.push(3);\nconsole.log(items.length);\ntry {\n  items = [];\n} catch (e) {\n  console.log(e.name);\n}\nconsole.log(items.join(\",\"));",
+          "reference_solution": "Output:\n3\nTypeError\n1,2,3\n\nExplanation: const prevents re-assigning the variable, not changing the value it refers to. push() mutates the same array, so the length becomes 3. Assigning a new array to a const variable throws a TypeError (\"Assignment to constant variable\"), which is caught and its name printed. The array still holds 1,2,3.",
+          "evaluation_points": [
+            "States the exact output: 3, TypeError, 1,2,3",
+            "Explains const blocks re-assignment, not mutation",
+            "Identifies the error type as TypeError"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "3\nTypeError\n1,2,3"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-03",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function capitalizeWords(text) that returns the text with the first letter of every word in upper case and the remaining letters in lower case. Words are separated by single spaces. Example: capitalizeWords(\"hELLO wORLD\") returns \"Hello World\".",
+          "starter_code": "function capitalizeWords(text) {\n  // your code\n}",
+          "reference_solution": "function capitalizeWords(text) {\n  return text\n    .split(\" \")\n    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())\n    .join(\" \");\n}",
+          "evaluation_points": [
+            "Splits into words and rejoins with spaces",
+            "Upper-cases the first character of each word",
+            "Lower-cases the rest of each word",
+            "Handles an empty string without error"
+          ],
+          "test_cases": [
+            {
+              "input": "capitalizeWords(\"hELLO wORLD\")",
+              "expected": "\"Hello World\""
+            },
+            {
+              "input": "capitalizeWords(\"javascript\")",
+              "expected": "\"Javascript\""
+            },
+            {
+              "input": "capitalizeWords(\"\")",
+              "expected": "\"\""
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-04",
+          "topic": "Array Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function activeEmployeeNames(employees, department) where employees is an array of objects { name, department, active }. Return an array of the names of employees who are active and belong to the given department, in the original order. Use array methods (filter/map) rather than a manual loop.",
+          "starter_code": "function activeEmployeeNames(employees, department) {\n  // your code\n}",
+          "reference_solution": "function activeEmployeeNames(employees, department) {\n  return employees\n    .filter(e => e.active && e.department === department)\n    .map(e => e.name);\n}",
+          "evaluation_points": [
+            "Filters on both active and department",
+            "Maps to names only",
+            "Preserves original order",
+            "Returns [] when nothing matches"
+          ],
+          "test_cases": [
+            {
+              "input": "activeEmployeeNames([{ name: \"Asha\", department: \"IT\", active: true }, { name: \"Ravi\", department: \"IT\", active: false }, { name: \"Meera\", department: \"HR\", active: true }, { name: \"Karan\", department: \"IT\", active: true }], \"IT\")",
+              "expected": "[\"Asha\", \"Karan\"]"
+            },
+            {
+              "input": "activeEmployeeNames([{ name: \"Asha\", department: \"IT\", active: true }], \"Sales\")",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-05",
+          "topic": "this Keyword",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The cart.total() method should return the sum of the item prices after applying the discount (for the data below it should return 54), but calling it throws an error. Explain the bug and fix the code.",
+          "starter_code": "const cart = {\n  items: [10, 20, 30],\n  discount: 0.1,\n  total: () => {\n    const sum = this.items.reduce((s, p) => s + p, 0);\n    return sum * (1 - this.discount);\n  }\n};",
+          "reference_solution": "const cart = {\n  items: [10, 20, 30],\n  discount: 0.1,\n  total() {\n    const sum = this.items.reduce((s, p) => s + p, 0);\n    return sum * (1 - this.discount);\n  }\n};\n// Bug: arrow functions do not get their own \"this\"; they use the \"this\" of the surrounding scope, so this.items is undefined. A regular method (or function expression) receives the cart as \"this\" when called as cart.total().",
+          "evaluation_points": [
+            "Identifies that arrow functions do not bind their own this",
+            "Replaces the arrow with a method shorthand or function expression",
+            "Correct result 54 for the sample data"
+          ],
+          "test_cases": [
+            {
+              "input": "cart.total()",
+              "expected": "54"
+            },
+            {
+              "input": "cart.items.push(40); cart.total()",
+              "expected": "90"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-06",
+          "topic": "Destructuring & Spread",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function mergeSettings(defaults, overrides) that returns a NEW object containing all keys of defaults, with values replaced by those in overrides. Any key in overrides whose value is undefined must be ignored (the default is kept). Neither input object may be modified. Use the spread operator.",
+          "starter_code": "function mergeSettings(defaults, overrides) {\n  // your code\n}",
+          "reference_solution": "function mergeSettings(defaults, overrides) {\n  const cleaned = {};\n  for (const [key, value] of Object.entries(overrides)) {\n    if (value !== undefined) cleaned[key] = value;\n  }\n  return { ...defaults, ...cleaned };\n}",
+          "evaluation_points": [
+            "Returns a new object using spread",
+            "Override values win over defaults",
+            "Skips undefined override values",
+            "Does not mutate either input",
+            "Keeps falsy but defined values such as 0, false or \"\""
+          ],
+          "test_cases": [
+            {
+              "input": "mergeSettings({ theme: \"light\", pageSize: 20 }, { pageSize: 50 })",
+              "expected": "{ theme: \"light\", pageSize: 50 }"
+            },
+            {
+              "input": "mergeSettings({ theme: \"light\", pageSize: 20 }, { theme: undefined, pageSize: 0 })",
+              "expected": "{ theme: \"light\", pageSize: 0 }"
+            },
+            {
+              "input": "const d = { a: 1 }; mergeSettings(d, { a: 2, b: 3 }); d",
+              "expected": "{ a: 1 }"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-07",
+          "topic": "Promises & Async",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write an async function retry(task, attempts) where task is a function that returns a Promise. Call task(); if it resolves, return its value. If it rejects, try again, up to attempts calls in total. If every attempt fails, throw the error from the last attempt. No network access is involved; task is supplied by the caller.",
+          "starter_code": "async function retry(task, attempts) {\n  // your code\n}",
+          "reference_solution": "async function retry(task, attempts) {\n  let lastError;\n  for (let i = 0; i < attempts; i++) {\n    try {\n      return await task();\n    } catch (err) {\n      lastError = err;\n    }\n  }\n  throw lastError;\n}",
+          "evaluation_points": [
+            "Uses await inside try/catch",
+            "Stops as soon as one attempt succeeds",
+            "Makes at most attempts calls",
+            "Rethrows the last error when all attempts fail"
+          ],
+          "test_cases": [
+            {
+              "input": "let n = 0; retry(async () => { n++; if (n < 3) throw new Error(\"fail\"); return \"ok\"; }, 5)",
+              "expected": "\"ok\""
+            },
+            {
+              "input": "retry(async () => { throw new Error(\"down\"); }, 2).catch(e => e.message)",
+              "expected": "\"down\""
+            },
+            {
+              "input": "let calls = 0; retry(async () => { calls++; throw new Error(\"x\"); }, 3).catch(() => calls)",
+              "expected": "3"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-08",
+          "topic": "Objects",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "An object containing a nested array is copied with the spread operator and the copy is then modified. Predict the exact console output and explain shallow versus deep copying.",
+          "starter_code": "const a = { n: 1, tags: [\"x\"] };\nconst b = { ...a };\nb.n = 2;\nb.tags.push(\"y\");\nconsole.log(a.n, a.tags.length);\nconsole.log(a.tags === b.tags);",
+          "reference_solution": "Output:\n1 2\ntrue\n\nExplanation: The spread operator makes a shallow copy. The primitive property n is copied, so changing b.n does not affect a.n (still 1). The tags property holds a reference to the same array, so pushing \"y\" through b also changes the array seen through a (length 2), and a.tags === b.tags is true.",
+          "evaluation_points": [
+            "States the exact output: \"1 2\" then \"true\"",
+            "Explains spread creates a shallow copy",
+            "Explains primitives are copied but nested objects/arrays are shared by reference"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "1 2\ntrue"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-09",
+          "topic": "Classes",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a class BankAccount. The constructor takes an opening balance (default 0). Provide: deposit(amount) and withdraw(amount), which update the balance; a read-only getter balance. Both methods must throw an Error with message \"Invalid amount\" if amount is not a positive number. withdraw must throw an Error with message \"Insufficient funds\" if amount is greater than the current balance (the balance must stay unchanged).",
+          "starter_code": "class BankAccount {\n  // your code\n}",
+          "reference_solution": "class BankAccount {\n  #balance;\n  constructor(openingBalance = 0) {\n    this.#balance = openingBalance;\n  }\n  get balance() {\n    return this.#balance;\n  }\n  deposit(amount) {\n    if (typeof amount !== \"number\" || amount <= 0) throw new Error(\"Invalid amount\");\n    this.#balance += amount;\n  }\n  withdraw(amount) {\n    if (typeof amount !== \"number\" || amount <= 0) throw new Error(\"Invalid amount\");\n    if (amount > this.#balance) throw new Error(\"Insufficient funds\");\n    this.#balance -= amount;\n  }\n}",
+          "evaluation_points": [
+            "Constructor with default opening balance",
+            "Getter exposes balance without a setter",
+            "Validates amount is a positive number",
+            "Throws \"Insufficient funds\" and leaves balance unchanged",
+            "Uses the class syntax correctly"
+          ],
+          "test_cases": [
+            {
+              "input": "const a = new BankAccount(100); a.deposit(50); a.withdraw(30); a.balance",
+              "expected": "120"
+            },
+            {
+              "input": "const a = new BankAccount(10); let msg; try { a.withdraw(20); } catch (e) { msg = e.message; } [msg, a.balance]",
+              "expected": "[\"Insufficient funds\", 10]"
+            },
+            {
+              "input": "let msg; try { new BankAccount().deposit(-5); } catch (e) { msg = e.message; } msg",
+              "expected": "\"Invalid amount\""
+            },
+            {
+              "input": "new BankAccount().balance",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S2-10",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function deepEqual(a, b) that returns true if a and b are deeply equal: primitives are compared with ===; arrays are equal if they have the same length and deeply equal elements in order; plain objects are equal if they have the same set of keys and deeply equal values for each key. An array is never equal to a non-array object. null must be handled correctly.",
+          "starter_code": "function deepEqual(a, b) {\n  // your code\n}",
+          "reference_solution": "function deepEqual(a, b) {\n  if (a === b) return true;\n  if (typeof a !== \"object\" || typeof b !== \"object\" || a === null || b === null) return false;\n  if (Array.isArray(a) !== Array.isArray(b)) return false;\n  const keysA = Object.keys(a);\n  const keysB = Object.keys(b);\n  if (keysA.length !== keysB.length) return false;\n  return keysA.every(k => Object.prototype.hasOwnProperty.call(b, k) && deepEqual(a[k], b[k]));\n}",
+          "evaluation_points": [
+            "Handles primitives and null without errors",
+            "Recurses into nested arrays and objects",
+            "Compares key sets (same count, same keys)",
+            "Distinguishes arrays from plain objects"
+          ],
+          "test_cases": [
+            {
+              "input": "deepEqual({ a: [1, { b: 2 }] }, { a: [1, { b: 2 }] })",
+              "expected": "true"
+            },
+            {
+              "input": "deepEqual({ a: 1 }, { a: 1, b: undefined })",
+              "expected": "false"
+            },
+            {
+              "input": "deepEqual([1, 2], { 0: 1, 1: 2 })",
+              "expected": "false"
+            },
+            {
+              "input": "deepEqual(null, {})",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-JAVASCRIPT-S3-01",
+          "topic": "Closures",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Two loops schedule setTimeout callbacks, one using a var counter and one using a let counter. Write the exact console output and explain how each loop variable is captured by the callbacks.",
+          "starter_code": "for (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(\"var\", i), 0);\n}\nfor (let j = 0; j < 3; j++) {\n  setTimeout(() => console.log(\"let\", j), 0);\n}",
+          "reference_solution": "Output:\nvar 3\nvar 3\nvar 3\nlet 0\nlet 1\nlet 2\n\nExplanation: The callbacks run after both loops have finished. With var there is a single function-scoped i shared by all callbacks, and by then it equals 3. With let each loop iteration gets a new binding of j, so each callback closes over its own value 0, 1 and 2.",
+          "evaluation_points": [
+            "States the exact output in order",
+            "Explains callbacks run after the loops complete",
+            "Explains var creates one shared binding",
+            "Explains let creates a new binding per iteration"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "var 3\nvar 3\nvar 3\nlet 0\nlet 1\nlet 2"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-02",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function isPalindrome(text) that returns true if text reads the same forwards and backwards, ignoring letter case and any character that is not a letter or digit. Example: isPalindrome(\"Never odd or even\") returns true.",
+          "starter_code": "function isPalindrome(text) {\n  // your code\n}",
+          "reference_solution": "function isPalindrome(text) {\n  const cleaned = text.toLowerCase().replace(/[^a-z0-9]/g, \"\");\n  return cleaned === cleaned.split(\"\").reverse().join(\"\");\n}",
+          "evaluation_points": [
+            "Normalises case",
+            "Removes non-alphanumeric characters",
+            "Compares with the reversed string (or two-pointer check)",
+            "Returns a boolean"
+          ],
+          "test_cases": [
+            {
+              "input": "isPalindrome(\"Never odd or even\")",
+              "expected": "true"
+            },
+            {
+              "input": "isPalindrome(\"A man, a plan, a canal: Panama\")",
+              "expected": "true"
+            },
+            {
+              "input": "isPalindrome(\"invoice\")",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-03",
+          "topic": "Types & Coercion",
+          "task_type": "fix_bug",
+          "difficulty": "Easy",
+          "question": "countZeros(values) should count how many elements are exactly the number 0. The array may contain mixed types. For [0, \"0\", \"\", false, 0, null] it should return 2 but returns 5. Fix the bug and explain it.",
+          "starter_code": "function countZeros(values) {\n  let count = 0;\n  for (const v of values) {\n    if (v == 0) count++;\n  }\n  return count;\n}",
+          "reference_solution": "function countZeros(values) {\n  let count = 0;\n  for (const v of values) {\n    if (v === 0) count++;\n  }\n  return count;\n}\n// Bug: == coerces types, so \"0\", \"\" and false are all converted to 0 and counted. === compares without coercion.",
+          "evaluation_points": [
+            "Replaces == with ===",
+            "Explains loose equality coerces \"0\", \"\" and false to 0",
+            "Returns 2 for the sample input"
+          ],
+          "test_cases": [
+            {
+              "input": "countZeros([0, \"0\", \"\", false, 0, null])",
+              "expected": "2"
+            },
+            {
+              "input": "countZeros([1, 2, 3])",
+              "expected": "0"
+            },
+            {
+              "input": "countZeros([0, -0])",
+              "expected": "2"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-04",
+          "topic": "Array Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function findFirstOverdue(invoices, today) where invoices is an array of { id, dueDate, paid } and dates are strings in \"YYYY-MM-DD\" format (today uses the same format). Return the first invoice (in array order) that is not paid and whose dueDate is before today, or null if there is none. Use Array.prototype.find.",
+          "starter_code": "function findFirstOverdue(invoices, today) {\n  // your code\n}",
+          "reference_solution": "function findFirstOverdue(invoices, today) {\n  return invoices.find(inv => !inv.paid && inv.dueDate < today) ?? null;\n}",
+          "evaluation_points": [
+            "Uses find to return the first match",
+            "Checks both unpaid and dueDate before today (strictly)",
+            "Returns null instead of undefined when nothing matches",
+            "Date strings in YYYY-MM-DD can be compared directly (or converted to Date)"
+          ],
+          "test_cases": [
+            {
+              "input": "findFirstOverdue([{ id: 1, dueDate: \"2024-01-10\", paid: true }, { id: 2, dueDate: \"2024-02-01\", paid: false }, { id: 3, dueDate: \"2024-01-05\", paid: false }], \"2024-03-01\")",
+              "expected": "{ id: 2, dueDate: \"2024-02-01\", paid: false }"
+            },
+            {
+              "input": "findFirstOverdue([{ id: 1, dueDate: \"2024-03-01\", paid: false }], \"2024-03-01\")",
+              "expected": "null"
+            },
+            {
+              "input": "findFirstOverdue([], \"2024-03-01\")",
+              "expected": "null"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-05",
+          "topic": "Array Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function totalByCategory(orders) where orders is an array of { category, amount }. Return an object mapping each category to the sum of its amounts. Use Array.prototype.reduce. Example: [{ category: \"books\", amount: 10 }, { category: \"toys\", amount: 5 }, { category: \"books\", amount: 7 }] returns { books: 17, toys: 5 }.",
+          "starter_code": "function totalByCategory(orders) {\n  // your code\n}",
+          "reference_solution": "function totalByCategory(orders) {\n  return orders.reduce((totals, { category, amount }) => {\n    totals[category] = (totals[category] || 0) + amount;\n    return totals;\n  }, {});\n}",
+          "evaluation_points": [
+            "Uses reduce with an initial empty object",
+            "Initialises each category before adding",
+            "Returns the accumulator from the callback",
+            "Returns {} for an empty array"
+          ],
+          "test_cases": [
+            {
+              "input": "totalByCategory([{ category: \"books\", amount: 10 }, { category: \"toys\", amount: 5 }, { category: \"books\", amount: 7 }])",
+              "expected": "{ books: 17, toys: 5 }"
+            },
+            {
+              "input": "totalByCategory([])",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-06",
+          "topic": "JSON & Error Handling",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function parseConfig(jsonText) that parses a JSON string and returns the resulting object. If the text is not valid JSON, throw an Error with message \"Invalid config\". If the parsed value does not have a numeric \"port\" property, throw an Error with message \"Missing port\". If \"host\" is missing, default it to \"localhost\" in the returned object.",
+          "starter_code": "function parseConfig(jsonText) {\n  // your code\n}",
+          "reference_solution": "function parseConfig(jsonText) {\n  let config;\n  try {\n    config = JSON.parse(jsonText);\n  } catch (e) {\n    throw new Error(\"Invalid config\");\n  }\n  if (!config || typeof config.port !== \"number\") {\n    throw new Error(\"Missing port\");\n  }\n  return { host: \"localhost\", ...config };\n}",
+          "evaluation_points": [
+            "Wraps JSON.parse in try/catch",
+            "Throws \"Invalid config\" on a parse error",
+            "Validates port is a number",
+            "Defaults host to \"localhost\" without overwriting a given host"
+          ],
+          "test_cases": [
+            {
+              "input": "parseConfig('{\"port\": 8080}')",
+              "expected": "{ host: \"localhost\", port: 8080 }"
+            },
+            {
+              "input": "parseConfig('{\"host\": \"db\", \"port\": 5432}')",
+              "expected": "{ host: \"db\", port: 5432 }"
+            },
+            {
+              "input": "let m; try { parseConfig(\"{port: 1}\"); } catch (e) { m = e.message; } m",
+              "expected": "\"Invalid config\""
+            },
+            {
+              "input": "let m; try { parseConfig('{\"port\": \"80\"}'); } catch (e) { m = e.message; } m",
+              "expected": "\"Missing port\""
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-07",
+          "topic": "Functions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function compose(...fns) that takes any number of single-argument functions and returns a new function that applies them from right to left. compose(f, g, h)(x) must equal f(g(h(x))). compose() with no functions returns a function that returns its argument unchanged. Use arrow functions.",
+          "starter_code": "const compose = (...fns) => {\n  // your code\n};",
+          "reference_solution": "const compose = (...fns) => (x) => fns.reduceRight((value, fn) => fn(value), x);",
+          "evaluation_points": [
+            "Uses rest parameters to accept any number of functions",
+            "Returns a function (higher-order)",
+            "Applies functions right to left",
+            "Works with zero functions (identity)"
+          ],
+          "test_cases": [
+            {
+              "input": "const add1 = x => x + 1; const double = x => x * 2; compose(add1, double)(5)",
+              "expected": "11"
+            },
+            {
+              "input": "const add1 = x => x + 1; const double = x => x * 2; compose(double, add1)(5)",
+              "expected": "12"
+            },
+            {
+              "input": "compose()(7)",
+              "expected": "7"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-08",
+          "topic": "this Keyword",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "The same greet method is invoked three ways: on its original object, on a second object that borrows it, and through .call(). Give the exact output and explain how this is determined in each call.",
+          "starter_code": "const user = {\n  name: \"Asha\",\n  greet() {\n    return \"Hi \" + this.name;\n  }\n};\nconst other = { name: \"Ravi\", greet: user.greet };\nconsole.log(user.greet());\nconsole.log(other.greet());\nconsole.log(user.greet.call({ name: \"Meera\" }));",
+          "reference_solution": "Output:\nHi Asha\nHi Ravi\nHi Meera\n\nExplanation: For a regular function, this is decided by how the function is called, not where it was defined. user.greet() is called on user, so this is user. other.greet() calls the same function on other, so this is other. .call() sets this explicitly to the object passed in.",
+          "evaluation_points": [
+            "States the exact output",
+            "Explains this is determined by the call site for regular functions",
+            "Explains .call() sets this explicitly"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "Hi Asha\nHi Ravi\nHi Meera"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-09",
+          "topic": "Classes",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a class Employee with a constructor(name, salary) and a method describe() returning \"<name> earns <salary>\". Then write a class Manager that extends Employee, whose constructor(name, salary) also creates an empty list of reports, a method addReport(employee) that adds an Employee to that list, and overrides describe() to return the Employee description followed by \" and manages <n> people\" (call the parent method using super).",
+          "starter_code": "class Employee {\n  // your code\n}\n\nclass Manager extends Employee {\n  // your code\n}",
+          "reference_solution": "class Employee {\n  constructor(name, salary) {\n    this.name = name;\n    this.salary = salary;\n  }\n  describe() {\n    return this.name + \" earns \" + this.salary;\n  }\n}\n\nclass Manager extends Employee {\n  constructor(name, salary) {\n    super(name, salary);\n    this.reports = [];\n  }\n  addReport(employee) {\n    this.reports.push(employee);\n  }\n  describe() {\n    return super.describe() + \" and manages \" + this.reports.length + \" people\";\n  }\n}",
+          "evaluation_points": [
+            "Uses extends and calls super(...) before using this",
+            "Each Manager has its own reports array",
+            "Overrides describe() and reuses super.describe()",
+            "Correct string format"
+          ],
+          "test_cases": [
+            {
+              "input": "new Employee(\"Asha\", 5000).describe()",
+              "expected": "\"Asha earns 5000\""
+            },
+            {
+              "input": "const m = new Manager(\"Ravi\", 9000); m.addReport(new Employee(\"Asha\", 5000)); m.addReport(new Employee(\"Karan\", 4000)); m.describe()",
+              "expected": "\"Ravi earns 9000 and manages 2 people\""
+            },
+            {
+              "input": "const m = new Manager(\"Ravi\", 9000); [m instanceof Employee, m.reports.length]",
+              "expected": "[true, 0]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S3-10",
+          "topic": "Sorting/Searching",
+          "task_type": "fix_bug",
+          "difficulty": "Hard",
+          "question": "binarySearch(arr, target) should return the index of target in a sorted array of numbers, or -1 if it is not present. For some inputs (e.g. searching for 4 in [1, 3, 5, 7, 9]) it never finishes. Find the bug, explain why it loops forever, and fix it.",
+          "starter_code": "function binarySearch(arr, target) {\n  let lo = 0;\n  let hi = arr.length;\n  while (lo < hi) {\n    const mid = Math.floor((lo + hi) / 2);\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) {\n      lo = mid;\n    } else {\n      hi = mid;\n    }\n  }\n  return -1;\n}",
+          "reference_solution": "function binarySearch(arr, target) {\n  let lo = 0;\n  let hi = arr.length;\n  while (lo < hi) {\n    const mid = Math.floor((lo + hi) / 2);\n    if (arr[mid] === target) return mid;\n    if (arr[mid] < target) {\n      lo = mid + 1;\n    } else {\n      hi = mid;\n    }\n  }\n  return -1;\n}\n// Bug: lo = mid does not shrink the range when hi = lo + 1 (mid equals lo), so the loop repeats forever. Since arr[mid] is already known to be too small, use lo = mid + 1.",
+          "evaluation_points": [
+            "Identifies lo = mid as the cause",
+            "Explains the search range stops shrinking when mid equals lo",
+            "Fixes with lo = mid + 1 while keeping the half-open [lo, hi) range consistent",
+            "Returns -1 for missing targets"
+          ],
+          "test_cases": [
+            {
+              "input": "binarySearch([1, 3, 5, 7, 9], 7)",
+              "expected": "3"
+            },
+            {
+              "input": "binarySearch([1, 3, 5, 7, 9], 4)",
+              "expected": "-1"
+            },
+            {
+              "input": "binarySearch([1, 3, 5, 7, 9], 1)",
+              "expected": "0"
+            },
+            {
+              "input": "binarySearch([], 5)",
+              "expected": "-1"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-JAVASCRIPT-S4-01",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function fizzBuzz(n) that returns an array of strings for the numbers 1 to n: \"FizzBuzz\" for multiples of both 3 and 5, \"Fizz\" for multiples of 3, \"Buzz\" for multiples of 5, and the number as a string otherwise. Example: fizzBuzz(5) returns [\"1\", \"2\", \"Fizz\", \"4\", \"Buzz\"].",
+          "starter_code": "function fizzBuzz(n) {\n  // your code\n}",
+          "reference_solution": "function fizzBuzz(n) {\n  const result = [];\n  for (let i = 1; i <= n; i++) {\n    if (i % 15 === 0) result.push(\"FizzBuzz\");\n    else if (i % 3 === 0) result.push(\"Fizz\");\n    else if (i % 5 === 0) result.push(\"Buzz\");\n    else result.push(String(i));\n  }\n  return result;\n}",
+          "evaluation_points": [
+            "Loops from 1 to n inclusive",
+            "Checks the combined case (15) first",
+            "Returns numbers as strings",
+            "Returns [] for n = 0"
+          ],
+          "test_cases": [
+            {
+              "input": "fizzBuzz(5)",
+              "expected": "[\"1\", \"2\", \"Fizz\", \"4\", \"Buzz\"]"
+            },
+            {
+              "input": "fizzBuzz(15)[14]",
+              "expected": "\"FizzBuzz\""
+            },
+            {
+              "input": "fizzBuzz(0)",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-02",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function countVowels(text) that returns how many vowels (a, e, i, o, u, upper or lower case) the string contains. Example: countVowels(\"Invoice Total\") returns 6.",
+          "starter_code": "function countVowels(text) {\n  // your code\n}",
+          "reference_solution": "function countVowels(text) {\n  let count = 0;\n  for (const ch of text.toLowerCase()) {\n    if (\"aeiou\".includes(ch)) count++;\n  }\n  return count;\n}",
+          "evaluation_points": [
+            "Handles both upper and lower case",
+            "Counts only a, e, i, o, u",
+            "Returns 0 for an empty string or no vowels"
+          ],
+          "test_cases": [
+            {
+              "input": "countVowels(\"Invoice Total\")",
+              "expected": "6"
+            },
+            {
+              "input": "countVowels(\"rhythm\")",
+              "expected": "0"
+            },
+            {
+              "input": "countVowels(\"AEIOU\")",
+              "expected": "5"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-03",
+          "topic": "Types & Coercion",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Using typeof and Array.isArray on null, an array, undefined and NaN: write the exact console output and explain any surprising results.",
+          "starter_code": "console.log(typeof null);\nconsole.log(typeof []);\nconsole.log(Array.isArray([]));\nconsole.log(typeof undefined);\nconsole.log(typeof NaN);",
+          "reference_solution": "Output:\nobject\nobject\ntrue\nundefined\nnumber\n\nExplanation: typeof null is \"object\" (a long-standing quirk of the language). Arrays are objects, so typeof [] is \"object\"; Array.isArray is the correct way to test for an array. typeof undefined is \"undefined\". NaN (\"not a number\") is still of type number.",
+          "evaluation_points": [
+            "States the exact output",
+            "Notes typeof null is \"object\" as a known quirk",
+            "Explains typeof cannot distinguish arrays; use Array.isArray",
+            "Notes NaN is of type number"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "object\nobject\ntrue\nundefined\nnumber"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-04",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function chunk(items, size) that splits an array into consecutive groups of length size and returns an array of these groups. The last group may be shorter. The original array must not be modified. Assume size is a positive integer. Example: chunk([1, 2, 3, 4, 5], 2) returns [[1, 2], [3, 4], [5]].",
+          "starter_code": "function chunk(items, size) {\n  // your code\n}",
+          "reference_solution": "function chunk(items, size) {\n  const result = [];\n  for (let i = 0; i < items.length; i += size) {\n    result.push(items.slice(i, i + size));\n  }\n  return result;\n}",
+          "evaluation_points": [
+            "Steps through the array by size",
+            "Uses slice (non-mutating) or equivalent",
+            "Handles a shorter final chunk",
+            "Returns [] for an empty array"
+          ],
+          "test_cases": [
+            {
+              "input": "chunk([1, 2, 3, 4, 5], 2)",
+              "expected": "[[1, 2], [3, 4], [5]]"
+            },
+            {
+              "input": "chunk([1, 2, 3], 5)",
+              "expected": "[[1, 2, 3]]"
+            },
+            {
+              "input": "chunk([], 3)",
+              "expected": "[]"
+            },
+            {
+              "input": "const a = [1, 2, 3]; chunk(a, 1); a",
+              "expected": "[1, 2, 3]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-05",
+          "topic": "Promises & Async",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "getTotal(fetchPrice, ids) should return (a Promise of) the sum of prices, where fetchPrice(id) returns a Promise that resolves to a number. It always resolves to 0. Explain the bug and fix it so the prices are awaited before returning.",
+          "starter_code": "async function getTotal(fetchPrice, ids) {\n  let total = 0;\n  ids.forEach(async (id) => {\n    total += await fetchPrice(id);\n  });\n  return total;\n}",
+          "reference_solution": "async function getTotal(fetchPrice, ids) {\n  let total = 0;\n  for (const id of ids) {\n    total += await fetchPrice(id);\n  }\n  return total;\n}\n// Bug: forEach does not wait for async callbacks; it starts them and returns immediately, so total is returned before any price has been added. Use for...of with await (or Promise.all and then sum).",
+          "evaluation_points": [
+            "Explains forEach ignores the promises returned by async callbacks",
+            "Uses for...of with await, or Promise.all",
+            "Returns the correct total"
+          ],
+          "test_cases": [
+            {
+              "input": "getTotal(id => Promise.resolve(id * 10), [1, 2, 3])",
+              "expected": "60"
+            },
+            {
+              "input": "getTotal(id => Promise.resolve(5), [])",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-06",
+          "topic": "Destructuring & Spread",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function summarizeOrder(order) where order has the shape { id, customer: { name }, items: [{ qty, price }] }. Use destructuring to read the values and return the string \"Order #<id> for <name>: <count> items, total <total>\", where count is the sum of all qty and total is the sum of qty * price formatted with exactly 2 decimals.",
+          "starter_code": "function summarizeOrder(order) {\n  // your code\n}",
+          "reference_solution": "function summarizeOrder({ id, customer: { name }, items }) {\n  let count = 0;\n  let total = 0;\n  for (const { qty, price } of items) {\n    count += qty;\n    total += qty * price;\n  }\n  return \"Order #\" + id + \" for \" + name + \": \" + count + \" items, total \" + total.toFixed(2);\n}",
+          "evaluation_points": [
+            "Uses nested destructuring for customer name",
+            "Destructures qty and price from items",
+            "Sums quantities and line totals correctly",
+            "Formats the total with toFixed(2)"
+          ],
+          "test_cases": [
+            {
+              "input": "summarizeOrder({ id: 7, customer: { name: \"Asha\" }, items: [{ qty: 2, price: 3.5 }, { qty: 1, price: 10 }] })",
+              "expected": "\"Order #7 for Asha: 3 items, total 17.00\""
+            },
+            {
+              "input": "summarizeOrder({ id: 8, customer: { name: \"Ravi\" }, items: [] })",
+              "expected": "\"Order #8 for Ravi: 0 items, total 0.00\""
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-07",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function passwordProblems(password) that returns an array of messages for every rule the password breaks, in this order: \"Too short\" (fewer than 8 characters), \"Needs a digit\" (no 0-9), \"Needs an uppercase letter\" (no A-Z), \"Needs a lowercase letter\" (no a-z). Return [] if the password is valid.",
+          "starter_code": "function passwordProblems(password) {\n  // your code\n}",
+          "reference_solution": "function passwordProblems(password) {\n  const problems = [];\n  if (password.length < 8) problems.push(\"Too short\");\n  if (!/[0-9]/.test(password)) problems.push(\"Needs a digit\");\n  if (!/[A-Z]/.test(password)) problems.push(\"Needs an uppercase letter\");\n  if (!/[a-z]/.test(password)) problems.push(\"Needs a lowercase letter\");\n  return problems;\n}",
+          "evaluation_points": [
+            "Checks every rule independently (not else-if)",
+            "Messages in the required order",
+            "Correct length boundary (8 is valid)",
+            "Returns [] for a valid password"
+          ],
+          "test_cases": [
+            {
+              "input": "passwordProblems(\"Secret123\")",
+              "expected": "[]"
+            },
+            {
+              "input": "passwordProblems(\"abc\")",
+              "expected": "[\"Too short\", \"Needs a digit\", \"Needs an uppercase letter\"]"
+            },
+            {
+              "input": "passwordProblems(\"ABCDEFGH\")",
+              "expected": "[\"Needs a digit\", \"Needs a lowercase letter\"]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-08",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a custom error class ValidationError that extends Error, takes (field, message) in its constructor, stores field as a property, and sets name to \"ValidationError\". Then write validateProduct(product) that throws a ValidationError with field \"name\" and message \"Name is required\" if name is missing or an empty string, or with field \"price\" and message \"Price must be positive\" if price is not a number greater than 0. Otherwise it returns true.",
+          "starter_code": "class ValidationError extends Error {\n  // your code\n}\n\nfunction validateProduct(product) {\n  // your code\n}",
+          "reference_solution": "class ValidationError extends Error {\n  constructor(field, message) {\n    super(message);\n    this.name = \"ValidationError\";\n    this.field = field;\n  }\n}\n\nfunction validateProduct(product) {\n  if (!product.name) {\n    throw new ValidationError(\"name\", \"Name is required\");\n  }\n  if (typeof product.price !== \"number\" || product.price <= 0) {\n    throw new ValidationError(\"price\", \"Price must be positive\");\n  }\n  return true;\n}",
+          "evaluation_points": [
+            "Extends Error and calls super(message)",
+            "Sets name and field properties",
+            "Throws the right error for each rule",
+            "Returns true for a valid product"
+          ],
+          "test_cases": [
+            {
+              "input": "validateProduct({ name: \"Pen\", price: 2 })",
+              "expected": "true"
+            },
+            {
+              "input": "let r; try { validateProduct({ name: \"Pen\", price: -1 }); } catch (e) { r = [e instanceof ValidationError, e instanceof Error, e.field, e.message]; } r",
+              "expected": "[true, true, \"price\", \"Price must be positive\"]"
+            },
+            {
+              "input": "let r; try { validateProduct({ name: \"\", price: 5 }); } catch (e) { r = [e.name, e.field]; } r",
+              "expected": "[\"ValidationError\", \"name\"]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive function subsets(items) that returns all subsets of an array of distinct values, as an array of arrays. Each subset must keep the elements in their original relative order, and the subsets must be returned in this order: for [1, 2, 3] the result is [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]] (subsets without the first element, followed by the same subsets with the first element prepended).",
+          "starter_code": "function subsets(items) {\n  // your code\n}",
+          "reference_solution": "function subsets(items) {\n  if (items.length === 0) return [[]];\n  const [first, ...rest] = items;\n  const without = subsets(rest);\n  const withFirst = without.map(s => [first, ...s]);\n  return [...without, ...withFirst];\n}",
+          "evaluation_points": [
+            "Correct base case returning [[]]",
+            "Recursive step on the rest of the array",
+            "Builds subsets with and without the first element",
+            "Result has 2^n subsets in the required order"
+          ],
+          "test_cases": [
+            {
+              "input": "subsets([1, 2, 3])",
+              "expected": "[[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]"
+            },
+            {
+              "input": "subsets([])",
+              "expected": "[[]]"
+            },
+            {
+              "input": "subsets([\"a\", \"b\"])",
+              "expected": "[[], [\"b\"], [\"a\"], [\"a\", \"b\"]]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S4-10",
+          "topic": "Recursion",
+          "task_type": "explain_output",
+          "difficulty": "Hard",
+          "question": "Trace the recursive build(n) function below, which combines results with spread syntax. State exactly what is logged for build(2) and build(3) and show the calls that produce it.",
+          "starter_code": "function build(n) {\n  if (n <= 1) return [n];\n  return [...build(n - 1), n, ...build(n - 2)];\n}\nconsole.log(build(2).join(\" \"));\nconsole.log(build(3).join(\" \"));",
+          "reference_solution": "Output:\n1 2 0\n1 2 0 3 1\n\nExplanation: Base cases: build(1) = [1] and build(0) = [0]. build(2) = [...build(1), 2, ...build(0)] = [1, 2, 0]. build(3) = [...build(2), 3, ...build(1)] = [1, 2, 0, 3, 1].",
+          "evaluation_points": [
+            "States the exact output for both lines",
+            "Identifies the base cases build(1) and build(0)",
+            "Shows the trace combining results with spread"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "1 2 0\n1 2 0 3 1"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-JAVASCRIPT-S5-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a function isLeapYear(year) that returns true if year is a leap year: divisible by 4, except years divisible by 100, unless they are also divisible by 400. Example: 2024 and 2000 are leap years; 1900 and 2023 are not.",
+          "starter_code": "function isLeapYear(year) {\n  // your code\n}",
+          "reference_solution": "function isLeapYear(year) {\n  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;\n}",
+          "evaluation_points": [
+            "Handles the divisible-by-4 rule",
+            "Excludes centuries not divisible by 400",
+            "Includes years divisible by 400",
+            "Returns a boolean"
+          ],
+          "test_cases": [
+            {
+              "input": "isLeapYear(2024)",
+              "expected": "true"
+            },
+            {
+              "input": "isLeapYear(1900)",
+              "expected": "false"
+            },
+            {
+              "input": "isLeapYear(2000)",
+              "expected": "true"
+            },
+            {
+              "input": "isLeapYear(2023)",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-02",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Easy",
+          "question": "average(nums) should return the average of an array of numbers, and 0 for an empty array. It currently returns NaN for every input. Find and fix the problem(s).",
+          "starter_code": "function average(nums) {\n  let sum;\n  for (const n of nums) {\n    sum += n;\n  }\n  return sum / nums.length;\n}",
+          "reference_solution": "function average(nums) {\n  if (nums.length === 0) return 0;\n  let sum = 0;\n  for (const n of nums) {\n    sum += n;\n  }\n  return sum / nums.length;\n}\n// Bug: sum was declared without a value, so it is undefined and undefined + number is NaN. Initialise it to 0, and handle the empty array to avoid 0 / 0 (NaN).",
+          "evaluation_points": [
+            "Initialises sum to 0",
+            "Explains undefined + number gives NaN",
+            "Returns 0 for an empty array"
+          ],
+          "test_cases": [
+            {
+              "input": "average([2, 4, 6])",
+              "expected": "4"
+            },
+            {
+              "input": "average([5])",
+              "expected": "5"
+            },
+            {
+              "input": "average([])",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-03",
+          "topic": "Functions",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "One function reassigns a number parameter and another modifies a property of an object parameter. Predict the single line of output and explain why only one change is visible to the caller.",
+          "starter_code": "let count = 5;\nfunction change(n) {\n  n = 10;\n}\nfunction changeObj(o) {\n  o.value = 10;\n}\nconst box = { value: 5 };\nchange(count);\nchangeObj(box);\nconsole.log(count, box.value);",
+          "reference_solution": "Output:\n5 10\n\nExplanation: Arguments are passed by value. change receives a copy of the number 5; reassigning its parameter n does not affect count. changeObj receives a copy of the reference to the same object, so modifying o.value changes the object that box also refers to.",
+          "evaluation_points": [
+            "States the exact output \"5 10\"",
+            "Explains primitives are copied into parameters",
+            "Explains objects are accessed through a shared reference, so mutation is visible to the caller"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "5 10"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-04",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function rotateRight(items, k) that returns a NEW array with the elements rotated k positions to the right. k is a non-negative integer and may be larger than the array length. The input array must not be modified. Example: rotateRight([1, 2, 3, 4, 5], 2) returns [4, 5, 1, 2, 3].",
+          "starter_code": "function rotateRight(items, k) {\n  // your code\n}",
+          "reference_solution": "function rotateRight(items, k) {\n  if (items.length === 0) return [];\n  const shift = k % items.length;\n  if (shift === 0) return [...items];\n  return [...items.slice(-shift), ...items.slice(0, -shift)];\n}",
+          "evaluation_points": [
+            "Uses k % length to handle large k",
+            "Returns a new array without mutating input",
+            "Handles k = 0 and empty arrays",
+            "Correct element order after rotation"
+          ],
+          "test_cases": [
+            {
+              "input": "rotateRight([1, 2, 3, 4, 5], 2)",
+              "expected": "[4, 5, 1, 2, 3]"
+            },
+            {
+              "input": "rotateRight([1, 2, 3], 7)",
+              "expected": "[3, 1, 2]"
+            },
+            {
+              "input": "rotateRight([1, 2, 3], 0)",
+              "expected": "[1, 2, 3]"
+            },
+            {
+              "input": "rotateRight([], 4)",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-05",
+          "topic": "Objects",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function changedFields(before, after) that compares two flat objects and returns an array of { field, from, to } for every key whose value differs (using ===). Include keys present in only one object (the missing side is undefined). Return the results sorted by field name.",
+          "starter_code": "function changedFields(before, after) {\n  // your code\n}",
+          "reference_solution": "function changedFields(before, after) {\n  const keys = new Set([...Object.keys(before), ...Object.keys(after)]);\n  const changes = [];\n  for (const field of keys) {\n    if (before[field] !== after[field]) {\n      changes.push({ field, from: before[field], to: after[field] });\n    }\n  }\n  return changes.sort((a, b) => a.field.localeCompare(b.field));\n}",
+          "evaluation_points": [
+            "Considers keys from both objects (e.g. with a Set)",
+            "Compares values with ===",
+            "Reports added and removed keys with undefined on the missing side",
+            "Sorts the result by field name"
+          ],
+          "test_cases": [
+            {
+              "input": "changedFields({ status: \"open\", qty: 2, note: \"x\" }, { status: \"closed\", qty: 2, owner: \"Ravi\" })",
+              "expected": "[{ field: \"note\", from: \"x\", to: undefined }, { field: \"owner\", from: undefined, to: \"Ravi\" }, { field: \"status\", from: \"open\", to: \"closed\" }]"
+            },
+            {
+              "input": "changedFields({ a: 1 }, { a: 1 })",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-06",
+          "topic": "Sorting/Searching",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Arrays of numbers and words are sorted with and without a comparator. Give the exact three lines of output and explain why the default sort produces an unexpected order.",
+          "starter_code": "const nums = [10, 1, 5, 100];\nconsole.log(nums.sort().join(\",\"));\nconsole.log(nums.sort((a, b) => a - b).join(\",\"));\nconst words = [\"banana\", \"apple\", \"Cherry\"];\nconsole.log(words.sort().join(\",\"));",
+          "reference_solution": "Output:\n1,10,100,5\n1,5,10,100\nCherry,apple,banana\n\nExplanation: Without a comparator, sort converts elements to strings and compares them by UTF-16 code units, so \"10\" and \"100\" come before \"5\". Passing (a, b) => a - b sorts numerically. For strings, upper-case letters have lower code units than lower-case ones, so \"Cherry\" comes before \"apple\". (Note that sort also changes the array in place.)",
+          "evaluation_points": [
+            "States the exact output for all three lines",
+            "Explains default sort compares values as strings",
+            "Explains the numeric comparator a - b",
+            "Explains upper-case letters sort before lower-case by default"
+          ],
+          "test_cases": [
+            {
+              "input": "(run the program)",
+              "expected": "1,10,100,5\n1,5,10,100\nCherry,apple,banana"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-07",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a function compress(text) that performs run-length encoding: each run of the same consecutive character is replaced by the character followed by the run length. Example: compress(\"aaabccdddd\") returns \"a3b1c2d4\". An empty string returns \"\".",
+          "starter_code": "function compress(text) {\n  // your code\n}",
+          "reference_solution": "function compress(text) {\n  let result = \"\";\n  let i = 0;\n  while (i < text.length) {\n    let j = i;\n    while (j < text.length && text[j] === text[i]) j++;\n    result += text[i] + (j - i);\n    i = j;\n  }\n  return result;\n}",
+          "evaluation_points": [
+            "Groups consecutive identical characters",
+            "Appends character plus run length",
+            "Handles the final run correctly",
+            "Returns \"\" for an empty string"
+          ],
+          "test_cases": [
+            {
+              "input": "compress(\"aaabccdddd\")",
+              "expected": "\"a3b1c2d4\""
+            },
+            {
+              "input": "compress(\"abc\")",
+              "expected": "\"a1b1c1\""
+            },
+            {
+              "input": "compress(\"\")",
+              "expected": "\"\""
+            },
+            {
+              "input": "compress(\"zzzzzzzzzzzz\")",
+              "expected": "\"z12\""
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-08",
+          "topic": "Classes",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a class Stack with methods push(item), pop() which removes and returns the top item, peek() which returns the top item without removing it, isEmpty() and a getter size. pop() and peek() must throw an Error with message \"Stack is empty\" when there are no items.",
+          "starter_code": "class Stack {\n  // your code\n}",
+          "reference_solution": "class Stack {\n  constructor() {\n    this.items = [];\n  }\n  push(item) {\n    this.items.push(item);\n  }\n  pop() {\n    if (this.isEmpty()) throw new Error(\"Stack is empty\");\n    return this.items.pop();\n  }\n  peek() {\n    if (this.isEmpty()) throw new Error(\"Stack is empty\");\n    return this.items[this.items.length - 1];\n  }\n  isEmpty() {\n    return this.items.length === 0;\n  }\n  get size() {\n    return this.items.length;\n  }\n}",
+          "evaluation_points": [
+            "LIFO order for push/pop",
+            "peek does not remove the item",
+            "Throws \"Stack is empty\" on pop/peek of an empty stack",
+            "size is a getter reflecting the number of items"
+          ],
+          "test_cases": [
+            {
+              "input": "const s = new Stack(); s.push(1); s.push(2); s.push(3); [s.pop(), s.peek(), s.size]",
+              "expected": "[3, 2, 2]"
+            },
+            {
+              "input": "const s = new Stack(); let m; try { s.pop(); } catch (e) { m = e.message; } [m, s.isEmpty()]",
+              "expected": "[\"Stack is empty\", true]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-09",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a function mergeIntervals(intervals) where intervals is an array of [start, end] pairs (start <= end) in any order. Merge all overlapping or touching intervals (e.g. [1, 3] and [3, 5] become [1, 5]) and return the merged list sorted by start. Do not modify the input array.",
+          "starter_code": "function mergeIntervals(intervals) {\n  // your code\n}",
+          "reference_solution": "function mergeIntervals(intervals) {\n  const sorted = [...intervals].sort((a, b) => a[0] - b[0]);\n  const merged = [];\n  for (const [start, end] of sorted) {\n    const last = merged[merged.length - 1];\n    if (last && start <= last[1]) {\n      last[1] = Math.max(last[1], end);\n    } else {\n      merged.push([start, end]);\n    }\n  }\n  return merged;\n}",
+          "evaluation_points": [
+            "Sorts a copy by start with a numeric comparator",
+            "Merges overlapping and touching intervals",
+            "Uses Math.max so contained intervals are handled",
+            "Does not mutate the input intervals",
+            "Returns [] for empty input"
+          ],
+          "test_cases": [
+            {
+              "input": "mergeIntervals([[8, 10], [1, 3], [2, 6], [15, 18]])",
+              "expected": "[[1, 6], [8, 10], [15, 18]]"
+            },
+            {
+              "input": "mergeIntervals([[1, 3], [3, 5]])",
+              "expected": "[[1, 5]]"
+            },
+            {
+              "input": "mergeIntervals([[1, 10], [2, 3]])",
+              "expected": "[[1, 10]]"
+            },
+            {
+              "input": "const a = [[5, 6], [1, 2]]; mergeIntervals(a); a",
+              "expected": "[[5, 6], [1, 2]]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVASCRIPT-S5-10",
+          "topic": "Closures",
+          "task_type": "fix_bug",
+          "difficulty": "Hard",
+          "question": "makeFib() returns a memoized Fibonacci function (fib(0) = 0, fib(1) = 1). It returns correct values, but fib(50) takes far too long to finish because the memoization does not work. Find the bug and fix it so each value is computed only once.",
+          "starter_code": "function makeFib() {\n  const cache = {};\n  return function fib(n) {\n    if (n <= 1) return n;\n    if (cache[n] !== undefined) return cache[n];\n    const result = fib(n - 1) + fib(n - 2);\n    return result;\n  };\n}",
+          "reference_solution": "function makeFib() {\n  const cache = {};\n  return function fib(n) {\n    if (n <= 1) return n;\n    if (cache[n] !== undefined) return cache[n];\n    const result = fib(n - 1) + fib(n - 2);\n    cache[n] = result;\n    return result;\n  };\n}\n// Bug: the result is never stored in the cache, so the lookup always misses and the recursion stays exponential. Save it with cache[n] = result before returning.",
+          "evaluation_points": [
+            "Identifies that the cache is never written",
+            "Stores the computed value before returning",
+            "Explains the closure keeps the cache between calls",
+            "fib(50) completes quickly with the correct value"
+          ],
+          "test_cases": [
+            {
+              "input": "const fib = makeFib(); fib(10)",
+              "expected": "55"
+            },
+            {
+              "input": "const fib = makeFib(); fib(50)",
+              "expected": "12586269025"
+            },
+            {
+              "input": "const fib = makeFib(); fib(0)",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

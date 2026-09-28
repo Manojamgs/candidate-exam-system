@@ -1,0 +1,495 @@
+{
+  "set_code": "SET-06",
+  "name": "Exam Set 06",
+  "aptitude": [
+    {
+      "code": "APT-S06-01",
+      "category": "Quantitative Aptitude",
+      "topic": "Age Problems",
+      "difficulty": "Medium",
+      "question": "The present ages of two colleagues, Arun and Bala, are in the ratio 4 : 3. After 5 years, the ratio of their ages will be 5 : 4. What is Arun's present age?",
+      "options": {
+        "A": "16 years",
+        "B": "24 years",
+        "C": "20 years",
+        "D": "15 years"
+      },
+      "correct": "C",
+      "explanation": "(4x + 5)/(3x + 5) = 5/4 → 16x + 20 = 15x + 25 → x = 5. Arun = 4 × 5 = 20 years.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-02",
+      "category": "Quantitative Aptitude",
+      "topic": "Number Systems (Remainders)",
+      "difficulty": "Easy",
+      "question": "A number leaves a remainder of 29 when divided by 56. What remainder will it leave when divided by 8?",
+      "options": {
+        "A": "5",
+        "B": "3",
+        "C": "1",
+        "D": "7"
+      },
+      "correct": "A",
+      "explanation": "Number = 56k + 29. Since 56 is divisible by 8, the remainder is 29 mod 8 = 5.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-03",
+      "category": "Quantitative Aptitude",
+      "topic": "Decimals",
+      "difficulty": "Easy",
+      "question": "Evaluate: 0.25 × 0.4 + 1.2 ÷ 0.3",
+      "options": {
+        "A": "0.5",
+        "B": "4.01",
+        "C": "0.41",
+        "D": "4.1"
+      },
+      "correct": "D",
+      "explanation": "0.25 × 0.4 = 0.1 and 1.2 ÷ 0.3 = 4. Sum = 4.1.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-04",
+      "category": "Quantitative Aptitude",
+      "topic": "Quadratic Equations",
+      "difficulty": "Medium",
+      "question": "The length of a rectangular school classroom is 5 m more than its width, and its floor area is 84 m². What is the width of the classroom?",
+      "options": {
+        "A": "12 m",
+        "B": "7 m",
+        "C": "6 m",
+        "D": "9 m"
+      },
+      "correct": "B",
+      "explanation": "w(w + 5) = 84 → w² + 5w − 84 = 0 → (w + 12)(w − 7) = 0. Width must be positive, so w = 7 m.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-05",
+      "category": "Quantitative Aptitude",
+      "topic": "Probability (Selection)",
+      "difficulty": "Hard",
+      "question": "A hospital forms a 3-member committee chosen at random from 5 nurses and 4 doctors. What is the probability that the committee has at least 2 doctors?",
+      "options": {
+        "A": "1/21",
+        "B": "5/14",
+        "C": "10/21",
+        "D": "17/42"
+      },
+      "correct": "D",
+      "explanation": "Total ways = C(9,3) = 84. Exactly 2 doctors: C(4,2) × C(5,1) = 30; 3 doctors: C(4,3) = 4. Favourable = 34. Probability = 34/84 = 17/42.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-06",
+      "category": "Quantitative Aptitude",
+      "topic": "Permutations",
+      "difficulty": "Medium",
+      "question": "In how many different ways can the letters of the word SCHOOL be arranged?",
+      "options": {
+        "A": "720",
+        "B": "360",
+        "C": "120",
+        "D": "180"
+      },
+      "correct": "B",
+      "explanation": "SCHOOL has 6 letters with O repeated twice. Arrangements = 6! / 2! = 720 / 2 = 360.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-07",
+      "category": "Quantitative Aptitude",
+      "topic": "Clock",
+      "difficulty": "Medium",
+      "question": "What is the smaller angle between the hour hand and the minute hand of a clock at 4:20?",
+      "options": {
+        "A": "10°",
+        "B": "0°",
+        "C": "20°",
+        "D": "5°"
+      },
+      "correct": "A",
+      "explanation": "Angle = |30H − 5.5M| = |30 × 4 − 5.5 × 20| = |120 − 110| = 10°.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-08",
+      "category": "Quantitative Aptitude",
+      "topic": "Calendar",
+      "difficulty": "Hard",
+      "question": "If 1 March 2027 is a Monday, what day of the week will 1 June 2027 be?",
+      "options": {
+        "A": "Monday",
+        "B": "Wednesday",
+        "C": "Tuesday",
+        "D": "Thursday"
+      },
+      "correct": "C",
+      "explanation": "Days from 1 March to 1 June = 31 (March) + 30 (April) + 31 (May) = 92. 92 = 7 × 13 + 1, so 1 June is one day after Monday: Tuesday.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-09",
+      "category": "Logical Reasoning",
+      "topic": "Alphabet Series",
+      "difficulty": "Medium",
+      "question": "Find the next letter in the series: A, C, F, J, O, ?",
+      "options": {
+        "A": "U",
+        "B": "T",
+        "C": "V",
+        "D": "S"
+      },
+      "correct": "A",
+      "explanation": "Positions 1, 3, 6, 10, 15 increase by +2, +3, +4, +5; the next gap is +6, giving 21 = U.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-10",
+      "category": "Logical Reasoning",
+      "topic": "Odd One Out",
+      "difficulty": "Easy",
+      "question": "Which number is the odd one out: 23, 29, 35, 41?",
+      "options": {
+        "A": "23",
+        "B": "35",
+        "C": "29",
+        "D": "41"
+      },
+      "correct": "B",
+      "explanation": "23, 29 and 41 are prime numbers; 35 = 5 × 7 is not prime.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-11",
+      "category": "Logical Reasoning",
+      "topic": "Analogy (Number)",
+      "difficulty": "Easy",
+      "question": "3 : 27 :: 5 : ?",
+      "options": {
+        "A": "25",
+        "B": "15",
+        "C": "125",
+        "D": "100"
+      },
+      "correct": "C",
+      "explanation": "27 is the cube of 3, so the answer is the cube of 5 = 125.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-12",
+      "category": "Logical Reasoning",
+      "topic": "Pattern Recognition (Number Matrix)",
+      "difficulty": "Medium",
+      "question": "In a 3 × 3 number grid, each row follows the same rule. Row 1: 4, 5, 24. Row 2: 6, 3, 24. Row 3: 7, 8, ?. Find the missing number.",
+      "options": {
+        "A": "56",
+        "B": "64",
+        "C": "60",
+        "D": "63"
+      },
+      "correct": "D",
+      "explanation": "Third number = first × (second + 1): 4 × 6 = 24, 6 × 4 = 24, so 7 × 9 = 63.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-13",
+      "category": "Logical Reasoning",
+      "topic": "Statement and Assumption",
+      "difficulty": "Medium",
+      "question": "Statement: An HR notice to all employees says, \"Submit all leave requests through the new online portal from next Monday.\" Assumptions: I. Employees will be able to access the online portal. II. The online portal is the only software the company uses. Which assumption(s) are implicit in the statement?",
+      "options": {
+        "A": "Only assumption II is implicit",
+        "B": "Only assumption I is implicit",
+        "C": "Neither assumption is implicit",
+        "D": "Both assumptions are implicit"
+      },
+      "correct": "B",
+      "explanation": "Asking everyone to use the portal presumes they can access it, so I is implicit. Nothing suggests the company uses no other software, so II is not implicit.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-14",
+      "category": "Logical Reasoning",
+      "topic": "Seating Arrangement",
+      "difficulty": "Hard",
+      "question": "Five colleagues P, Q, R, S and T sit in a row facing north. R sits at the extreme left end and T sits at the extreme right end. Q sits immediately to the right of P. S does not sit next to R. Who sits in the middle of the row?",
+      "options": {
+        "A": "Q",
+        "B": "P",
+        "C": "S",
+        "D": "R"
+      },
+      "correct": "A",
+      "explanation": "Seats 2–4 hold P, Q, S with Q immediately right of P. S cannot be in seat 2 (next to R), so the order is R, P, Q, S, T. Q is in the middle.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-15",
+      "category": "Numerical Reasoning",
+      "topic": "Staffing Ratio",
+      "difficulty": "Medium",
+      "question": "A hospital ward must have at least 1 nurse for every 4 patients on each shift. The ward currently has 138 patients and 28 nurses on shift. What is the minimum number of additional nurses needed?",
+      "options": {
+        "A": "6",
+        "B": "8",
+        "C": "5",
+        "D": "7"
+      },
+      "correct": "D",
+      "explanation": "Required nurses = 138 / 4 = 34.5, rounded up to 35. Additional = 35 − 28 = 7.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-16",
+      "category": "Numerical Reasoning",
+      "topic": "Tax on Invoice",
+      "difficulty": "Medium",
+      "question": "An IT services invoice shows a total of Rs. 70,800, which already includes 18% tax on the service charge. What is the service charge before tax?",
+      "options": {
+        "A": "Rs. 58,056",
+        "B": "Rs. 59,000",
+        "C": "Rs. 60,000",
+        "D": "Rs. 62,400"
+      },
+      "correct": "C",
+      "explanation": "Service charge × 1.18 = 70,800 → service charge = 70,800 / 1.18 = Rs. 60,000.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-17",
+      "category": "Numerical Reasoning",
+      "topic": "Fuel Cost",
+      "difficulty": "Easy",
+      "question": "A school's delivery van makes 5 trips a week of 64 km each. The van runs 8 km per litre and fuel costs Rs. 102.50 per litre. What is the weekly fuel cost?",
+      "options": {
+        "A": "Rs. 4,100",
+        "B": "Rs. 4,000",
+        "C": "Rs. 3,280",
+        "D": "Rs. 4,510"
+      },
+      "correct": "A",
+      "explanation": "Distance = 5 × 64 = 320 km. Fuel = 320 / 8 = 40 litres. Cost = 40 × 102.50 = Rs. 4,100.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-18",
+      "category": "Data Interpretation",
+      "topic": "Table (Branch Revenue vs Target)",
+      "difficulty": "Medium",
+      "question": "The table shows quarterly revenue targets and actual revenue for four branches of a bank. Which branch achieved the highest percentage of its target?",
+      "table": {
+        "headers": [
+          "Branch",
+          "Quarterly Target (in thousands)",
+          "Actual Revenue (in thousands)"
+        ],
+        "rows": [
+          [
+            "North",
+            "500",
+            "540"
+          ],
+          [
+            "South",
+            "450",
+            "405"
+          ],
+          [
+            "East",
+            "600",
+            "630"
+          ],
+          [
+            "West",
+            "400",
+            "440"
+          ]
+        ]
+      },
+      "options": {
+        "A": "North",
+        "B": "West",
+        "C": "East",
+        "D": "South"
+      },
+      "correct": "B",
+      "explanation": "Achievement: North 540/500 = 108%; South 405/450 = 90%; East 630/600 = 105%; West 440/400 = 110%. West is highest.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-19",
+      "category": "Data Interpretation",
+      "topic": "Table (Branch Revenue vs Target)",
+      "difficulty": "Easy",
+      "question": "Using the table of branch targets and actual revenue, by how much did the combined actual revenue of all four branches exceed the combined target?",
+      "table": {
+        "headers": [
+          "Branch",
+          "Quarterly Target (in thousands)",
+          "Actual Revenue (in thousands)"
+        ],
+        "rows": [
+          [
+            "North",
+            "500",
+            "540"
+          ],
+          [
+            "South",
+            "450",
+            "405"
+          ],
+          [
+            "East",
+            "600",
+            "630"
+          ],
+          [
+            "West",
+            "400",
+            "440"
+          ]
+        ]
+      },
+      "options": {
+        "A": "45 thousand",
+        "B": "85 thousand",
+        "C": "110 thousand",
+        "D": "65 thousand"
+      },
+      "correct": "D",
+      "explanation": "Total actual = 540 + 405 + 630 + 440 = 2,015. Total target = 500 + 450 + 600 + 400 = 1,950. Excess = 65 thousand.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S06-20",
+      "category": "Data Interpretation",
+      "topic": "Table (Product Returns)",
+      "difficulty": "Hard",
+      "question": "The table shows units sold and units returned for four products at an electronics retailer. What is the overall return rate for all four products combined? (Round to two decimal places.)",
+      "table": {
+        "headers": [
+          "Product",
+          "Units Sold",
+          "Units Returned"
+        ],
+        "rows": [
+          [
+            "Laptop",
+            "1,200",
+            "36"
+          ],
+          [
+            "Tablet",
+            "800",
+            "40"
+          ],
+          [
+            "Monitor",
+            "500",
+            "10"
+          ],
+          [
+            "Printer",
+            "400",
+            "24"
+          ]
+        ]
+      },
+      "options": {
+        "A": "4.00%",
+        "B": "4.25%",
+        "C": "3.79%",
+        "D": "3.50%"
+      },
+      "correct": "C",
+      "explanation": "Total returned = 36 + 40 + 10 + 24 = 110. Total sold = 1,200 + 800 + 500 + 400 = 2,900. Rate = 110 / 2,900 × 100 = 3.79%. (Averaging the four individual rates would wrongly give 4.00%.)",
+      "marks": 1
+    }
+  ],
+  "communication": [
+    {
+      "code": "COM-S06-01",
+      "category": "Ethics & Professionalism",
+      "question": "Workplaces bring together people with different backgrounds, working styles and viewpoints. Describe how you make sure you work with everyone respectfully and inclusively, and why this matters to a team's success. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-02",
+      "category": "Time Management",
+      "question": "A colleague is unexpectedly away for two weeks and part of their workload is added to yours. Explain how you would organise and prioritise the combined work so that important deadlines are still met. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-03",
+      "category": "Customer Handling",
+      "question": "A customer is frustrated because a company policy has changed and they can no longer get a service the way they used to. Describe how you would explain the change to them and handle the conversation. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-04",
+      "category": "Leadership",
+      "question": "Describe a time when you mentored, coached or helped someone improve their skills or performance. What approach did you take, and how did you know your help was making a difference? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-05",
+      "category": "Problem Solving",
+      "question": "Describe a situation in which you took initiative to solve a problem or improve something without being asked to. What did you notice, what did you do, and what was the outcome? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-06",
+      "category": "Adaptability",
+      "question": "Many teams now collaborate remotely or across locations. Explain the practices you would follow to communicate clearly, stay accountable and build good working relationships in a virtual team. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-07",
+      "category": "Workplace Communication",
+      "question": "You receive an urgent email late in the day from a senior leader asking for information you do not fully have yet. Describe how you would respond, both immediately and in the follow-up. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-08",
+      "category": "Teamwork",
+      "question": "A member of your team keeps making the same mistake in their work, which is affecting the rest of the team. How would you address the situation constructively and professionally? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-09",
+      "category": "Leadership",
+      "question": "In your view, what are the most important qualities of a good manager? Explain why these qualities matter and how they affect the people who work with that manager. Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S06-10",
+      "category": "Career Goals",
+      "question": "Describe how you plan to develop yourself professionally over the next two years. Which skills or knowledge do you want to build, and what concrete steps will you take to achieve this? Write a paragraph of 100–200 words.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    }
+  ]
+}

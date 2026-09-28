@@ -1,0 +1,35 @@
+# Render Blueprint – one-click deployment of the Candidate Examination System.
+# Render → New → Blueprint → pick this GitHub repository. See docs/DEPLOY_RENDER.md.
+services:
+  - type: web
+    name: candidate-exam-system
+    runtime: node
+    region: singapore            # oregon | ohio | virginia | frankfurt | singapore – pick the one closest to your candidates
+    plan: 0.5c-512mb             # a paid instance is required for the persistent disk (the free tier cannot keep data)
+    buildCommand: npm ci --omit=dev
+    startCommand: node server/index.js
+    healthCheckPath: /api/health
+    autoDeploy: true             # every push to the main branch redeploys (≈1 minute of downtime – avoid during live exams)
+    disk:
+      name: exam-data
+      mountPath: /var/data       # SQLite database lives here; Render snapshots it daily
+      sizeGB: 1
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: "22"
+      - key: DB_PATH
+        value: /var/data/exam.db
+      - key: APP_SECRET          # encrypts stored secrets and exam links – never change it after first start
+        generateValue: true
+      - key: SECURE_COOKIES
+        value: "true"
+      - key: ADMIN_USERNAME
+        value: admin
+      - key: ADMIN_EMAIL
+        sync: false              # Render asks for these when you create the Blueprint
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: APP_BASE_URL        # optional: set to your custom domain, e.g. https://exams.activemindsit.com (defaults to the onrender.com URL)
+        sync: false

@@ -1,0 +1,1503 @@
+{
+  "language": "csharp",
+  "label": "C#",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-CSHARP-S1-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static string Classify(int n)` that returns \"Positive\" if n is greater than zero, \"Negative\" if n is less than zero, and \"Zero\" if n equals zero.",
+          "reference_solution": "static string Classify(int n)\n{\n    if (n > 0) return \"Positive\";\n    if (n < 0) return \"Negative\";\n    return \"Zero\";\n}",
+          "evaluation_points": [
+            "Returns exactly \"Positive\", \"Negative\" or \"Zero\" (correct spelling/case)",
+            "Handles zero as its own case",
+            "Correct comparison operators (no off-by-one such as >= 0 for Positive)",
+            "Every code path returns a value"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 5",
+              "expected": "Positive"
+            },
+            {
+              "input": "n = -3",
+              "expected": "Negative"
+            },
+            {
+              "input": "n = 0",
+              "expected": "Zero"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-02",
+          "topic": "Value vs Reference Types",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "The program below copies a struct variable and a class variable, then modifies each copy. Predict the two values it prints and explain, in terms of value types and reference types, why they differ.",
+          "starter_code": "using System;\n\nstruct PointS { public int X; }\nclass PointC { public int X; }\n\nclass Program\n{\n    static void Main()\n    {\n        PointS a = new PointS { X = 1 };\n        PointS b = a;\n        b.X = 10;\n\n        PointC c = new PointC { X = 1 };\n        PointC d = c;\n        d.X = 10;\n\n        Console.WriteLine(a.X);\n        Console.WriteLine(c.X);\n    }\n}",
+          "reference_solution": "Output:\n1\n10\n\nExplanation: PointS is a struct (value type): `PointS b = a;` copies the whole value, so changing b.X does not affect a, and a.X is still 1. PointC is a class (reference type): `PointC d = c;` copies only the reference, so c and d refer to the same object on the heap; setting d.X = 10 changes the object that c also refers to, so c.X prints 10.",
+          "evaluation_points": [
+            "States the exact output: 1 then 10",
+            "Explains that a struct is a value type, so `b = a` copies the data",
+            "Explains that a class is a reference type, so `d = c` copies the reference and both variables point to the same object",
+            "Explains that changing d.X is therefore visible through c"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-03",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static int SumDigits(int n)` that returns the sum of the decimal digits of n. Negative numbers should be treated as their absolute value (e.g. -507 gives 5 + 0 + 7 = 12). You may assume |n| <= 1,000,000,000. Use a loop; do not convert the number to a string.",
+          "reference_solution": "static int SumDigits(int n)\n{\n    n = Math.Abs(n);\n    int sum = 0;\n    while (n > 0)\n    {\n        sum += n % 10;\n        n /= 10;\n    }\n    return sum;\n}",
+          "evaluation_points": [
+            "Uses % 10 and / 10 in a loop to extract digits",
+            "Handles negative input via Math.Abs (or equivalent)",
+            "Returns 0 for input 0",
+            "Does not convert to string as required"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 1234",
+              "expected": "10"
+            },
+            {
+              "input": "n = -507",
+              "expected": "12"
+            },
+            {
+              "input": "n = 0",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-04",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static bool IsPalindrome(string s)` that returns true if s reads the same forwards and backwards when you consider only letters and digits and ignore case. Spaces and punctuation are ignored. An empty string is a palindrome. Use a two-pointer approach (do not build a reversed copy with LINQ).",
+          "reference_solution": "static bool IsPalindrome(string s)\n{\n    int left = 0, right = s.Length - 1;\n    while (left < right)\n    {\n        if (!char.IsLetterOrDigit(s[left])) { left++; continue; }\n        if (!char.IsLetterOrDigit(s[right])) { right--; continue; }\n        if (char.ToLower(s[left]) != char.ToLower(s[right])) return false;\n        left++;\n        right--;\n    }\n    return true;\n}",
+          "evaluation_points": [
+            "Skips characters that are not letters or digits (char.IsLetterOrDigit)",
+            "Compares case-insensitively (char.ToLower / ToUpper)",
+            "Two pointers move towards each other and stop when they meet",
+            "Returns true for an empty string or a string with no letters/digits"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"A man, a plan, a canal: Panama\"",
+              "expected": "true"
+            },
+            {
+              "input": "s = \"race a car\"",
+              "expected": "false"
+            },
+            {
+              "input": "s = \"\"",
+              "expected": "true"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-05",
+          "topic": "Dictionary<TKey,TValue>",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static Dictionary<string, int> WordFrequency(string text)` that counts how many times each word appears in text. Words are separated by one or more spaces. Counting is case-insensitive: store every key in lower case. An empty string returns an empty dictionary.",
+          "reference_solution": "static Dictionary<string, int> WordFrequency(string text)\n{\n    var counts = new Dictionary<string, int>();\n    string[] words = text.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);\n    foreach (string w in words)\n    {\n        string key = w.ToLower();\n        if (counts.ContainsKey(key))\n            counts[key]++;\n        else\n            counts[key] = 1;\n    }\n    return counts;\n}",
+          "evaluation_points": [
+            "Splits on spaces and ignores empty entries caused by repeated spaces",
+            "Normalises keys to lower case",
+            "Checks for an existing key (ContainsKey/TryGetValue) before incrementing, avoiding KeyNotFoundException",
+            "Returns an empty dictionary for empty input"
+          ],
+          "test_cases": [
+            {
+              "input": "text = \"the cat and the hat\"",
+              "expected": "{the: 2, cat: 1, and: 1, hat: 1}"
+            },
+            {
+              "input": "text = \"Go  go GO\"",
+              "expected": "{go: 3}"
+            },
+            {
+              "input": "text = \"\"",
+              "expected": "{} (empty)"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-06",
+          "topic": "Arrays",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below should return the largest value in a non-empty integer array, but it returns the wrong result for some inputs. Find the bug, explain it, and provide the corrected method.",
+          "starter_code": "static int FindMax(int[] numbers)\n{\n    int max = 0;\n    for (int i = 0; i < numbers.Length; i++)\n    {\n        if (numbers[i] > max)\n            max = numbers[i];\n    }\n    return max;\n}",
+          "reference_solution": "static int FindMax(int[] numbers)\n{\n    int max = numbers[0];   // bug fix: start from the first element, not 0\n    for (int i = 1; i < numbers.Length; i++)\n    {\n        if (numbers[i] > max)\n            max = numbers[i];\n    }\n    return max;\n}",
+          "evaluation_points": [
+            "Identifies that initialising max to 0 is wrong when all values are negative",
+            "Initialises max with numbers[0] (or int.MinValue)",
+            "Keeps the rest of the loop logic correct",
+            "Correctly returns -2 for { -5, -2, -8 }"
+          ],
+          "test_cases": [
+            {
+              "input": "numbers = { 3, 9, 2 }",
+              "expected": "9"
+            },
+            {
+              "input": "numbers = { -5, -2, -8 }",
+              "expected": "-2"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-07",
+          "topic": "Classes, Properties & Constructors",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# class `BankAccount` with:\n- a read-only property `Owner` (string) and a property `Balance` (decimal) that can be read publicly but only changed inside the class;\n- a constructor `BankAccount(string owner, decimal initialBalance)` that throws ArgumentException if initialBalance is negative;\n- `void Deposit(decimal amount)` that throws ArgumentException if amount <= 0, otherwise adds it to Balance;\n- `bool Withdraw(decimal amount)` that returns false (and changes nothing) if amount <= 0 or amount > Balance, otherwise subtracts it and returns true.",
+          "reference_solution": "public class BankAccount\n{\n    public string Owner { get; }\n    public decimal Balance { get; private set; }\n\n    public BankAccount(string owner, decimal initialBalance)\n    {\n        if (initialBalance < 0)\n            throw new ArgumentException(\"Initial balance cannot be negative.\");\n        Owner = owner;\n        Balance = initialBalance;\n    }\n\n    public void Deposit(decimal amount)\n    {\n        if (amount <= 0)\n            throw new ArgumentException(\"Deposit amount must be positive.\");\n        Balance += amount;\n    }\n\n    public bool Withdraw(decimal amount)\n    {\n        if (amount <= 0 || amount > Balance)\n            return false;\n        Balance -= amount;\n        return true;\n    }\n}",
+          "evaluation_points": [
+            "Balance has a public getter and a private setter; Owner is get-only",
+            "Constructor validates initialBalance and assigns both properties",
+            "Deposit throws ArgumentException for non-positive amounts",
+            "Withdraw returns false without modifying Balance when the amount is invalid or exceeds Balance",
+            "Uses decimal for money"
+          ],
+          "test_cases": [
+            {
+              "input": "new BankAccount(\"Ana\", 100); Deposit(50); Balance",
+              "expected": "150"
+            },
+            {
+              "input": "then Withdraw(200); Balance",
+              "expected": "false, Balance stays 150"
+            },
+            {
+              "input": "then Withdraw(30); Balance",
+              "expected": "true, Balance 120"
+            },
+            {
+              "input": "Deposit(-5)",
+              "expected": "throws ArgumentException"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-08",
+          "topic": "LINQ Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Given the class below, write a C# method `static List<string> NamesAtOrAbove(List<Product> products, decimal minPrice)` that uses LINQ to return the names of all products whose Price is greater than or equal to minPrice, ordered by Price ascending and then by Name ascending for equal prices. Return an empty list if nothing matches.\n\npublic class Product { public string Name { get; set; } public decimal Price { get; set; } }",
+          "reference_solution": "static List<string> NamesAtOrAbove(List<Product> products, decimal minPrice)\n{\n    return products\n        .Where(p => p.Price >= minPrice)\n        .OrderBy(p => p.Price)\n        .ThenBy(p => p.Name)\n        .Select(p => p.Name)\n        .ToList();\n}",
+          "evaluation_points": [
+            "Filters with Where using >= (inclusive)",
+            "Orders by Price then by Name (OrderBy + ThenBy, not two OrderBy calls)",
+            "Projects to names with Select and materialises with ToList",
+            "Returns an empty list (not null) when nothing matches"
+          ],
+          "test_cases": [
+            {
+              "input": "products = [Pen 2, Book 12, Lamp 30, Mug 12], minPrice = 10",
+              "expected": "[Book, Mug, Lamp]"
+            },
+            {
+              "input": "same products, minPrice = 100",
+              "expected": "[] (empty list)"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive C# method `static List<string> Permutations(string s)` that returns every permutation of the characters in s. All characters in s are distinct and 1 <= s.Length <= 6. The order of the returned strings does not matter, but each permutation must appear exactly once.",
+          "reference_solution": "static List<string> Permutations(string s)\n{\n    var result = new List<string>();\n    Build(\"\", s, result);\n    return result;\n}\n\nstatic void Build(string prefix, string remaining, List<string> result)\n{\n    if (remaining.Length == 0)\n    {\n        result.Add(prefix);\n        return;\n    }\n    for (int i = 0; i < remaining.Length; i++)\n    {\n        Build(prefix + remaining[i], remaining.Remove(i, 1), result);\n    }\n}",
+          "evaluation_points": [
+            "Has a correct base case (no characters left -> add the built string)",
+            "Recursive step picks each remaining character once and recurses on the rest",
+            "Produces n! results with no duplicates or missing permutations",
+            "Accumulates results in a list (helper method or returned lists)"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"ab\"",
+              "expected": "[ab, ba]"
+            },
+            {
+              "input": "s = \"abc\"",
+              "expected": "[abc, acb, bac, bca, cab, cba] (any order)"
+            },
+            {
+              "input": "s = \"x\"",
+              "expected": "[x]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S1-10",
+          "topic": "Methods (out parameters)",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# method `static bool TryParseTime(string s, out int totalMinutes)` that parses a 24-hour time in the exact format \"HH:MM\" (two digits, a colon, two digits). If s is valid (hours 00-23, minutes 00-59) set totalMinutes to the number of minutes since midnight and return true. Otherwise set totalMinutes to 0 and return false. Null, wrong length, missing colon or non-digit characters are invalid. Do not throw exceptions.",
+          "reference_solution": "static bool TryParseTime(string s, out int totalMinutes)\n{\n    totalMinutes = 0;\n    if (s == null || s.Length != 5 || s[2] != ':')\n        return false;\n    if (!char.IsDigit(s[0]) || !char.IsDigit(s[1]) || !char.IsDigit(s[3]) || !char.IsDigit(s[4]))\n        return false;\n\n    int hours = int.Parse(s.Substring(0, 2));\n    int minutes = int.Parse(s.Substring(3, 2));\n    if (hours > 23 || minutes > 59)\n        return false;\n\n    totalMinutes = hours * 60 + minutes;\n    return true;\n}",
+          "evaluation_points": [
+            "Assigns the out parameter on every path (required by the compiler)",
+            "Validates null, length 5, colon position and digit characters before parsing",
+            "Rejects hours > 23 and minutes > 59",
+            "Computes hours * 60 + minutes and never throws"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"09:30\"",
+              "expected": "true, totalMinutes = 570"
+            },
+            {
+              "input": "s = \"23:59\"",
+              "expected": "true, totalMinutes = 1439"
+            },
+            {
+              "input": "s = \"24:00\"",
+              "expected": "false, totalMinutes = 0"
+            },
+            {
+              "input": "s = \"9:30\"",
+              "expected": "false, totalMinutes = 0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-CSHARP-S2-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static int CountVowels(string s)` that returns how many vowels (a, e, i, o, u, in upper or lower case) appear in s.",
+          "reference_solution": "static int CountVowels(string s)\n{\n    int count = 0;\n    foreach (char c in s.ToLower())\n    {\n        if (\"aeiou\".IndexOf(c) >= 0)\n            count++;\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Iterates over every character",
+            "Treats upper and lower case vowels the same",
+            "Counts only a, e, i, o, u (not y)",
+            "Returns 0 when there are no vowels"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"Hello World\"",
+              "expected": "3"
+            },
+            {
+              "input": "s = \"rhythm\"",
+              "expected": "0"
+            },
+            {
+              "input": "s = \"AEIOU\"",
+              "expected": "5"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-02",
+          "topic": "Null Handling",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following C# program print? Explain what the ?. and ?? operators do on each line.",
+          "starter_code": "using System;\n\nclass Address { public string City; }\nclass Customer { public string Name; public Address Address; }\n\nclass Program\n{\n    static void Main()\n    {\n        Customer c1 = new Customer { Name = \"Ravi\" };\n        Customer c2 = null;\n\n        Console.WriteLine(c1.Address?.City ?? \"No city\");\n        Console.WriteLine(c2?.Name ?? \"No customer\");\n\n        int? length = c1.Name?.Length;\n        Console.WriteLine(length);\n\n        string s = null;\n        Console.WriteLine($\"[{s}]\");\n    }\n}",
+          "reference_solution": "Output:\nNo city\nNo customer\n4\n[]\n\nExplanation: c1.Address was never set, so it is null; `c1.Address?.City` short-circuits to null instead of throwing NullReferenceException, and `?? \"No city\"` replaces the null. c2 is null, so `c2?.Name` is null and \"No customer\" is printed. c1.Name is \"Ravi\", so `c1.Name?.Length` evaluates to an int? holding 4. A null string inside an interpolated string is formatted as an empty string, giving \"[]\".",
+          "evaluation_points": [
+            "States the exact four output lines: No city, No customer, 4, []",
+            "Explains ?. returns null instead of throwing when the left side is null",
+            "Explains ?? supplies the right-hand value when the left side is null",
+            "Explains that c1.Name?.Length gives an int? with value 4, and a null string interpolates as empty text"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-03",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static void ReverseInPlace(int[] arr)` that reverses the elements of arr in place (the same array object is modified). Do not use Array.Reverse, LINQ or a second array.",
+          "reference_solution": "static void ReverseInPlace(int[] arr)\n{\n    int left = 0, right = arr.Length - 1;\n    while (left < right)\n    {\n        int temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n        left++;\n        right--;\n    }\n}",
+          "evaluation_points": [
+            "Swaps elements from both ends moving inwards",
+            "Stops at the middle (does not swap back)",
+            "Uses no extra array, Array.Reverse or LINQ",
+            "Works for empty and even/odd length arrays"
+          ],
+          "test_cases": [
+            {
+              "input": "arr = { 1, 2, 3, 4, 5 }",
+              "expected": "arr becomes { 5, 4, 3, 2, 1 }"
+            },
+            {
+              "input": "arr = { 7, 8 }",
+              "expected": "arr becomes { 8, 7 }"
+            },
+            {
+              "input": "arr = { }",
+              "expected": "arr stays { }"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-04",
+          "topic": "List<T>",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static List<string> RemoveDuplicates(List<string> items)` that returns a new list containing each distinct string from items once, keeping the order of first appearance. Comparison is case-sensitive. Do not modify the input list and do not use LINQ's Distinct.",
+          "reference_solution": "static List<string> RemoveDuplicates(List<string> items)\n{\n    var seen = new HashSet<string>();\n    var result = new List<string>();\n    foreach (string item in items)\n    {\n        if (seen.Add(item))\n            result.Add(item);\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Returns a new list and leaves the input unchanged",
+            "Keeps first-occurrence order",
+            "Uses a HashSet (or equivalent) for efficient lookups rather than nested loops (preferred, not mandatory)",
+            "Handles an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "items = [\"a\", \"b\", \"a\", \"c\", \"b\"]",
+              "expected": "[\"a\", \"b\", \"c\"]"
+            },
+            {
+              "input": "items = [\"X\", \"x\", \"X\"]",
+              "expected": "[\"X\", \"x\"]"
+            },
+            {
+              "input": "items = []",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-05",
+          "topic": "Inheritance & Polymorphism",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "In the code below, `Shape s = new Rectangle(3, 4); Console.WriteLine(s.Area());` prints 0 instead of 12. Find the bug, explain why it happens, and provide the corrected code.",
+          "starter_code": "public class Shape\n{\n    public virtual double Area() { return 0; }\n}\n\npublic class Rectangle : Shape\n{\n    private double width, height;\n    public Rectangle(double w, double h) { width = w; height = h; }\n\n    public new double Area() { return width * height; }\n}",
+          "reference_solution": "public class Shape\n{\n    public virtual double Area() { return 0; }\n}\n\npublic class Rectangle : Shape\n{\n    private double width, height;\n    public Rectangle(double w, double h) { width = w; height = h; }\n\n    // fix: 'override' instead of 'new', so the call is dispatched at runtime\n    public override double Area() { return width * height; }\n}",
+          "evaluation_points": [
+            "Identifies that `new` hides the base method instead of overriding it",
+            "Explains that with `new`, a call through a Shape reference uses Shape.Area",
+            "Replaces `new` with `override`",
+            "Result through the base-class reference is 12"
+          ],
+          "test_cases": [
+            {
+              "input": "Shape s = new Rectangle(3, 4); s.Area()",
+              "expected": "12"
+            },
+            {
+              "input": "Shape s = new Shape(); s.Area()",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-06",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static bool IsPrime(int n)` that returns true if n is a prime number and false otherwise. Numbers less than 2 are not prime. Your loop should only test divisors up to the square root of n.",
+          "reference_solution": "static bool IsPrime(int n)\n{\n    if (n < 2) return false;\n    for (int i = 2; (long)i * i <= n; i++)\n    {\n        if (n % i == 0)\n            return false;\n    }\n    return true;\n}",
+          "evaluation_points": [
+            "Returns false for n < 2 (including 0, 1 and negatives)",
+            "Loops only while i * i <= n (or i <= Math.Sqrt(n))",
+            "Returns false as soon as a divisor is found",
+            "Correctly treats 2 as prime and perfect squares such as 49 as not prime"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 2",
+              "expected": "true"
+            },
+            {
+              "input": "n = 1",
+              "expected": "false"
+            },
+            {
+              "input": "n = 29",
+              "expected": "true"
+            },
+            {
+              "input": "n = 49",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-07",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static decimal DiscountedPrice(decimal price, int percent)` that returns price reduced by percent percent. Throw ArgumentException if price is negative, and ArgumentOutOfRangeException if percent is less than 0 or greater than 100. Include a meaningful message (and the parameter name) in each exception.",
+          "reference_solution": "static decimal DiscountedPrice(decimal price, int percent)\n{\n    if (price < 0)\n        throw new ArgumentException(\"Price cannot be negative.\", nameof(price));\n    if (percent < 0 || percent > 100)\n        throw new ArgumentOutOfRangeException(nameof(percent), \"Percent must be between 0 and 100.\");\n    return price - price * percent / 100;\n}",
+          "evaluation_points": [
+            "Validates inputs before computing",
+            "Throws ArgumentException for negative price and ArgumentOutOfRangeException for percent outside 0-100",
+            "Uses the correct constructor argument order (ArgumentOutOfRangeException takes paramName first)",
+            "Computes the discount with decimal arithmetic (no integer division issues)"
+          ],
+          "test_cases": [
+            {
+              "input": "price = 200, percent = 15",
+              "expected": "170"
+            },
+            {
+              "input": "price = 50, percent = 120",
+              "expected": "throws ArgumentOutOfRangeException"
+            },
+            {
+              "input": "price = -5, percent = 10",
+              "expected": "throws ArgumentException"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-08",
+          "topic": "Strings & StringBuilder",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static string RunLengthEncode(string s)` that compresses s by replacing each run of identical consecutive characters with the character followed by the run length. For example \"aaabcc\" becomes \"a3b1c2\". An empty string returns an empty string. Build the result with StringBuilder.",
+          "reference_solution": "static string RunLengthEncode(string s)\n{\n    var sb = new StringBuilder();\n    int i = 0;\n    while (i < s.Length)\n    {\n        char current = s[i];\n        int count = 0;\n        while (i < s.Length && s[i] == current)\n        {\n            count++;\n            i++;\n        }\n        sb.Append(current).Append(count);\n    }\n    return sb.ToString();\n}",
+          "evaluation_points": [
+            "Counts consecutive runs correctly, including the final run",
+            "Appends character then count for every run (including count 1)",
+            "Uses StringBuilder instead of repeated string concatenation",
+            "Returns an empty string for empty input without index errors"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"aaabcc\"",
+              "expected": "\"a3b1c2\""
+            },
+            {
+              "input": "s = \"zzzz\"",
+              "expected": "\"z4\""
+            },
+            {
+              "input": "s = \"abca\"",
+              "expected": "\"a1b1c1a1\""
+            },
+            {
+              "input": "s = \"\"",
+              "expected": "\"\""
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-09",
+          "topic": "Dictionary<TKey,TValue>",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# method `static List<List<string>> GroupAnagrams(List<string> words)` that groups words that are anagrams of each other (same letters in a different order). All words are lower case. Groups must appear in the order their first word appears in the input, and words inside a group keep their input order.",
+          "reference_solution": "static List<List<string>> GroupAnagrams(List<string> words)\n{\n    var groups = new Dictionary<string, List<string>>();\n    var result = new List<List<string>>();\n    foreach (string word in words)\n    {\n        char[] letters = word.ToCharArray();\n        Array.Sort(letters);\n        string key = new string(letters);\n\n        if (!groups.TryGetValue(key, out List<string> group))\n        {\n            group = new List<string>();\n            groups[key] = group;\n            result.Add(group);\n        }\n        group.Add(word);\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Builds a canonical key per word (sorted letters or a letter count)",
+            "Uses a Dictionary from key to list of words",
+            "Preserves the order of groups by first appearance and the order of words within a group",
+            "Handles an empty input list (returns an empty list)"
+          ],
+          "test_cases": [
+            {
+              "input": "words = [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"]",
+              "expected": "[[eat, tea, ate], [tan, nat], [bat]]"
+            },
+            {
+              "input": "words = [\"abc\"]",
+              "expected": "[[abc]]"
+            },
+            {
+              "input": "words = []",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S2-10",
+          "topic": "Collections (Stack)",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# method `static bool IsBalanced(string s)` that returns true if every bracket in s is correctly matched and nested. The bracket pairs are (), [] and {}. All other characters are ignored. Use a Stack<char>.",
+          "reference_solution": "static bool IsBalanced(string s)\n{\n    var stack = new Stack<char>();\n    foreach (char c in s)\n    {\n        if (c == '(' || c == '[' || c == '{')\n        {\n            stack.Push(c);\n        }\n        else if (c == ')' || c == ']' || c == '}')\n        {\n            if (stack.Count == 0) return false;\n            char open = stack.Pop();\n            if ((c == ')' && open != '(') || (c == ']' && open != '[') || (c == '}' && open != '{'))\n                return false;\n        }\n    }\n    return stack.Count == 0;\n}",
+          "evaluation_points": [
+            "Pushes opening brackets and pops on closing brackets",
+            "Returns false when a closing bracket arrives with an empty stack",
+            "Checks that the popped bracket matches the closing type",
+            "Returns false if unclosed brackets remain at the end",
+            "Ignores non-bracket characters"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"{[()]}\"",
+              "expected": "true"
+            },
+            {
+              "input": "s = \"([)]\"",
+              "expected": "false"
+            },
+            {
+              "input": "s = \"((\"",
+              "expected": "false"
+            },
+            {
+              "input": "s = \"a(b)c]\"",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-CSHARP-S3-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static string GetGrade(int score)` that converts an exam score (0-100) into a letter grade: 90 and above \"A\", 80-89 \"B\", 70-79 \"C\", 60-69 \"D\", below 60 \"F\". Throw ArgumentOutOfRangeException if score is less than 0 or greater than 100.",
+          "reference_solution": "static string GetGrade(int score)\n{\n    if (score < 0 || score > 100)\n        throw new ArgumentOutOfRangeException(nameof(score), \"Score must be between 0 and 100.\");\n    if (score >= 90) return \"A\";\n    if (score >= 80) return \"B\";\n    if (score >= 70) return \"C\";\n    if (score >= 60) return \"D\";\n    return \"F\";\n}",
+          "evaluation_points": [
+            "Validates the range first and throws ArgumentOutOfRangeException",
+            "Checks thresholds from highest to lowest so each score maps to one grade",
+            "Boundary values (90, 80, 70, 60) map to the higher grade",
+            "Returns \"F\" for scores below 60"
+          ],
+          "test_cases": [
+            {
+              "input": "score = 95",
+              "expected": "\"A\""
+            },
+            {
+              "input": "score = 80",
+              "expected": "\"B\""
+            },
+            {
+              "input": "score = 59",
+              "expected": "\"F\""
+            },
+            {
+              "input": "score = 101",
+              "expected": "throws ArgumentOutOfRangeException"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-02",
+          "topic": "String Interpolation",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following C# program print? Explain the format specifier, alignment and brace syntax used in each interpolated string.",
+          "starter_code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        string item = \"Laptop\";\n        int qty = 3;\n        int id = 7;\n\n        Console.WriteLine($\"Order {id:D4}: {qty} x {item}\");\n        Console.WriteLine($\"{qty} item{(qty == 1 ? \"\" : \"s\")}\");\n        Console.WriteLine($\"[{item,8}]\");\n        Console.WriteLine($\"[{item,-8}]\");\n        Console.WriteLine($\"{{{qty * 2}}}\");\n    }\n}",
+          "reference_solution": "Output:\nOrder 0007: 3 x Laptop\n3 items\n[  Laptop]\n[Laptop  ]\n{6}\n\nExplanation: {id:D4} formats 7 as a 4-digit integer with leading zeros (0007). The ternary operator is placed in parentheses so the colon is not read as a format specifier; qty is 3 so \"s\" is appended. {item,8} right-aligns \"Laptop\" (6 chars) in a field of 8, adding two leading spaces; {item,-8} left-aligns it, adding two trailing spaces. In the last line {{ and }} are escaped literal braces and the inner {qty * 2} evaluates to 6, producing {6}.",
+          "evaluation_points": [
+            "States all five output lines exactly, including padding",
+            "Explains :D4 pads an integer with leading zeros to 4 digits",
+            "Explains the conditional expression must be wrapped in parentheses inside the braces",
+            "Explains ,8 right-aligns and ,-8 left-aligns within 8 characters",
+            "Explains {{ and }} produce literal braces"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-03",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static long Factorial(int n)` that returns n! using a loop (not recursion). 0! is 1. Throw ArgumentOutOfRangeException if n is negative or greater than 20 (21! does not fit in a long).",
+          "reference_solution": "static long Factorial(int n)\n{\n    if (n < 0 || n > 20)\n        throw new ArgumentOutOfRangeException(nameof(n), \"n must be between 0 and 20.\");\n    long result = 1;\n    for (int i = 2; i <= n; i++)\n        result *= i;\n    return result;\n}",
+          "evaluation_points": [
+            "Uses long for the accumulator",
+            "Returns 1 for n = 0",
+            "Iterative loop multiplies 1..n (or 2..n)",
+            "Throws ArgumentOutOfRangeException for n < 0 or n > 20"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 0",
+              "expected": "1"
+            },
+            {
+              "input": "n = 5",
+              "expected": "120"
+            },
+            {
+              "input": "n = 20",
+              "expected": "2432902008176640000"
+            },
+            {
+              "input": "n = -1",
+              "expected": "throws ArgumentOutOfRangeException"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-04",
+          "topic": "Static Members",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# class `Ticket` for a support desk. Each new Ticket must automatically receive a unique sequential integer `Id` starting at 1 (first ticket 1, second 2, ...). It has a read-only `Title` property set through the constructor `Ticket(string title)`. Also expose a static read-only property `Count` returning how many Ticket objects have been created so far.",
+          "reference_solution": "public class Ticket\n{\n    private static int nextId = 1;\n\n    public static int Count { get; private set; }\n\n    public int Id { get; }\n    public string Title { get; }\n\n    public Ticket(string title)\n    {\n        Id = nextId++;\n        Title = title;\n        Count++;\n    }\n}",
+          "evaluation_points": [
+            "Uses a static field to hold the next id, shared by all instances",
+            "Assigns Id in the constructor and then increments the counter",
+            "Id and Title are instance properties that cannot be changed from outside",
+            "Count is static with a private setter (or computed from the static field)"
+          ],
+          "test_cases": [
+            {
+              "input": "var t1 = new Ticket(\"Login issue\"); t1.Id",
+              "expected": "1"
+            },
+            {
+              "input": "then var t2 = new Ticket(\"Printer\"); var t3 = new Ticket(\"VPN\"); t3.Id",
+              "expected": "3"
+            },
+            {
+              "input": "Ticket.Count after creating three tickets",
+              "expected": "3"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-05",
+          "topic": "Strings",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below should reverse the order of the words in a sentence (words are separated by single spaces), e.g. \"one two three\" -> \"three two one\". It gives wrong results. Find the bug, explain it, and provide the corrected method.",
+          "starter_code": "static string ReverseWords(string sentence)\n{\n    string[] words = sentence.Split(' ');\n    string result = \"\";\n    for (int i = words.Length - 1; i > 0; i--)\n    {\n        result += words[i] + \" \";\n    }\n    return result.Trim();\n}",
+          "reference_solution": "static string ReverseWords(string sentence)\n{\n    string[] words = sentence.Split(' ');\n    string result = \"\";\n    for (int i = words.Length - 1; i >= 0; i--)   // fix: >= 0 so the first word is included\n    {\n        result += words[i] + \" \";\n    }\n    return result.Trim();\n}",
+          "evaluation_points": [
+            "Identifies the loop condition `i > 0` skips index 0 (the first word)",
+            "Changes the condition to `i >= 0`",
+            "Single-word input now returns the word instead of an empty string",
+            "Optionally mentions StringBuilder or string.Join(\" \", words.Reverse()) as cleaner alternatives"
+          ],
+          "test_cases": [
+            {
+              "input": "sentence = \"one two three\"",
+              "expected": "\"three two one\""
+            },
+            {
+              "input": "sentence = \"hello\"",
+              "expected": "\"hello\""
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-06",
+          "topic": "Arrays & Nullable Types",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static int? SecondLargest(int[] nums)` that returns the second largest DISTINCT value in nums, or null if the array has fewer than two distinct values. Use a single pass through the array; do not sort.",
+          "reference_solution": "static int? SecondLargest(int[] nums)\n{\n    int? first = null, second = null;\n    foreach (int n in nums)\n    {\n        if (first == null || n > first)\n        {\n            second = first;\n            first = n;\n        }\n        else if (n != first && (second == null || n > second))\n        {\n            second = n;\n        }\n    }\n    return second;\n}",
+          "evaluation_points": [
+            "Returns int? and uses null to signal no answer",
+            "Tracks largest and second largest in one pass",
+            "Ignores duplicates of the largest value (distinct requirement)",
+            "Handles negative numbers (does not initialise with 0)",
+            "Returns null for empty arrays or all-equal values"
+          ],
+          "test_cases": [
+            {
+              "input": "nums = { 4, 1, 9, 7 }",
+              "expected": "7"
+            },
+            {
+              "input": "nums = { 3, 8, 8 }",
+              "expected": "3"
+            },
+            {
+              "input": "nums = { 5, 5, 5 }",
+              "expected": "null"
+            },
+            {
+              "input": "nums = { }",
+              "expected": "null"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-07",
+          "topic": "Methods (ref parameters)",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static void NormalizeTime(ref int hours, ref int minutes)` that normalises a time value in place: minutes of 60 or more are carried into hours, so minutes ends up in 0-59, and hours wraps around a 24-hour clock (0-23). Both inputs are non-negative. For example hours = 1, minutes = 135 becomes hours = 3, minutes = 15.",
+          "reference_solution": "static void NormalizeTime(ref int hours, ref int minutes)\n{\n    hours += minutes / 60;\n    minutes %= 60;\n    hours %= 24;\n}",
+          "evaluation_points": [
+            "Uses ref parameters so the caller's variables change",
+            "Carries minutes / 60 into hours before reducing minutes with % 60",
+            "Wraps hours with % 24",
+            "Leaves already-normal values unchanged"
+          ],
+          "test_cases": [
+            {
+              "input": "hours = 1, minutes = 135",
+              "expected": "hours = 3, minutes = 15"
+            },
+            {
+              "input": "hours = 23, minutes = 75",
+              "expected": "hours = 0, minutes = 15"
+            },
+            {
+              "input": "hours = 5, minutes = 30",
+              "expected": "hours = 5, minutes = 30"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-08",
+          "topic": "LINQ Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Given the class below, write a C# method `static Dictionary<string, int> HeadcountByDepartment(List<Employee> employees)` that uses LINQ GroupBy to return a dictionary mapping each department name to the number of employees in it. An empty list returns an empty dictionary.\n\npublic class Employee { public string Name { get; set; } public string Department { get; set; } }",
+          "reference_solution": "static Dictionary<string, int> HeadcountByDepartment(List<Employee> employees)\n{\n    return employees\n        .GroupBy(e => e.Department)\n        .ToDictionary(g => g.Key, g => g.Count());\n}",
+          "evaluation_points": [
+            "Groups by Department using GroupBy",
+            "Uses the group Key as dictionary key and Count() as value",
+            "Converts to a Dictionary with ToDictionary",
+            "Works for an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "employees = [Asha/Sales, Ben/IT, Chen/Sales, Dev/HR]",
+              "expected": "{Sales: 2, IT: 1, HR: 1}"
+            },
+            {
+              "input": "employees = []",
+              "expected": "{} (empty)"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "A staircase has n steps and you can climb either 1 or 2 steps at a time. Write a recursive C# method `static long CountWays(int n)` that returns the number of distinct ways to reach the top. Use memoisation (e.g. a Dictionary<int, long>) so that n up to 80 runs instantly. Treat n = 0 and n = 1 as 1 way.",
+          "reference_solution": "static Dictionary<int, long> memo = new Dictionary<int, long>();\n\nstatic long CountWays(int n)\n{\n    if (n <= 1) return 1;\n    if (memo.TryGetValue(n, out long cached)) return cached;\n\n    long ways = CountWays(n - 1) + CountWays(n - 2);\n    memo[n] = ways;\n    return ways;\n}",
+          "evaluation_points": [
+            "Correct base cases for n = 0 and n = 1",
+            "Recurrence ways(n) = ways(n-1) + ways(n-2)",
+            "Stores and reuses computed results (memoisation) to avoid exponential time",
+            "Uses long to avoid overflow for large n"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 2",
+              "expected": "2"
+            },
+            {
+              "input": "n = 5",
+              "expected": "8"
+            },
+            {
+              "input": "n = 50",
+              "expected": "20365011074"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S3-10",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# method `static int[] MergeSorted(int[] a, int[] b)` that merges two arrays already sorted in ascending order into a new sorted array containing all elements of both (duplicates kept). Do not call Array.Sort, LINQ or any other sorting method; use a single pass with two indexes.",
+          "reference_solution": "static int[] MergeSorted(int[] a, int[] b)\n{\n    int[] result = new int[a.Length + b.Length];\n    int i = 0, j = 0, k = 0;\n    while (i < a.Length && j < b.Length)\n    {\n        if (a[i] <= b[j]) result[k++] = a[i++];\n        else result[k++] = b[j++];\n    }\n    while (i < a.Length) result[k++] = a[i++];\n    while (j < b.Length) result[k++] = b[j++];\n    return result;\n}",
+          "evaluation_points": [
+            "Allocates a result array of length a.Length + b.Length",
+            "Compares the current elements of both arrays and takes the smaller",
+            "Copies the remaining elements of whichever array is not exhausted",
+            "Handles empty arrays and duplicate values",
+            "Does not use a sorting method"
+          ],
+          "test_cases": [
+            {
+              "input": "a = { 1, 3, 5 }, b = { 2, 4, 6, 8 }",
+              "expected": "{ 1, 2, 3, 4, 5, 6, 8 }"
+            },
+            {
+              "input": "a = { }, b = { 1, 2 }",
+              "expected": "{ 1, 2 }"
+            },
+            {
+              "input": "a = { 1, 1 }, b = { 1 }",
+              "expected": "{ 1, 1, 1 }"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-CSHARP-S4-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static bool IsLeapYear(int year)` that returns true if year is a leap year in the Gregorian calendar: divisible by 4, except years divisible by 100, unless they are also divisible by 400. Do not use DateTime.IsLeapYear.",
+          "reference_solution": "static bool IsLeapYear(int year)\n{\n    if (year % 400 == 0) return true;\n    if (year % 100 == 0) return false;\n    return year % 4 == 0;\n}",
+          "evaluation_points": [
+            "Applies the divisible-by-400 rule",
+            "Applies the divisible-by-100 exception",
+            "Applies the divisible-by-4 rule",
+            "Rules are ordered/combined so 1900 is false and 2000 is true"
+          ],
+          "test_cases": [
+            {
+              "input": "year = 2024",
+              "expected": "true"
+            },
+            {
+              "input": "year = 1900",
+              "expected": "false"
+            },
+            {
+              "input": "year = 2000",
+              "expected": "true"
+            },
+            {
+              "input": "year = 2023",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-02",
+          "topic": "Loops",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following C# program print? Explain how continue and break affect the nested loops and how the while loop ends.",
+          "starter_code": "using System;\n\nclass Program\n{\n    static void Main()\n    {\n        for (int i = 1; i <= 3; i++)\n        {\n            for (int j = 1; j <= 3; j++)\n            {\n                if (j == 2) continue;\n                if (i == 3) break;\n                Console.Write(i * 10 + j + \" \");\n            }\n        }\n        Console.WriteLine();\n\n        int k = 0;\n        while (k < 10)\n        {\n            k += 4;\n        }\n        Console.WriteLine(k);\n    }\n}",
+          "reference_solution": "Output:\n11 13 21 23\n12\n\nExplanation: For i = 1 and i = 2 the inner loop prints j = 1 and j = 3; j = 2 is skipped by continue, which moves to the next iteration of the inner loop only. The expression i * 10 + j is evaluated numerically first (left to right) and then the space is appended, so values such as 11 and 13 are printed. When i = 3, j = 1 reaches break, which exits only the inner loop; the outer loop then ends because i becomes 4. The while loop adds 4 each time (4, 8, 12) and stops when k is no longer less than 10, so it prints 12.",
+          "evaluation_points": [
+            "States the output: first line `11 13 21 23 ` and second line `12`",
+            "Explains continue skips j == 2 but the inner loop keeps going",
+            "Explains break (when i == 3) exits only the inner loop",
+            "Explains i * 10 + j is added as numbers before being concatenated with \" \"",
+            "Explains k becomes 4, 8, 12 and the loop stops once k >= 10"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-03",
+          "topic": "List<T>",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static int CountOccurrences(List<string> items, string target)` that returns how many elements of items equal target, ignoring case. Null elements in the list must be skipped without throwing. Use a loop (no LINQ).",
+          "reference_solution": "static int CountOccurrences(List<string> items, string target)\n{\n    int count = 0;\n    foreach (string item in items)\n    {\n        if (item != null && string.Equals(item, target, StringComparison.OrdinalIgnoreCase))\n            count++;\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Loops over the list and counts matches",
+            "Comparison ignores case (StringComparison.OrdinalIgnoreCase or equivalent)",
+            "Does not throw on null elements (avoids item.ToLower() on null)",
+            "Returns 0 for an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "items = [\"Apple\", \"apple\", \"Pear\", \"APPLE\"], target = \"apple\"",
+              "expected": "3"
+            },
+            {
+              "input": "items = [\"a\", null, \"A\"], target = \"a\"",
+              "expected": "2"
+            },
+            {
+              "input": "items = [], target = \"x\"",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-04",
+          "topic": "Dictionary<TKey,TValue>",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below should count how many times each letter appears in text (non-letters are ignored, case-sensitive), but it throws an exception at runtime. Identify the exception, explain why it occurs, and provide the corrected method.",
+          "starter_code": "static Dictionary<char, int> CountLetters(string text)\n{\n    var counts = new Dictionary<char, int>();\n    foreach (char c in text)\n    {\n        if (char.IsLetter(c))\n        {\n            counts[c]++;\n        }\n    }\n    return counts;\n}",
+          "reference_solution": "static Dictionary<char, int> CountLetters(string text)\n{\n    var counts = new Dictionary<char, int>();\n    foreach (char c in text)\n    {\n        if (char.IsLetter(c))\n        {\n            // fix: a missing key cannot be read, so read it safely first\n            counts.TryGetValue(c, out int current);\n            counts[c] = current + 1;\n        }\n    }\n    return counts;\n}",
+          "evaluation_points": [
+            "Identifies KeyNotFoundException",
+            "Explains that counts[c]++ reads the key before writing it, and the key does not exist the first time",
+            "Fixes with TryGetValue, ContainsKey check, or initialising the key to 0",
+            "The corrected method returns correct counts"
+          ],
+          "test_cases": [
+            {
+              "input": "text = \"banana\"",
+              "expected": "{b: 1, a: 3, n: 2}"
+            },
+            {
+              "input": "text = \"a1a\"",
+              "expected": "{a: 2}"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-05",
+          "topic": "Abstract Classes & Inheritance",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write an abstract C# class `Employee` with a read-only `Name` property set by a protected constructor and an abstract method `decimal MonthlyPay()`. Then write two subclasses:\n- `SalariedEmployee(string name, decimal annualSalary)` whose monthly pay is annualSalary / 12;\n- `HourlyEmployee(string name, decimal hourlyRate, int hoursWorked)` whose monthly pay is hourlyRate * hoursWorked.",
+          "reference_solution": "public abstract class Employee\n{\n    public string Name { get; }\n\n    protected Employee(string name)\n    {\n        Name = name;\n    }\n\n    public abstract decimal MonthlyPay();\n}\n\npublic class SalariedEmployee : Employee\n{\n    private readonly decimal annualSalary;\n\n    public SalariedEmployee(string name, decimal annualSalary) : base(name)\n    {\n        this.annualSalary = annualSalary;\n    }\n\n    public override decimal MonthlyPay() => annualSalary / 12;\n}\n\npublic class HourlyEmployee : Employee\n{\n    private readonly decimal hourlyRate;\n    private readonly int hoursWorked;\n\n    public HourlyEmployee(string name, decimal hourlyRate, int hoursWorked) : base(name)\n    {\n        this.hourlyRate = hourlyRate;\n        this.hoursWorked = hoursWorked;\n    }\n\n    public override decimal MonthlyPay() => hourlyRate * hoursWorked;\n}",
+          "evaluation_points": [
+            "Employee is abstract with an abstract MonthlyPay method",
+            "Subclasses call the base constructor with : base(name)",
+            "Subclasses use override and implement the correct formulas",
+            "Uses decimal for money values",
+            "Objects can be used polymorphically through an Employee reference"
+          ],
+          "test_cases": [
+            {
+              "input": "Employee e = new SalariedEmployee(\"Mia\", 60000); e.MonthlyPay()",
+              "expected": "5000"
+            },
+            {
+              "input": "Employee e = new HourlyEmployee(\"Leo\", 25, 160); e.MonthlyPay()",
+              "expected": "4000"
+            },
+            {
+              "input": "sum of MonthlyPay() for both in a List<Employee>",
+              "expected": "9000"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-06",
+          "topic": "Strings & StringBuilder",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static string CapitalizeWords(string s)` that returns s with the first letter of every word in upper case and all other letters in lower case. Words are separated by spaces; keep all spaces exactly as they are (including multiple or leading spaces). Use StringBuilder.",
+          "reference_solution": "static string CapitalizeWords(string s)\n{\n    var sb = new StringBuilder(s.Length);\n    bool startOfWord = true;\n    foreach (char c in s)\n    {\n        if (c == ' ')\n        {\n            sb.Append(c);\n            startOfWord = true;\n        }\n        else\n        {\n            sb.Append(startOfWord ? char.ToUpper(c) : char.ToLower(c));\n            startOfWord = false;\n        }\n    }\n    return sb.ToString();\n}",
+          "evaluation_points": [
+            "Upper-cases the first character after a space or at the start",
+            "Lower-cases the remaining characters of each word",
+            "Preserves the original spacing (does not Split and Join with single spaces)",
+            "Uses StringBuilder and handles an empty string"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"hello wORLD\"",
+              "expected": "\"Hello World\""
+            },
+            {
+              "input": "s = \"  multiple   spaces\"",
+              "expected": "\"  Multiple   Spaces\""
+            },
+            {
+              "input": "s = \"\"",
+              "expected": "\"\""
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-07",
+          "topic": "Exceptions",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "What does the following C# program print? Explain the order in which the try, catch and finally blocks run, including when a return statement is inside try or catch.",
+          "starter_code": "using System;\n\nclass Program\n{\n    static int Divide(int a, int b)\n    {\n        try\n        {\n            Console.WriteLine(\"Start\");\n            return a / b;\n        }\n        catch (DivideByZeroException)\n        {\n            Console.WriteLine(\"Cannot divide by zero\");\n            return -1;\n        }\n        finally\n        {\n            Console.WriteLine(\"Finally\");\n        }\n    }\n\n    static void Main()\n    {\n        Console.WriteLine(Divide(10, 2));\n        Console.WriteLine(Divide(1, 0));\n    }\n}",
+          "reference_solution": "Output:\nStart\nFinally\n5\nStart\nCannot divide by zero\nFinally\n-1\n\nExplanation: In the first call, try prints \"Start\" and evaluates a / b = 5 for the return; before control leaves the method, finally prints \"Finally\"; then Main prints the returned 5. In the second call, 1 / 0 with integers throws DivideByZeroException, so the catch block prints its message and prepares to return -1; finally again runs before the method returns, and then Main prints -1.",
+          "evaluation_points": [
+            "States the exact output (seven lines, in order)",
+            "Explains finally always runs, even after return",
+            "Explains the return value is computed before finally runs but is printed by Main afterwards",
+            "Explains integer division by zero throws DivideByZeroException which is caught and returns -1"
+          ],
+          "test_cases": [],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-08",
+          "topic": "Loops & StringBuilder",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static string FizzBuzzLine(int n)` that returns the numbers from 1 to n separated by single spaces, where multiples of 3 are replaced by \"Fizz\", multiples of 5 by \"Buzz\", and multiples of both by \"FizzBuzz\". There must be no leading or trailing space. Use StringBuilder. Assume n >= 1.",
+          "reference_solution": "static string FizzBuzzLine(int n)\n{\n    var sb = new StringBuilder();\n    for (int i = 1; i <= n; i++)\n    {\n        if (i > 1) sb.Append(' ');\n        if (i % 15 == 0) sb.Append(\"FizzBuzz\");\n        else if (i % 3 == 0) sb.Append(\"Fizz\");\n        else if (i % 5 == 0) sb.Append(\"Buzz\");\n        else sb.Append(i);\n    }\n    return sb.ToString();\n}",
+          "evaluation_points": [
+            "Checks the multiple-of-15 case before 3 and 5",
+            "Loops from 1 to n inclusive",
+            "Separates items with single spaces and no trailing space",
+            "Uses StringBuilder rather than repeated string concatenation"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 5",
+              "expected": "\"1 2 Fizz 4 Buzz\""
+            },
+            {
+              "input": "n = 15",
+              "expected": "\"1 2 Fizz 4 Buzz Fizz 7 8 Fizz Buzz 11 Fizz 13 14 FizzBuzz\""
+            },
+            {
+              "input": "n = 1",
+              "expected": "\"1\""
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-09",
+          "topic": "LINQ Basics",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Given the class below, write a C# method `static List<string> TopCustomers(List<Order> orders, int n)` that uses LINQ to return the names of the n customers with the highest total order Amount. Sort by total descending; when totals are equal, sort by customer name ascending. If there are fewer than n customers, return all of them.\n\npublic class Order { public string Customer { get; set; } public decimal Amount { get; set; } }",
+          "reference_solution": "static List<string> TopCustomers(List<Order> orders, int n)\n{\n    return orders\n        .GroupBy(o => o.Customer)\n        .Select(g => new { Customer = g.Key, Total = g.Sum(o => o.Amount) })\n        .OrderByDescending(x => x.Total)\n        .ThenBy(x => x.Customer)\n        .Take(n)\n        .Select(x => x.Customer)\n        .ToList();\n}",
+          "evaluation_points": [
+            "Groups orders by customer and sums Amount per group",
+            "Orders by total descending then by name ascending (OrderByDescending + ThenBy)",
+            "Uses Take(n) so fewer than n customers is handled naturally",
+            "Returns only customer names as a List<string>"
+          ],
+          "test_cases": [
+            {
+              "input": "orders = [Ana 50, Raj 30, Ana 40, Kim 60, Raj 30], n = 2",
+              "expected": "[Ana, Kim]  (totals Ana 90, Kim 60, Raj 60)"
+            },
+            {
+              "input": "same orders, n = 5",
+              "expected": "[Ana, Kim, Raj]"
+            },
+            {
+              "input": "orders = [], n = 3",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S4-10",
+          "topic": "Classes & Collections",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# class `Inventory` that tracks stock quantities by item name using a private Dictionary<string, int>. It must provide:\n- `void Add(string item, int quantity)`: increases the stock; throws ArgumentException if quantity <= 0;\n- `void Remove(string item, int quantity)`: decreases the stock; throws ArgumentException if quantity <= 0 and InvalidOperationException if there is not enough stock; when stock reaches 0 the item is removed from the dictionary;\n- `int GetQuantity(string item)`: returns the current stock, or 0 for unknown items;\n- a read-only property `int DistinctItems` returning how many different items are in stock.",
+          "reference_solution": "public class Inventory\n{\n    private readonly Dictionary<string, int> stock = new Dictionary<string, int>();\n\n    public int DistinctItems => stock.Count;\n\n    public void Add(string item, int quantity)\n    {\n        if (quantity <= 0) throw new ArgumentException(\"Quantity must be positive.\", nameof(quantity));\n        stock[item] = GetQuantity(item) + quantity;\n    }\n\n    public void Remove(string item, int quantity)\n    {\n        if (quantity <= 0) throw new ArgumentException(\"Quantity must be positive.\", nameof(quantity));\n        int current = GetQuantity(item);\n        if (quantity > current) throw new InvalidOperationException(\"Insufficient stock for \" + item);\n\n        if (current == quantity) stock.Remove(item);\n        else stock[item] = current - quantity;\n    }\n\n    public int GetQuantity(string item)\n    {\n        return stock.TryGetValue(item, out int qty) ? qty : 0;\n    }\n}",
+          "evaluation_points": [
+            "Dictionary field is private (encapsulation)",
+            "Add creates or increases an entry without KeyNotFoundException",
+            "Remove validates quantity and stock before changing anything, and removes the key at zero",
+            "Throws the specified exception types",
+            "GetQuantity returns 0 for unknown items; DistinctItems reflects the dictionary count"
+          ],
+          "test_cases": [
+            {
+              "input": "Add(\"pen\", 10); Add(\"pen\", 5); Remove(\"pen\", 3); GetQuantity(\"pen\")",
+              "expected": "12"
+            },
+            {
+              "input": "Remove(\"ink\", 1)",
+              "expected": "throws InvalidOperationException"
+            },
+            {
+              "input": "Add(\"cap\", 2); Remove(\"cap\", 2); GetQuantity(\"cap\"), DistinctItems",
+              "expected": "0, 1 (only pen remains)"
+            },
+            {
+              "input": "Add(\"pen\", 0)",
+              "expected": "throws ArgumentException"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-CSHARP-S5-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static string Initials(string fullName)` that returns the upper-case initials of each word followed by a dot, e.g. \"john ronald tolkien\" -> \"J.R.T.\". Ignore extra spaces anywhere in the input. An empty or all-space string returns \"\".",
+          "reference_solution": "static string Initials(string fullName)\n{\n    string[] parts = fullName.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);\n    string result = \"\";\n    foreach (string part in parts)\n    {\n        result += char.ToUpper(part[0]) + \".\";\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Splits into words and removes empty entries",
+            "Takes the first character of each word and upper-cases it",
+            "Appends a dot after each initial",
+            "Returns an empty string for empty or whitespace-only input"
+          ],
+          "test_cases": [
+            {
+              "input": "fullName = \"john ronald tolkien\"",
+              "expected": "\"J.R.T.\""
+            },
+            {
+              "input": "fullName = \"  ada   lovelace \"",
+              "expected": "\"A.L.\""
+            },
+            {
+              "input": "fullName = \"\"",
+              "expected": "\"\""
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-02",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a C# method `static int[] RunningTotal(int[] values)` that returns a new array where element i is the sum of values[0] through values[i]. The input array must not be modified. An empty input returns an empty array.",
+          "reference_solution": "static int[] RunningTotal(int[] values)\n{\n    int[] result = new int[values.Length];\n    int sum = 0;\n    for (int i = 0; i < values.Length; i++)\n    {\n        sum += values[i];\n        result[i] = sum;\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Creates a new array of the same length",
+            "Keeps a running sum and stores it at each index",
+            "Does not modify the input array",
+            "Handles empty arrays and negative numbers"
+          ],
+          "test_cases": [
+            {
+              "input": "values = { 1, 2, 3, 4 }",
+              "expected": "{ 1, 3, 6, 10 }"
+            },
+            {
+              "input": "values = { 5, -2 }",
+              "expected": "{ 5, 3 }"
+            },
+            {
+              "input": "values = { }",
+              "expected": "{ }"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-03",
+          "topic": "Methods & Parameter Passing",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following C# program print? Explain what happens to each of the three arguments inside Update.",
+          "starter_code": "using System;\n\nclass Program\n{\n    static void Update(int number, int[] values, ref int counter)\n    {\n        number = 100;\n        values[0] = 100;\n        counter++;\n        values = new int[] { 7, 7, 7 };\n    }\n\n    static void Main()\n    {\n        int n = 1;\n        int[] arr = { 1, 2, 3 };\n        int c = 0;\n\n        Update(n, arr, ref c);\n\n        Console.WriteLine(n);\n        Console.WriteLine(string.Join(\",\", arr));\n        Console.WriteLine(c);\n    }\n}",
+          "reference_solution": "Output:\n1\n100,2,3\n1\n\nExplanation: number is an int passed by value, so the method works on a copy and n stays 1. values receives a copy of the reference to the same array object, so values[0] = 100 modifies the caller's arr; the later `values = new int[] {7,7,7}` only points the local parameter at a new array and does not affect arr, which prints 100,2,3. counter is passed with ref, so counter++ updates the caller's variable c to 1.",
+          "evaluation_points": [
+            "States the exact output: 1, then 100,2,3, then 1",
+            "Explains int is passed by value, so changing number does not affect n",
+            "Explains the array reference is copied, so values[0] = 100 changes the caller's array",
+            "Explains that assigning a new array to values only changes the local copy of the reference",
+            "Explains ref lets counter++ change c"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-04",
+          "topic": "Null Handling",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Given the class below, write a C# method `static string DisplayName(Customer c)` that returns the text to show for a customer: the Nickname if it is not null/empty/whitespace, otherwise the FullName if it is not null/empty/whitespace, otherwise \"Guest\". If c itself is null, return \"Guest\". Trim the returned name. Use the null-conditional (?.) and null-coalescing (??) operators where appropriate.\n\npublic class Customer { public string FullName { get; set; } public string Nickname { get; set; } }",
+          "reference_solution": "static string DisplayName(Customer c)\n{\n    string nick = string.IsNullOrWhiteSpace(c?.Nickname) ? null : c.Nickname.Trim();\n    string full = string.IsNullOrWhiteSpace(c?.FullName) ? null : c.FullName.Trim();\n    return nick ?? full ?? \"Guest\";\n}",
+          "evaluation_points": [
+            "Does not throw when c is null (uses ?. or an explicit null check)",
+            "Treats empty and whitespace-only strings like null (string.IsNullOrWhiteSpace)",
+            "Applies the priority Nickname -> FullName -> \"Guest\" (e.g. with chained ??)",
+            "Trims the returned value"
+          ],
+          "test_cases": [
+            {
+              "input": "c = { FullName = \"Priya Shah\", Nickname = \"Pri\" }",
+              "expected": "\"Pri\""
+            },
+            {
+              "input": "c = { FullName = \"Tom Lee\", Nickname = \"  \" }",
+              "expected": "\"Tom Lee\""
+            },
+            {
+              "input": "c = null",
+              "expected": "\"Guest\""
+            },
+            {
+              "input": "c = { FullName = null, Nickname = null }",
+              "expected": "\"Guest\""
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-05",
+          "topic": "Sorting/Searching",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The iterative binary search below should return the index of target in an array sorted in ascending order, or -1 if target is not present. For some inputs it returns -1 even though the value exists (for example searching for 9 in { 1, 3, 5, 7, 9 }). Find the bug, explain it, and provide the corrected method.",
+          "starter_code": "static int BinarySearch(int[] sorted, int target)\n{\n    int low = 0, high = sorted.Length - 1;\n    while (low < high)\n    {\n        int mid = (low + high) / 2;\n        if (sorted[mid] == target) return mid;\n        if (sorted[mid] < target) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}",
+          "reference_solution": "static int BinarySearch(int[] sorted, int target)\n{\n    int low = 0, high = sorted.Length - 1;\n    while (low <= high)   // fix: <= so the last remaining element is also checked\n    {\n        int mid = low + (high - low) / 2;\n        if (sorted[mid] == target) return mid;\n        if (sorted[mid] < target) low = mid + 1;\n        else high = mid - 1;\n    }\n    return -1;\n}",
+          "evaluation_points": [
+            "Identifies that `low < high` stops before checking the element when low == high",
+            "Changes the loop condition to `low <= high`",
+            "Keeps low = mid + 1 / high = mid - 1 updates (no infinite loop)",
+            "Optionally notes low + (high - low) / 2 avoids overflow",
+            "Single-element arrays now work"
+          ],
+          "test_cases": [
+            {
+              "input": "sorted = { 1, 3, 5, 7, 9 }, target = 9",
+              "expected": "4"
+            },
+            {
+              "input": "sorted = { 1, 3, 5, 7, 9 }, target = 3",
+              "expected": "1"
+            },
+            {
+              "input": "sorted = { 2 }, target = 2",
+              "expected": "0"
+            },
+            {
+              "input": "sorted = { 1, 3, 5 }, target = 4",
+              "expected": "-1"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-06",
+          "topic": "Interfaces",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Define a C# interface `IDiscount` with one method `decimal Apply(decimal amount)`. Implement it in two classes:\n- `PercentageDiscount(decimal percent)`: reduces the amount by percent percent;\n- `FlatDiscount(decimal value)`: subtracts a fixed value, but never returns less than 0.\nThen write `public static decimal ApplyAll(decimal amount, List<IDiscount> discounts)` in a static class `Checkout` that applies each discount in list order and returns the final amount.",
+          "reference_solution": "public interface IDiscount\n{\n    decimal Apply(decimal amount);\n}\n\npublic class PercentageDiscount : IDiscount\n{\n    private readonly decimal percent;\n    public PercentageDiscount(decimal percent) { this.percent = percent; }\n    public decimal Apply(decimal amount) => amount - amount * percent / 100;\n}\n\npublic class FlatDiscount : IDiscount\n{\n    private readonly decimal value;\n    public FlatDiscount(decimal value) { this.value = value; }\n    public decimal Apply(decimal amount) => Math.Max(0m, amount - value);\n}\n\npublic static class Checkout\n{\n    public static decimal ApplyAll(decimal amount, List<IDiscount> discounts)\n    {\n        foreach (IDiscount d in discounts)\n            amount = d.Apply(amount);\n        return amount;\n    }\n}",
+          "evaluation_points": [
+            "Declares the interface method without a body and implements it publicly in both classes",
+            "PercentageDiscount and FlatDiscount compute correctly; FlatDiscount clamps at 0",
+            "ApplyAll depends only on IDiscount (polymorphism) and applies discounts in order",
+            "Uses decimal for money"
+          ],
+          "test_cases": [
+            {
+              "input": "new PercentageDiscount(10).Apply(200)",
+              "expected": "180"
+            },
+            {
+              "input": "new FlatDiscount(50).Apply(30)",
+              "expected": "0"
+            },
+            {
+              "input": "Checkout.ApplyAll(100, [PercentageDiscount(20), FlatDiscount(15)])",
+              "expected": "65"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-07",
+          "topic": "Dictionary<TKey,TValue>",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a C# method `static char? FirstUniqueChar(string s)` that returns the first character in s that occurs exactly once, or null if every character repeats (or s is empty). The comparison is case-sensitive. Use a Dictionary<char, int> to count characters, then scan the string a second time.",
+          "reference_solution": "static char? FirstUniqueChar(string s)\n{\n    var counts = new Dictionary<char, int>();\n    foreach (char c in s)\n    {\n        counts.TryGetValue(c, out int n);\n        counts[c] = n + 1;\n    }\n    foreach (char c in s)\n    {\n        if (counts[c] == 1)\n            return c;\n    }\n    return null;\n}",
+          "evaluation_points": [
+            "First pass counts every character in a Dictionary",
+            "Second pass iterates over the string (not the dictionary) to respect original order",
+            "Returns char? and null when no unique character exists",
+            "Case-sensitive ('L' and 'l' are different)"
+          ],
+          "test_cases": [
+            {
+              "input": "s = \"swiss\"",
+              "expected": "'w'"
+            },
+            {
+              "input": "s = \"aabb\"",
+              "expected": "null"
+            },
+            {
+              "input": "s = \"Level\"",
+              "expected": "'L'"
+            },
+            {
+              "input": "s = \"\"",
+              "expected": "null"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-08",
+          "topic": "LINQ Basics",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete the C# method below by filling in the three lambda expressions marked 1, 2 and 3. The method must return the squares of all odd numbers in the list, sorted from largest to smallest. Negative odd numbers count as odd.",
+          "starter_code": "static List<int> OddSquaresDescending(List<int> numbers)\n{\n    return numbers\n        .Where(/* 1: keep only odd numbers */)\n        .Select(/* 2: square each number */)\n        .OrderByDescending(/* 3: sort key */)\n        .ToList();\n}",
+          "reference_solution": "static List<int> OddSquaresDescending(List<int> numbers)\n{\n    return numbers\n        .Where(n => n % 2 != 0)\n        .Select(n => n * n)\n        .OrderByDescending(sq => sq)\n        .ToList();\n}",
+          "evaluation_points": [
+            "Filter uses n % 2 != 0 (n % 2 == 1 fails for negative odd numbers)",
+            "Select squares each value",
+            "OrderByDescending uses the squared value as the key",
+            "Returns an empty list when there are no odd numbers"
+          ],
+          "test_cases": [
+            {
+              "input": "numbers = [1, 2, 3, 4, 5]",
+              "expected": "[25, 9, 1]"
+            },
+            {
+              "input": "numbers = [-3, 2, 7]",
+              "expected": "[49, 9]"
+            },
+            {
+              "input": "numbers = [2, 4]",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive C# method `static List<string> NoConsecutiveOnes(int n)` that returns all binary strings of length n (1 <= n <= 15) that do not contain two adjacent '1' characters, in ascending lexicographic order. For n = 3 the result is [\"000\", \"001\", \"010\", \"100\", \"101\"].",
+          "reference_solution": "static List<string> NoConsecutiveOnes(int n)\n{\n    var result = new List<string>();\n    Generate(\"\", n, result);\n    return result;\n}\n\nstatic void Generate(string current, int n, List<string> result)\n{\n    if (current.Length == n)\n    {\n        result.Add(current);\n        return;\n    }\n    Generate(current + \"0\", n, result);\n    if (current.Length == 0 || current[current.Length - 1] != '1')\n        Generate(current + \"1\", n, result);\n}",
+          "evaluation_points": [
+            "Base case adds the string when it reaches length n",
+            "Always tries appending '0'",
+            "Appends '1' only if the previous character is not '1' (prunes invalid strings instead of filtering afterwards)",
+            "Trying '0' before '1' yields lexicographic order without sorting"
+          ],
+          "test_cases": [
+            {
+              "input": "n = 1",
+              "expected": "[\"0\", \"1\"]"
+            },
+            {
+              "input": "n = 2",
+              "expected": "[\"00\", \"01\", \"10\"]"
+            },
+            {
+              "input": "n = 3",
+              "expected": "[\"000\", \"001\", \"010\", \"100\", \"101\"]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-CSHARP-S5-10",
+          "topic": "Arrays (2D)",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a C# method `static int[,] RotateClockwise(int[,] matrix)` that takes an n x n matrix and returns a NEW n x n matrix rotated 90 degrees clockwise. The input must not be modified. For example [[1,2],[3,4]] becomes [[3,1],[4,2]].",
+          "reference_solution": "static int[,] RotateClockwise(int[,] matrix)\n{\n    int n = matrix.GetLength(0);\n    int[,] result = new int[n, n];\n    for (int row = 0; row < n; row++)\n    {\n        for (int col = 0; col < n; col++)\n        {\n            result[col, n - 1 - row] = matrix[row, col];\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Uses GetLength(0) to get the size of a rectangular int[,] array",
+            "Maps element [row, col] to [col, n - 1 - row]",
+            "Writes into a new array and leaves the input unchanged",
+            "Works for 1 x 1 and larger matrices"
+          ],
+          "test_cases": [
+            {
+              "input": "matrix = [[1, 2], [3, 4]]",
+              "expected": "[[3, 1], [4, 2]]"
+            },
+            {
+              "input": "matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]",
+              "expected": "[[7, 4, 1], [8, 5, 2], [9, 6, 3]]"
+            },
+            {
+              "input": "matrix = [[5]]",
+              "expected": "[[5]]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

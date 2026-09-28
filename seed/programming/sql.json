@@ -1,0 +1,1341 @@
+{
+  "language": "sql",
+  "label": "SQL",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-SQL-S1-01",
+          "topic": "SELECT / WHERE",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a query that returns the name and price of every product in the 'Stationery' category that costs less than 5.00 and currently has stock greater than 0. Sort the result by price, lowest first.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  category VARCHAR(30) NOT NULL,\n  price DECIMAL(8,2) NOT NULL,\n  stock INT NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'Stapler', 'Stationery', 7.50, 40),\n (2, 'Pencil Pack', 'Stationery', 3.20, 120),\n (3, 'Desk Lamp', 'Furniture', 4.99, 15),\n (4, 'Sticky Notes', 'Stationery', 2.75, 0),\n (5, 'Office Chair', 'Furniture', 89.00, 8),\n (6, 'Eraser', 'Stationery', 0.99, 300);",
+          "reference_solution": "SELECT name, price\nFROM products\nWHERE category = 'Stationery'\n  AND price < 5.00\n  AND stock > 0\nORDER BY price ASC;",
+          "evaluation_points": [
+            "Filters on all three conditions combined with AND (category, price < 5, stock > 0)",
+            "Excludes out-of-stock 'Sticky Notes' and the cheap non-Stationery 'Desk Lamp'",
+            "Selects only name and price",
+            "Sorts by price ascending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | price\nEraser | 0.99\nPencil Pack | 3.20"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (7, 'Ruler', 'Stationery', 1.50, 25);",
+              "expected": "name | price\nEraser | 0.99\nRuler | 1.50\nPencil Pack | 3.20"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-02",
+          "topic": "DISTINCT",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "The customers table contains many customers from the same cities. Write a query that lists each city that has at least one customer exactly once, in alphabetical order. Return a single column named city.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  city VARCHAR(40) NOT NULL\n);\nINSERT INTO customers VALUES\n (1, 'Acme Traders', 'Pune'),\n (2, 'Blue Hill Ltd', 'Chennai'),\n (3, 'Corner Mart', 'Pune'),\n (4, 'Delta Foods', 'Austin'),\n (5, 'Evergreen Co', 'Chennai');",
+          "reference_solution": "SELECT DISTINCT city\nFROM customers\nORDER BY city;",
+          "evaluation_points": [
+            "Uses DISTINCT (or GROUP BY city) so each city appears once",
+            "Returns only the city column",
+            "Orders alphabetically ascending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "city\nAustin\nChennai\nPune"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO customers VALUES (6, 'Frontier Supply', 'Boston');",
+              "expected": "city\nAustin\nBoston\nChennai\nPune"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-03",
+          "topic": "NULL Handling",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Some employees have no bonus recorded (NULL). State the exact single row returned by the query in starter_code (all four column values) and explain why COUNT(*) and COUNT(bonus) differ.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  bonus DECIMAL(10,2)\n);\nINSERT INTO employees VALUES\n (1, 'Asha', 500),\n (2, 'Ben', NULL),\n (3, 'Chen', 300),\n (4, 'Dina', NULL),\n (5, 'Eli', 200);\n\n-- Query:\nSELECT COUNT(*) AS total_rows,\n       COUNT(bonus) AS with_bonus,\n       SUM(bonus) AS bonus_sum,\n       MIN(bonus) AS min_bonus\nFROM employees;",
+          "reference_solution": "Result rows:\ntotal_rows | with_bonus | bonus_sum | min_bonus\n5 | 3 | 1000 | 200\n\nCOUNT(*) counts all 5 rows. COUNT(bonus), SUM(bonus) and MIN(bonus) ignore NULL values, so only the 3 recorded bonuses (500, 300, 200) are counted, summed (1000) and compared (minimum 200). NULL is not treated as zero.",
+          "evaluation_points": [
+            "total_rows = 5 because COUNT(*) counts rows regardless of NULLs",
+            "with_bonus = 3 because COUNT(column) skips NULLs",
+            "bonus_sum = 1000 and min_bonus = 200: SUM and MIN ignore NULLs (NULL is not treated as 0)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "total_rows | with_bonus | bonus_sum | min_bonus\n5 | 3 | 1000 | 200"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-04",
+          "topic": "GROUP BY / HAVING",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Using the orders table, return customer_id, the number of orders (order_count) and the total order amount (total_amount) for every customer who has placed at least 3 orders. Sort by total_amount, highest first.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 10, 120.00), (2, 20, 75.50), (3, 10, 60.00),\n (4, 30, 40.00), (5, 30, 55.25), (6, 10, 30.00),\n (7, 30, 80.00), (8, 20, 99.00), (9, 30, 10.00);",
+          "reference_solution": "SELECT customer_id,\n       COUNT(*) AS order_count,\n       SUM(amount) AS total_amount\nFROM orders\nGROUP BY customer_id\nHAVING COUNT(*) >= 3\nORDER BY total_amount DESC;",
+          "evaluation_points": [
+            "Groups by customer_id",
+            "Uses HAVING (not WHERE) to filter on COUNT(*) >= 3",
+            "Computes COUNT and SUM per customer",
+            "Sorts by total amount descending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "customer_id | order_count | total_amount\n10 | 3 | 210\n30 | 4 | 185.25"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (10, 20, 500.00);",
+              "expected": "customer_id | order_count | total_amount\n20 | 3 | 674.50\n10 | 3 | 210\n30 | 4 | 185.25"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-05",
+          "topic": "INNER JOIN",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a query that returns employee_name and department_name for every employee who is assigned to a department. Employees with no department must not appear. Sort by department_name, then employee_name.",
+          "starter_code": "CREATE TABLE departments (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  dept_id INT REFERENCES departments(id)\n);\nINSERT INTO departments VALUES (1, 'Finance'), (2, 'IT'), (3, 'Legal');\nINSERT INTO employees VALUES\n (1, 'Ravi', 2), (2, 'Anna', 1), (3, 'Tom', 2),\n (4, 'Meera', NULL), (5, 'Carl', 1);",
+          "reference_solution": "SELECT e.name AS employee_name,\n       d.name AS department_name\nFROM employees e\nINNER JOIN departments d ON d.id = e.dept_id\nORDER BY d.name, e.name;",
+          "evaluation_points": [
+            "Joins employees to departments on dept_id = departments.id",
+            "Uses INNER JOIN so the employee with NULL dept_id is excluded",
+            "Department 'Legal' (no employees) does not appear",
+            "Correct aliases and two-level sort"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "employee_name | department_name\nAnna | Finance\nCarl | Finance\nRavi | IT\nTom | IT"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (6, 'Zoe', 3);",
+              "expected": "employee_name | department_name\nAnna | Finance\nCarl | Finance\nRavi | IT\nTom | IT\nZoe | Legal"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-06",
+          "topic": "LEFT JOIN",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The query in starter_code should list EVERY customer with the number of orders they placed (order_count), showing 0 for customers with no orders, sorted by name. It currently omits customers without orders. Fix it.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id),\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Arun'), (2, 'Bela'), (3, 'Chris');\nINSERT INTO orders VALUES (1, 1, 50.00), (2, 1, 20.00), (3, 3, 70.00);\n\n-- Query to fix:\nSELECT c.name, COUNT(*) AS order_count\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY c.name;",
+          "reference_solution": "SELECT c.name, COUNT(o.id) AS order_count\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY c.name;",
+          "evaluation_points": [
+            "Changes INNER JOIN to LEFT JOIN (customers on the left)",
+            "Counts COUNT(o.id) instead of COUNT(*) so unmatched customers show 0, not 1",
+            "Keeps grouping per customer and sort by name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | order_count\nArun | 2\nBela | 0\nChris | 1"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO customers VALUES (4, 'Dev');",
+              "expected": "name | order_count\nArun | 2\nBela | 0\nChris | 1\nDev | 0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-07",
+          "topic": "Subqueries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return the name and price of every product whose price is greater than the average price of all products. Use a subquery to compute the average. Sort by price, highest first.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  price DECIMAL(8,2) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'Keyboard', 25.00), (2, 'Monitor', 180.00), (3, 'Mouse', 15.00),\n (4, 'Headset', 60.00), (5, 'Webcam', 45.00);",
+          "reference_solution": "SELECT name, price\nFROM products\nWHERE price > (SELECT AVG(price) FROM products)\nORDER BY price DESC;",
+          "evaluation_points": [
+            "Uses a scalar subquery SELECT AVG(price) FROM products",
+            "Strictly greater than (>) the average",
+            "Does not hard-code the average value (65 in the sample)",
+            "Sorts by price descending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | price\nMonitor | 180"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (6, 'Docking Station', 150.00);",
+              "expected": "name | price\nMonitor | 180\nDocking Station | 150"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-08",
+          "topic": "Constraints & Keys",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Each numbered statement in starter_code runs on its own (autocommit) with foreign keys enforced; a statement that violates a constraint is rejected and the rest continue. Name the statements that fail and the constraint each violates, then state the rows returned by the final query.",
+          "starter_code": "CREATE TABLE departments (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  dept_id INT REFERENCES departments(id),\n  salary DECIMAL(10,2) CHECK (salary > 0)\n);\nINSERT INTO departments VALUES (1, 'Sales'), (2, 'IT');  -- (1)\nINSERT INTO employees VALUES (1, 'Asha', 1, 50000);      -- (2)\nINSERT INTO employees VALUES (2, 'Ben', 3, 42000);       -- (3)\nINSERT INTO employees VALUES (1, 'Chen', 2, 61000);      -- (4)\nINSERT INTO employees VALUES (3, 'Dina', 2, -100);       -- (5)\nINSERT INTO employees VALUES (4, 'Eli', NULL, 39000);    -- (6)\nINSERT INTO employees VALUES (5, NULL, 1, 45000);        -- (7)\n\n-- Query:\nSELECT id, name, dept_id FROM employees ORDER BY id;",
+          "reference_solution": "Failing statements: (3), (4), (5), (7)\n\nResult rows:\nid | name | dept_id\n1 | Asha | 1\n4 | Eli | NULL\n\n(3) violates the FOREIGN KEY (department 3 does not exist); (4) violates the PRIMARY KEY (id 1 already used); (5) violates the CHECK (salary > 0); (7) violates NOT NULL on name. (6) succeeds: a NULL foreign key value is allowed because it references nothing.",
+          "evaluation_points": [
+            "(3) fails: FOREIGN KEY, department 3 does not exist",
+            "(4) fails: PRIMARY KEY, id 1 already exists",
+            "(5) fails: CHECK salary > 0",
+            "(7) fails: NOT NULL on name; (6) succeeds because a NULL foreign key is allowed",
+            "Final rows: (1, Asha, 1) and (4, Eli, NULL)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | name | dept_id\n1 | Asha | 1\n4 | Eli | NULL"
+            },
+            {
+              "input": "Which numbered statements fail?",
+              "expected": "(3), (4), (5), (7)"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-09",
+          "topic": "Window Functions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Return the single highest-paid employee of each department: department, name, salary. If two employees in a department have the same top salary, return the one with the lower id. Use ROW_NUMBER(). Sort by department.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  department VARCHAR(30) NOT NULL,\n  salary DECIMAL(10,2) NOT NULL\n);\nINSERT INTO employees VALUES\n (1, 'Asha', 'IT', 72000), (2, 'Ben', 'IT', 81000),\n (3, 'Chen', 'Sales', 55000), (4, 'Dina', 'Sales', 55000),\n (5, 'Eli', 'HR', 48000), (6, 'Fay', 'IT', 81000);",
+          "reference_solution": "SELECT department, name, salary\nFROM (\n  SELECT department, name, salary,\n         ROW_NUMBER() OVER (PARTITION BY department\n                            ORDER BY salary DESC, id ASC) AS rn\n  FROM employees\n) ranked\nWHERE rn = 1\nORDER BY department;",
+          "evaluation_points": [
+            "ROW_NUMBER() partitioned by department",
+            "Ordered by salary DESC with id ASC as tie-breaker",
+            "Filters rn = 1 in an outer query/CTE (window results cannot be filtered in WHERE of the same level)",
+            "Exactly one row per department (Ben for IT, Chen for Sales)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "department | name | salary\nHR | Eli | 48000\nIT | Ben | 81000\nSales | Chen | 55000"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (7, 'Gia', 'HR', 52000);",
+              "expected": "department | name | salary\nHR | Gia | 52000\nIT | Ben | 81000\nSales | Chen | 55000"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S1-10",
+          "topic": "CASE Expressions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "For every customer, including customers with no invoices, return name, paid_total (sum of invoices with status 'PAID') and unpaid_total (sum of invoices with status 'UNPAID'). Totals must be 0, not NULL, when there is nothing to sum. Use one query with conditional aggregation. Sort by name.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE invoices (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id),\n  amount DECIMAL(10,2) NOT NULL,\n  status VARCHAR(10) NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Northwind'), (2, 'Orbit'), (3, 'Pioneer');\nINSERT INTO invoices VALUES\n (1, 1, 200.00, 'PAID'), (2, 1, 150.00, 'UNPAID'),\n (3, 1, 50.00, 'PAID'), (4, 3, 300.00, 'UNPAID');",
+          "reference_solution": "SELECT c.name,\n       COALESCE(SUM(CASE WHEN i.status = 'PAID' THEN i.amount END), 0) AS paid_total,\n       COALESCE(SUM(CASE WHEN i.status = 'UNPAID' THEN i.amount END), 0) AS unpaid_total\nFROM customers c\nLEFT JOIN invoices i ON i.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY c.name;",
+          "evaluation_points": [
+            "LEFT JOIN so customers without invoices (Orbit) appear",
+            "SUM(CASE WHEN status = ... THEN amount END) per status",
+            "COALESCE (or ELSE 0) so empty totals show 0",
+            "Groups per customer and sorts by name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | paid_total | unpaid_total\nNorthwind | 250 | 150\nOrbit | 0 | 0\nPioneer | 0 | 300"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO invoices VALUES (5, 2, 80.00, 'PAID');",
+              "expected": "name | paid_total | unpaid_total\nNorthwind | 250 | 150\nOrbit | 80 | 0\nPioneer | 0 | 300"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-SQL-S2-01",
+          "topic": "ORDER BY",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "List every employee's name, department and salary, sorted by department alphabetically and, within each department, by salary from highest to lowest.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  department VARCHAR(30) NOT NULL,\n  salary DECIMAL(10,2) NOT NULL\n);\nINSERT INTO employees VALUES\n (1, 'Omar', 'Sales', 45000), (2, 'Priya', 'IT', 70000),\n (3, 'Quinn', 'Sales', 52000), (4, 'Rosa', 'IT', 64000),\n (5, 'Sam', 'Admin', 38000);",
+          "reference_solution": "SELECT name, department, salary\nFROM employees\nORDER BY department ASC, salary DESC;",
+          "evaluation_points": [
+            "Selects name, department, salary",
+            "First sort key department ascending",
+            "Second sort key salary descending (DESC applies only to salary)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | department | salary\nSam | Admin | 38000\nPriya | IT | 70000\nRosa | IT | 64000\nQuinn | Sales | 52000\nOmar | Sales | 45000"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (6, 'Tara', 'Admin', 41000);",
+              "expected": "name | department | salary\nTara | Admin | 41000\nSam | Admin | 38000\nPriya | IT | 70000\nRosa | IT | 64000\nQuinn | Sales | 52000\nOmar | Sales | 45000"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-02",
+          "topic": "LIKE",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Electronics products have a SKU that begins with the prefix 'EL-'. Return sku and name of all products whose SKU starts with 'EL-', sorted by sku.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  sku VARCHAR(20) NOT NULL,\n  name VARCHAR(50) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'EL-100', 'USB Cable'), (2, 'FU-200', 'Bookshelf'),\n (3, 'EL-050', 'Power Bank'), (4, 'XEL-300', 'Label Printer'),\n (5, 'ST-010', 'EL- Marker Set');",
+          "reference_solution": "SELECT sku, name\nFROM products\nWHERE sku LIKE 'EL-%'\nORDER BY sku;",
+          "evaluation_points": [
+            "Uses LIKE 'EL-%' on the sku column",
+            "Wildcard only at the end (not '%EL-%', which would match 'XEL-300')",
+            "Does not filter on name",
+            "Sorted by sku"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "sku | name\nEL-050 | Power Bank\nEL-100 | USB Cable"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (6, 'EL-010', 'HDMI Adapter');",
+              "expected": "sku | name\nEL-010 | HDMI Adapter\nEL-050 | Power Bank\nEL-100 | USB Cable"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-03",
+          "topic": "IN / BETWEEN",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "State the rows (id, amount) returned by the query in starter_code and explain how BETWEEN treats the boundary values.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  status VARCHAR(15) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 'Shipped', 100.00), (2, 'Cancelled', 150.00),\n (3, 'Pending', 200.00), (4, 'Shipped', 250.00),\n (5, 'Returned', 120.00), (6, 'Pending', 99.99);\n\n-- Query:\nSELECT id, amount\nFROM orders\nWHERE amount BETWEEN 100 AND 200\n  AND status NOT IN ('Cancelled', 'Returned')\nORDER BY id;",
+          "reference_solution": "Result rows:\nid | amount\n1 | 100\n3 | 200\n\nBETWEEN 100 AND 200 is inclusive, so 100.00 and 200.00 qualify. Order 2 (Cancelled) and 5 (Returned) are excluded by NOT IN; 250.00 and 99.99 are outside the range.",
+          "evaluation_points": [
+            "Rows returned: 1 (100) and 3 (200)",
+            "BETWEEN is inclusive of both ends, so 100 and 200 qualify",
+            "Orders 2 and 5 are removed by NOT IN, 4 and 6 are outside the range"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | amount\n1 | 100\n3 | 200"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-04",
+          "topic": "Aggregates",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "For each product category return: category, product_count, cheapest (lowest price), most_expensive (highest price) and avg_price (average price rounded to 2 decimals). Sort by category.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  category VARCHAR(30) NOT NULL,\n  price DECIMAL(8,2) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'Notebook', 'Paper', 2.50), (2, 'Printer Paper', 'Paper', 6.00),\n (3, 'Card Stock', 'Paper', 4.25), (4, 'Gel Pen', 'Pens', 1.20),\n (5, 'Fountain Pen', 'Pens', 18.00);",
+          "reference_solution": "SELECT category,\n       COUNT(*) AS product_count,\n       MIN(price) AS cheapest,\n       MAX(price) AS most_expensive,\n       ROUND(AVG(price), 2) AS avg_price\nFROM products\nGROUP BY category\nORDER BY category;",
+          "evaluation_points": [
+            "GROUP BY category",
+            "Uses COUNT, MIN, MAX, AVG correctly",
+            "Rounds the average with ROUND(..., 2)",
+            "Sorted by category"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "category | product_count | cheapest | most_expensive | avg_price\nPaper | 3 | 2.50 | 6 | 4.25\nPens | 2 | 1.20 | 18 | 9.60"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (6, 'Marker', 'Pens', 3.30);",
+              "expected": "category | product_count | cheapest | most_expensive | avg_price\nPaper | 3 | 2.50 | 6 | 4.25\nPens | 3 | 1.20 | 18 | 7.50"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-05",
+          "topic": "GROUP BY / HAVING",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The query in starter_code should return each region whose total sales exceed 1000, with the total as total_sales, sorted by region. It fails with an error. Fix it.",
+          "starter_code": "CREATE TABLE sales (\n  id INT PRIMARY KEY,\n  region VARCHAR(20) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO sales VALUES\n (1, 'North', 600.00), (2, 'South', 300.00), (3, 'North', 700.00),\n (4, 'East', 1200.00), (5, 'South', 450.00), (6, 'West', 1000.00);\n\n-- Query to fix:\nSELECT region, SUM(amount) AS total_sales\nFROM sales\nWHERE SUM(amount) > 1000\nGROUP BY region\nORDER BY region;",
+          "reference_solution": "SELECT region, SUM(amount) AS total_sales\nFROM sales\nGROUP BY region\nHAVING SUM(amount) > 1000\nORDER BY region;",
+          "evaluation_points": [
+            "Moves the aggregate condition from WHERE to HAVING (aggregates are not allowed in WHERE)",
+            "HAVING appears after GROUP BY",
+            "Keeps strict > 1000 (West with exactly 1000 is excluded)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "region | total_sales\nEast | 1200\nNorth | 1300"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO sales VALUES (7, 'South', 300.00);",
+              "expected": "region | total_sales\nEast | 1200\nNorth | 1300\nSouth | 1050"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-06",
+          "topic": "Self Join",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "The employees table stores each person's manager in manager_id (which refers to another employee's id). Return every employee's name and their manager's name as manager_name. Employees without a manager must still appear with NULL. Sort by employee name.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  manager_id INT REFERENCES employees(id)\n);\nINSERT INTO employees VALUES\n (1, 'Grace', NULL), (2, 'Henry', 1), (3, 'Irene', 1),\n (4, 'Jack', 2), (5, 'Kim', 2);",
+          "reference_solution": "SELECT e.name, m.name AS manager_name\nFROM employees e\nLEFT JOIN employees m ON m.id = e.manager_id\nORDER BY e.name;",
+          "evaluation_points": [
+            "Joins the employees table to itself using two aliases",
+            "Join condition m.id = e.manager_id (direction matters)",
+            "LEFT JOIN so the top manager (Grace) appears with NULL",
+            "Sorted by employee name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | manager_name\nGrace | NULL\nHenry | Grace\nIrene | Grace\nJack | Henry\nKim | Henry"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (6, 'Leo', 4);",
+              "expected": "name | manager_name\nGrace | NULL\nHenry | Grace\nIrene | Grace\nJack | Henry\nKim | Henry\nLeo | Jack"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-07",
+          "topic": "EXISTS",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return the names of customers who placed at least one order during 2024 (order_date from 2024-01-01 to 2024-12-31 inclusive). Use EXISTS with a correlated subquery. Each customer must appear once; sort by name.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id),\n  order_date DATE NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Alpha'), (2, 'Bravo'), (3, 'Charlie'), (4, 'Delta');\nINSERT INTO orders VALUES\n (1, 1, '2024-03-10'), (2, 1, '2024-07-01'), (3, 2, '2023-12-31'),\n (4, 3, '2024-12-31'), (5, 4, '2025-01-01');",
+          "reference_solution": "SELECT c.name\nFROM customers c\nWHERE EXISTS (\n  SELECT 1 FROM orders o\n  WHERE o.customer_id = c.id\n    AND o.order_date BETWEEN '2024-01-01' AND '2024-12-31'\n)\nORDER BY c.name;",
+          "evaluation_points": [
+            "Uses EXISTS with a subquery correlated on customer_id = c.id",
+            "Date range includes both 2024-01-01 and 2024-12-31",
+            "Alpha appears once even though it has two 2024 orders (no duplicate rows)",
+            "Sorted by name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name\nAlpha\nCharlie"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (6, 4, '2024-06-15');",
+              "expected": "name\nAlpha\nCharlie\nDelta"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-08",
+          "topic": "Indexes",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "starter_code creates a UNIQUE INDEX on users(email) and then runs numbered INSERTs, each on its own. Say which statements fail and why, state the rows returned by the final query, and briefly explain what else the index does for a query such as WHERE email = 'bela@example.com'.",
+          "starter_code": "CREATE TABLE users (\n  id INT PRIMARY KEY,\n  username VARCHAR(30) NOT NULL,\n  email VARCHAR(60) NOT NULL\n);\nCREATE UNIQUE INDEX ux_users_email ON users(email);\nINSERT INTO users VALUES (1, 'arun', 'arun@example.com');   -- (1)\nINSERT INTO users VALUES (2, 'bela', 'bela@example.com');   -- (2)\nINSERT INTO users VALUES (3, 'arun2', 'arun@example.com');  -- (3)\nINSERT INTO users VALUES (4, 'chris', 'chris@example.com'); -- (4)\nINSERT INTO users VALUES (5, 'arun', 'dev@example.com');    -- (5)\n\n-- Query:\nSELECT id, username FROM users ORDER BY id;",
+          "reference_solution": "Failing statements: (3)\n\nResult rows:\nid | username\n1 | arun\n2 | bela\n4 | chris\n5 | arun\n\nOnly (3) fails, because 'arun@example.com' already exists and the UNIQUE index forbids duplicate emails. (5) succeeds because username has no unique constraint. Besides enforcing uniqueness, the index is a sorted lookup structure, so WHERE email = '...' can jump straight to the matching row instead of scanning the table; the trade-off is extra storage and slightly slower INSERT/UPDATE.",
+          "evaluation_points": [
+            "Only (3) fails: duplicate email violates the unique index",
+            "(5) succeeds: username is not indexed/unique, so a repeated username is allowed",
+            "Final rows: 1 arun, 2 bela, 4 chris, 5 arun",
+            "The index also lets the database find rows by email quickly without scanning the whole table (at some cost to insert/update speed and storage)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | username\n1 | arun\n2 | bela\n4 | chris\n5 | arun"
+            },
+            {
+              "input": "Which numbered statements fail?",
+              "expected": "(3)"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-09",
+          "topic": "Window Functions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Each row of sales is one sale of a product. First total the sales per product, then rank products inside each category by total (highest = 1) using RANK() so that ties share a rank. Return category, product, total_sales, sales_rank for products ranked 1 or 2. Sort by category, sales_rank, product.",
+          "starter_code": "CREATE TABLE sales (\n  id INT PRIMARY KEY,\n  category VARCHAR(20) NOT NULL,\n  product VARCHAR(30) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO sales VALUES\n (1, 'Audio', 'Speaker', 300), (2, 'Audio', 'Earbuds', 200),\n (3, 'Audio', 'Speaker', 100), (4, 'Audio', 'Headphones', 200),\n (5, 'Audio', 'Soundbar', 150), (6, 'Video', 'Camera', 500),\n (7, 'Video', 'Tripod', 120), (8, 'Video', 'Camera', 50);",
+          "reference_solution": "WITH totals AS (\n  SELECT category, product, SUM(amount) AS total_sales\n  FROM sales\n  GROUP BY category, product\n), ranked AS (\n  SELECT category, product, total_sales,\n         RANK() OVER (PARTITION BY category ORDER BY total_sales DESC) AS sales_rank\n  FROM totals\n)\nSELECT category, product, total_sales, sales_rank\nFROM ranked\nWHERE sales_rank <= 2\nORDER BY category, sales_rank, product;",
+          "evaluation_points": [
+            "Aggregates SUM(amount) per category and product before ranking",
+            "RANK() OVER (PARTITION BY category ORDER BY total DESC)",
+            "Ties share a rank (Earbuds and Headphones both rank 2 in Audio)",
+            "Filters rank <= 2 in an outer query/CTE; correct sort"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "category | product | total_sales | sales_rank\nAudio | Speaker | 400 | 1\nAudio | Earbuds | 200 | 2\nAudio | Headphones | 200 | 2\nVideo | Camera | 550 | 1\nVideo | Tripod | 120 | 2"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO sales VALUES (9, 'Video', 'Tripod', 480);",
+              "expected": "category | product | total_sales | sales_rank\nAudio | Speaker | 400 | 1\nAudio | Earbuds | 200 | 2\nAudio | Headphones | 200 | 2\nVideo | Tripod | 600 | 1\nVideo | Camera | 550 | 2"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S2-10",
+          "topic": "Subqueries",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Return name, department and salary of every employee who earns more than the average salary of their own department (not the company average). Use a correlated subquery. Sort by department, then salary highest first.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  department VARCHAR(30) NOT NULL,\n  salary DECIMAL(10,2) NOT NULL\n);\nINSERT INTO employees VALUES\n (1, 'Uma', 'IT', 90000), (2, 'Victor', 'IT', 60000), (3, 'Wendy', 'IT', 75000),\n (4, 'Xavier', 'Support', 40000), (5, 'Yara', 'Support', 44000),\n (6, 'Zane', 'Support', 42000), (7, 'Abel', 'Legal', 80000);",
+          "reference_solution": "SELECT e.name, e.department, e.salary\nFROM employees e\nWHERE e.salary > (\n  SELECT AVG(e2.salary)\n  FROM employees e2\n  WHERE e2.department = e.department\n)\nORDER BY e.department, e.salary DESC;",
+          "evaluation_points": [
+            "Subquery is correlated on department (e2.department = e.department)",
+            "Compares with strictly greater than the department average",
+            "A single-person department (Legal) is excluded because salary equals its own average",
+            "Sorted by department then salary descending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | department | salary\nUma | IT | 90000\nYara | Support | 44000"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (8, 'Bea', 'Legal', 60000);",
+              "expected": "name | department | salary\nUma | IT | 90000\nAbel | Legal | 80000\nYara | Support | 44000"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-SQL-S3-01",
+          "topic": "IN / BETWEEN",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Return id and status of all orders whose status is either 'Shipped' or 'Delivered'. Use the IN operator. Sort by id.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  reference VARCHAR(20) NOT NULL,\n  status VARCHAR(15) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 'R-1001', 'Pending'), (2, 'R-1002', 'Shipped'), (3, 'R-1003', 'Delivered'),\n (4, 'R-1004', 'Cancelled'), (5, 'R-1005', 'Shipped');",
+          "reference_solution": "SELECT id, status\nFROM orders\nWHERE status IN ('Shipped', 'Delivered')\nORDER BY id;",
+          "evaluation_points": [
+            "Uses IN ('Shipped', 'Delivered')",
+            "Returns id and status only",
+            "Sorted by id"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | status\n2 | Shipped\n3 | Delivered\n5 | Shipped"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (6, 'R-1006', 'Delivered');",
+              "expected": "id | status\n2 | Shipped\n3 | Delivered\n5 | Shipped\n6 | Delivered"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-02",
+          "topic": "NULL Handling",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Some employees do not have a desk phone extension yet; for them phone_ext is NULL. Write a query that returns the names of those employees, sorted by name.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  phone_ext VARCHAR(6)\n);\nINSERT INTO employees VALUES\n (1, 'Nora', '2101'), (2, 'Oscar', NULL), (3, 'Paula', '2107'),\n (4, 'Adam', NULL), (5, 'Ian', '2110');",
+          "reference_solution": "SELECT name\nFROM employees\nWHERE phone_ext IS NULL\nORDER BY name;",
+          "evaluation_points": [
+            "Uses IS NULL (not = NULL, which never matches)",
+            "Returns only the name column",
+            "Sorted by name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name\nAdam\nOscar"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (6, 'Bill', NULL);",
+              "expected": "name\nAdam\nBill\nOscar"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-03",
+          "topic": "LIKE",
+          "task_type": "fix_bug",
+          "difficulty": "Easy",
+          "question": "The query in starter_code should return the id and name of every product whose name contains the word 'Desk' anywhere (e.g. 'Standing Desk', 'Desk Lamp'), sorted by id. It returns no rows. Fix it.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'Desk Lamp'), (2, 'Office Chair'), (3, 'Standing Desk'),\n (4, 'Monitor Arm'), (5, 'Desk Organizer Tray');\n\n-- Query to fix:\nSELECT id, name\nFROM products\nWHERE name = '%Desk%'\nORDER BY id;",
+          "reference_solution": "SELECT id, name\nFROM products\nWHERE name LIKE '%Desk%'\nORDER BY id;",
+          "evaluation_points": [
+            "Replaces = with LIKE (= compares literally, '%' is not a wildcard with =)",
+            "Pattern has % on both sides to match anywhere in the name",
+            "Keeps sort by id"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | name\n1 | Desk Lamp\n3 | Standing Desk\n5 | Desk Organizer Tray"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (6, 'Corner Desk');",
+              "expected": "id | name\n1 | Desk Lamp\n3 | Standing Desk\n5 | Desk Organizer Tray\n6 | Corner Desk"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-04",
+          "topic": "LEFT JOIN",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return id and name of every product that has never been ordered, i.e. has no row in order_items. Sort by id.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL\n);\nCREATE TABLE order_items (\n  id INT PRIMARY KEY,\n  order_id INT NOT NULL,\n  product_id INT NOT NULL REFERENCES products(id),\n  qty INT NOT NULL\n);\nINSERT INTO products VALUES (1, 'Router'), (2, 'Switch'), (3, 'Cable'), (4, 'Antenna'), (5, 'Rack');\nINSERT INTO order_items VALUES (1, 100, 1, 2), (2, 100, 3, 10), (3, 101, 3, 5), (4, 102, 5, 1);",
+          "reference_solution": "SELECT p.id, p.name\nFROM products p\nLEFT JOIN order_items oi ON oi.product_id = p.id\nWHERE oi.id IS NULL\nORDER BY p.id;",
+          "evaluation_points": [
+            "Anti-join: LEFT JOIN + WHERE child IS NULL, or NOT EXISTS / NOT IN on a non-null column",
+            "Checks the NULL on a column of order_items (not products)",
+            "Returns Switch and Antenna for the sample; sorted by id"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | name\n2 | Switch\n4 | Antenna"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO order_items VALUES (5, 103, 2, 3);",
+              "expected": "id | name\n4 | Antenna"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-05",
+          "topic": "CASE Expressions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return name, salary and a salary_band column for every employee: 'Junior' when salary is below 40000, 'Mid' when salary is at least 40000 but below 70000, and 'Senior' when salary is 70000 or more. Sort by salary ascending.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  salary DECIMAL(10,2) NOT NULL\n);\nINSERT INTO employees VALUES\n (1, 'Aria', 35000), (2, 'Bo', 40000), (3, 'Cy', 69999.99),\n (4, 'Di', 70000), (5, 'Ed', 91000);",
+          "reference_solution": "SELECT name, salary,\n       CASE\n         WHEN salary < 40000 THEN 'Junior'\n         WHEN salary < 70000 THEN 'Mid'\n         ELSE 'Senior'\n       END AS salary_band\nFROM employees\nORDER BY salary;",
+          "evaluation_points": [
+            "Uses a searched CASE expression with the band aliased salary_band",
+            "Boundaries correct: 40000 is Mid, 70000 is Senior",
+            "WHEN branches in an order that does not mis-classify",
+            "Sorted by salary ascending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | salary | salary_band\nAria | 35000 | Junior\nBo | 40000 | Mid\nCy | 69999.99 | Mid\nDi | 70000 | Senior\nEd | 91000 | Senior"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (6, 'Fi', 39999);",
+              "expected": "name | salary | salary_band\nAria | 35000 | Junior\nFi | 39999 | Junior\nBo | 40000 | Mid\nCy | 69999.99 | Mid\nDi | 70000 | Senior\nEd | 91000 | Senior"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-06",
+          "topic": "GROUP BY / HAVING",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "State the rows returned by the query in starter_code (assignee, tickets, prioritized) and explain what happens to the tickets that have no assignee.",
+          "starter_code": "CREATE TABLE tickets (\n  id INT PRIMARY KEY,\n  assignee VARCHAR(20),\n  priority VARCHAR(10)\n);\nINSERT INTO tickets VALUES\n (1, 'Maya', 'High'), (2, 'Maya', NULL), (3, 'Liam', 'Low'),\n (4, 'Maya', 'Low'), (5, 'Noah', 'High'), (6, 'Noah', 'Low'),\n (7, NULL, 'High'), (8, 'Liam', NULL);\n\n-- Query:\nSELECT assignee,\n       COUNT(*) AS tickets,\n       COUNT(priority) AS prioritized\nFROM tickets\nGROUP BY assignee\nHAVING COUNT(*) >= 2\nORDER BY assignee;",
+          "reference_solution": "Result rows:\nassignee | tickets | prioritized\nLiam | 2 | 1\nMaya | 3 | 2\nNoah | 2 | 2\n\nGROUP BY puts all NULL assignees into one group (ticket 7), but that group has only 1 row and is removed by HAVING COUNT(*) >= 2. COUNT(priority) ignores NULLs, so Liam has 1 prioritized ticket and Maya 2.",
+          "evaluation_points": [
+            "Liam 2 1, Maya 3 2, Noah 2 2",
+            "COUNT(priority) skips the NULL priorities of tickets 2 and 8",
+            "The NULL assignee forms its own group but has only 1 ticket, so HAVING removes it"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "assignee | tickets | prioritized\nLiam | 2 | 1\nMaya | 3 | 2\nNoah | 2 | 2"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-07",
+          "topic": "UPDATE",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a single UPDATE statement that increases the price of every product in the 'Toys' category by 10%. Products in other categories must not change.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  category VARCHAR(30) NOT NULL,\n  price DECIMAL(8,2) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'Puzzle', 'Toys', 20.00), (2, 'Cookbook', 'Books', 18.00),\n (3, 'Kite', 'Toys', 15.50), (4, 'Board Game', 'Toys', 30.00);",
+          "reference_solution": "UPDATE products\nSET price = price * 1.10\nWHERE category = 'Toys';",
+          "evaluation_points": [
+            "Single UPDATE with SET price = price * 1.10 (or price + price * 0.10)",
+            "WHERE category = 'Toys' so other rows are untouched (no WHERE would update everything)",
+            "Does not hard-code new prices per row"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code. Then check with: SELECT id, price FROM products ORDER BY id;",
+              "expected": "id | price\n1 | 22\n2 | 18\n3 | 17.05\n4 | 33"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (5, 'Yo-yo', 'Toys', 5.00); Then check with: SELECT id, price FROM products ORDER BY id;",
+              "expected": "id | price\n1 | 22\n2 | 18\n3 | 17.05\n4 | 33\n5 | 5.50"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-08",
+          "topic": "SELECT / WHERE",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The query in starter_code should return id, name and price of products in the 'Books' or 'Music' category that cost less than 15, sorted by id. It also returns an expensive book. Explain the cause and fix it.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(50) NOT NULL,\n  category VARCHAR(30) NOT NULL,\n  price DECIMAL(8,2) NOT NULL\n);\nINSERT INTO products VALUES\n (1, 'SQL Primer', 'Books', 12.00), (2, 'Jazz Hits', 'Music', 9.99),\n (3, 'Atlas', 'Books', 30.00), (4, 'Rock Live', 'Music', 22.00),\n (5, 'Chess Set', 'Games', 8.00);\n\n-- Query to fix:\nSELECT id, name, price\nFROM products\nWHERE category = 'Books' OR category = 'Music'\n  AND price < 15\nORDER BY id;",
+          "reference_solution": "SELECT id, name, price\nFROM products\nWHERE (category = 'Books' OR category = 'Music')\n  AND price < 15\nORDER BY id;",
+          "evaluation_points": [
+            "Identifies operator precedence: AND binds tighter than OR",
+            "Adds parentheses around the OR (or uses category IN ('Books', 'Music'))",
+            "Price filter now applies to both categories, so 'Atlas' (30.00) is excluded"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | name | price\n1 | SQL Primer | 12\n2 | Jazz Hits | 9.99"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products VALUES (6, 'Poetry', 'Books', 14.50);",
+              "expected": "id | name | price\n1 | SQL Primer | 12\n2 | Jazz Hits | 9.99\n6 | Poetry | 14.50"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-09",
+          "topic": "Window Functions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "The daily_sales table has one row per day. Return sale_date, amount and running_total, where running_total is the cumulative sum of amount from the first day up to and including that day. Use a window function. Sort by sale_date.",
+          "starter_code": "CREATE TABLE daily_sales (\n  sale_date DATE PRIMARY KEY,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO daily_sales VALUES\n ('2024-05-01', 120.00), ('2024-05-02', 80.00), ('2024-05-03', 200.00),\n ('2024-05-04', 50.00);",
+          "reference_solution": "SELECT sale_date, amount,\n       SUM(amount) OVER (ORDER BY sale_date\n                         ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS running_total\nFROM daily_sales\nORDER BY sale_date;",
+          "evaluation_points": [
+            "Uses SUM(amount) OVER (ORDER BY sale_date ...)",
+            "No PARTITION BY (one running total over all days)",
+            "Includes the current day in the total",
+            "Sorted by sale_date (a correlated subquery answer is acceptable but less idiomatic)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "sale_date | amount | running_total\n2024-05-01 | 120 | 120\n2024-05-02 | 80 | 200\n2024-05-03 | 200 | 400\n2024-05-04 | 50 | 450"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO daily_sales VALUES ('2024-05-05', 25.00);",
+              "expected": "sale_date | amount | running_total\n2024-05-01 | 120 | 120\n2024-05-02 | 80 | 200\n2024-05-03 | 200 | 400\n2024-05-04 | 50 | 450\n2024-05-05 | 25 | 475"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S3-10",
+          "topic": "Constraints & Keys",
+          "task_type": "explain_output",
+          "difficulty": "Hard",
+          "question": "Foreign keys are enforced. orders references customers with ON DELETE CASCADE; payments references customers with no ON DELETE action. Each numbered statement runs on its own. Say which numbered statements fail and why, and state the single row returned by the final query.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id) ON DELETE CASCADE\n);\nCREATE TABLE payments (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id)\n);\nINSERT INTO customers VALUES (1, 'Iris'), (2, 'Jon'), (3, 'Kai');  -- (1)\nINSERT INTO orders VALUES (10, 1), (11, 1), (12, 2);               -- (2)\nINSERT INTO payments VALUES (100, 2);                              -- (3)\nDELETE FROM customers WHERE id = 1;                                -- (4)\nDELETE FROM customers WHERE id = 2;                                -- (5)\nINSERT INTO orders VALUES (13, 1);                                 -- (6)\n\n-- Query:\nSELECT (SELECT COUNT(*) FROM customers) AS customers_left,\n       (SELECT COUNT(*) FROM orders) AS orders_left,\n       (SELECT COUNT(*) FROM payments) AS payments_left;",
+          "reference_solution": "Failing statements: (5), (6)\n\nResult rows:\ncustomers_left | orders_left | payments_left\n2 | 1 | 1\n\n(4) deletes customer 1 and ON DELETE CASCADE removes orders 10 and 11. (5) fails because payment 100 references customer 2 and that foreign key has no cascade, so the delete is rejected as a whole (customer 2 and order 12 remain). (6) fails because customer 1 no longer exists. Remaining: customers 2 and 3, order 12, payment 100.",
+          "evaluation_points": [
+            "(4) succeeds and cascades: orders 10 and 11 are deleted automatically",
+            "(5) fails: payment 100 still references customer 2 and payments has no cascade, so the whole DELETE is rejected (order 12 stays)",
+            "(6) fails: customer 1 no longer exists (foreign key)",
+            "Result: customers_left 2, orders_left 1, payments_left 1"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "customers_left | orders_left | payments_left\n2 | 1 | 1"
+            },
+            {
+              "input": "Which numbered statements fail?",
+              "expected": "(5), (6)"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-SQL-S4-01",
+          "topic": "IN / BETWEEN",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Return invoice_no and amount for every invoice whose amount is from 100 to 500, both limits included. Use BETWEEN. Sort by amount ascending.",
+          "starter_code": "CREATE TABLE invoices (\n  id INT PRIMARY KEY,\n  invoice_no VARCHAR(12) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO invoices VALUES\n (1, 'INV-001', 99.00), (2, 'INV-002', 100.00), (3, 'INV-003', 320.40),\n (4, 'INV-004', 500.00), (5, 'INV-005', 875.00);",
+          "reference_solution": "SELECT invoice_no, amount\nFROM invoices\nWHERE amount BETWEEN 100 AND 500\nORDER BY amount;",
+          "evaluation_points": [
+            "Uses BETWEEN 100 AND 500",
+            "Both limits included (100.00 and 500.00 appear)",
+            "Sorted by amount ascending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "invoice_no | amount\nINV-002 | 100\nINV-003 | 320.40\nINV-004 | 500"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO invoices VALUES (6, 'INV-006', 250.00);",
+              "expected": "invoice_no | amount\nINV-002 | 100\nINV-006 | 250\nINV-003 | 320.40\nINV-004 | 500"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-02",
+          "topic": "Aggregates",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a query that returns one number, unique_customers: how many different customers have placed at least one order. A customer with several orders counts once.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 7, 20.00), (2, 8, 35.00), (3, 7, 12.00), (4, 9, 50.00), (5, 8, 10.00);",
+          "reference_solution": "SELECT COUNT(DISTINCT customer_id) AS unique_customers\nFROM orders;",
+          "evaluation_points": [
+            "Uses COUNT(DISTINCT customer_id) (or counts rows of a DISTINCT subquery)",
+            "Does not use COUNT(*) (which would give 5)",
+            "Returns a single value aliased unique_customers"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "unique_customers\n3"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (6, 10, 5.00), (7, 9, 8.00);",
+              "expected": "unique_customers\n4"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-03",
+          "topic": "DISTINCT",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "State every row returned by the query in starter_code, in order, and explain what DISTINCT does when more than one column is selected.",
+          "starter_code": "CREATE TABLE shipments (\n  id INT PRIMARY KEY,\n  city VARCHAR(20) NOT NULL,\n  carrier VARCHAR(20) NOT NULL\n);\nINSERT INTO shipments VALUES\n (1, 'Delhi', 'FastShip'), (2, 'Delhi', 'FastShip'), (3, 'Delhi', 'QuickLog'),\n (4, 'Mumbai', 'FastShip'), (5, 'Mumbai', 'FastShip'), (6, 'Agra', 'QuickLog');\n\n-- Query:\nSELECT DISTINCT city, carrier\nFROM shipments\nORDER BY city, carrier;",
+          "reference_solution": "Result rows:\ncity | carrier\nAgra | QuickLog\nDelhi | FastShip\nDelhi | QuickLog\nMumbai | FastShip\n\nDISTINCT applies to the whole selected row, so duplicates are removed only when both city and carrier are equal. Delhi appears twice because it has two different carriers.",
+          "evaluation_points": [
+            "Four rows: Agra/QuickLog, Delhi/FastShip, Delhi/QuickLog, Mumbai/FastShip",
+            "DISTINCT removes rows only when ALL selected columns match (the combination is unique)",
+            "Delhi appears twice because the carrier differs"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "city | carrier\nAgra | QuickLog\nDelhi | FastShip\nDelhi | QuickLog\nMumbai | FastShip"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-04",
+          "topic": "INSERT",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write one INSERT ... SELECT statement that copies the id, customer_id and amount of every order with status 'Closed' from orders into orders_archive. Do not modify or delete rows in orders.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  status VARCHAR(10) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nCREATE TABLE orders_archive (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 5, 'Closed', 40.00), (2, 6, 'Open', 25.00),\n (3, 5, 'Closed', 60.00), (4, 7, 'Open', 90.00);",
+          "reference_solution": "INSERT INTO orders_archive (id, customer_id, amount)\nSELECT id, customer_id, amount\nFROM orders\nWHERE status = 'Closed';",
+          "evaluation_points": [
+            "Uses INSERT INTO ... SELECT (no VALUES list with hard-coded rows)",
+            "Lists target columns in matching order",
+            "Filters WHERE status = 'Closed'",
+            "orders is left unchanged"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code. Then check with: SELECT id, customer_id, amount FROM orders_archive ORDER BY id;",
+              "expected": "id | customer_id | amount\n1 | 5 | 40\n3 | 5 | 60"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (5, 8, 'Closed', 15.00); Then check with: SELECT id, customer_id, amount FROM orders_archive ORDER BY id;",
+              "expected": "id | customer_id | amount\n1 | 5 | 40\n3 | 5 | 60\n5 | 8 | 15"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-05",
+          "topic": "INNER JOIN",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Produce an order line report: order_id, customer_name, product_name, qty and line_total (qty multiplied by the product's unit_price) for every order item. Join the four tables. Sort by order_id, then product_name.",
+          "starter_code": "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);\nCREATE TABLE products (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL, unit_price DECIMAL(8,2) NOT NULL);\nCREATE TABLE orders (id INT PRIMARY KEY, customer_id INT NOT NULL REFERENCES customers(id));\nCREATE TABLE order_items (\n  order_id INT NOT NULL REFERENCES orders(id),\n  product_id INT NOT NULL REFERENCES products(id),\n  qty INT NOT NULL,\n  PRIMARY KEY (order_id, product_id)\n);\nINSERT INTO customers VALUES (1, 'Lumen Ltd'), (2, 'Mesa Inc');\nINSERT INTO products VALUES (1, 'Toner', 45.00), (2, 'Paper Box', 12.50), (3, 'Binder', 3.00);\nINSERT INTO orders VALUES (500, 1), (501, 2);\nINSERT INTO order_items VALUES (500, 2, 4), (500, 1, 1), (501, 3, 10);",
+          "reference_solution": "SELECT o.id AS order_id,\n       c.name AS customer_name,\n       p.name AS product_name,\n       oi.qty,\n       oi.qty * p.unit_price AS line_total\nFROM order_items oi\nJOIN orders o ON o.id = oi.order_id\nJOIN customers c ON c.id = o.customer_id\nJOIN products p ON p.id = oi.product_id\nORDER BY o.id, p.name;",
+          "evaluation_points": [
+            "Joins order_items -> orders -> customers and order_items -> products with correct keys",
+            "Computes qty * unit_price as line_total",
+            "No cartesian product (every join has an ON condition)",
+            "Sorted by order_id then product_name"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "order_id | customer_name | product_name | qty | line_total\n500 | Lumen Ltd | Paper Box | 4 | 50\n500 | Lumen Ltd | Toner | 1 | 45\n501 | Mesa Inc | Binder | 10 | 30"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO order_items VALUES (501, 1, 2);",
+              "expected": "order_id | customer_name | product_name | qty | line_total\n500 | Lumen Ltd | Paper Box | 4 | 50\n500 | Lumen Ltd | Toner | 1 | 45\n501 | Mesa Inc | Binder | 10 | 30\n501 | Mesa Inc | Toner | 2 | 90"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-06",
+          "topic": "Subqueries",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The query in starter_code should return the names of employees working in any department located in 'Pune', sorted by name. Pune has two departments; the query errors on most databases ('subquery returns more than one row') or silently misses employees. Fix it.",
+          "starter_code": "CREATE TABLE departments (\n  id INT PRIMARY KEY,\n  name VARCHAR(30) NOT NULL,\n  location VARCHAR(30) NOT NULL\n);\nCREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  dept_id INT REFERENCES departments(id)\n);\nINSERT INTO departments VALUES (1, 'R&D', 'Pune'), (2, 'Support', 'Pune'), (3, 'Sales', 'Delhi');\nINSERT INTO employees VALUES (1, 'Aman', 1), (2, 'Bina', 2), (3, 'Chet', 3), (4, 'Dia', 2);\n\n-- Query to fix:\nSELECT name\nFROM employees\nWHERE dept_id = (SELECT id FROM departments WHERE location = 'Pune')\nORDER BY name;",
+          "reference_solution": "SELECT name\nFROM employees\nWHERE dept_id IN (SELECT id FROM departments WHERE location = 'Pune')\nORDER BY name;",
+          "evaluation_points": [
+            "Recognises that = requires the subquery to return a single value",
+            "Replaces = with IN (or rewrites as a JOIN / EXISTS)",
+            "Returns employees of both Pune departments (Aman, Bina, Dia)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name\nAman\nBina\nDia"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (5, 'Esha', 1);",
+              "expected": "name\nAman\nBina\nDia\nEsha"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-07",
+          "topic": "UNION",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Customers and suppliers are stored in separate tables. Return a single list of everyone located in 'Chennai' with two columns: name and party_type, where party_type is the text 'Customer' or 'Supplier'. Sort by name.",
+          "starter_code": "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL, city VARCHAR(30) NOT NULL);\nCREATE TABLE suppliers (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL, city VARCHAR(30) NOT NULL);\nINSERT INTO customers VALUES (1, 'Kavya Stores', 'Chennai'), (2, 'Leela Mart', 'Madurai'), (3, 'Anand Retail', 'Chennai');\nINSERT INTO suppliers VALUES (1, 'Bharat Steel', 'Chennai'), (2, 'Zenith Paper', 'Pune');",
+          "reference_solution": "SELECT name, 'Customer' AS party_type FROM customers WHERE city = 'Chennai'\nUNION ALL\nSELECT name, 'Supplier' AS party_type FROM suppliers WHERE city = 'Chennai'\nORDER BY name;",
+          "evaluation_points": [
+            "Combines two SELECTs with UNION or UNION ALL (same number/order of columns)",
+            "Adds a literal column to label the source",
+            "Filters each part on city = 'Chennai'",
+            "Single ORDER BY at the end of the whole union"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | party_type\nAnand Retail | Customer\nBharat Steel | Supplier\nKavya Stores | Customer"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO suppliers VALUES (3, 'Coastal Foods', 'Chennai');",
+              "expected": "name | party_type\nAnand Retail | Customer\nBharat Steel | Supplier\nCoastal Foods | Supplier\nKavya Stores | Customer"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-08",
+          "topic": "Indexes",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "starter_code creates a composite UNIQUE INDEX on stock(store_id, sku) and runs numbered INSERTs, each on its own. Say which statements fail, state the rows returned by the final query, and explain whether this index would help a query that filters only on sku.",
+          "starter_code": "CREATE TABLE stock (\n  store_id INT NOT NULL,\n  sku VARCHAR(20) NOT NULL,\n  qty INT NOT NULL\n);\nCREATE UNIQUE INDEX ux_stock_store_sku ON stock(store_id, sku);\nINSERT INTO stock VALUES (1, 'A100', 5);  -- (1)\nINSERT INTO stock VALUES (1, 'B200', 3);  -- (2)\nINSERT INTO stock VALUES (2, 'A100', 7);  -- (3)\nINSERT INTO stock VALUES (1, 'A100', 9);  -- (4)\nINSERT INTO stock VALUES (2, 'B200', 1);  -- (5)\n\n-- Query:\nSELECT store_id, COUNT(*) AS sku_count, SUM(qty) AS total_qty\nFROM stock\nGROUP BY store_id\nORDER BY store_id;",
+          "reference_solution": "Failing statements: (4)\n\nResult rows:\nstore_id | sku_count | total_qty\n1 | 2 | 8\n2 | 2 | 8\n\nThe composite unique index forbids a repeated (store_id, sku) pair, so only (4) fails; the same sku in a different store is fine. The index is sorted by store_id first and sku second, so it helps filters on store_id or on store_id + sku; a filter on sku alone usually cannot seek into it (it may at best scan the index), so a separate index on sku would be needed.",
+          "evaluation_points": [
+            "Only (4) fails: the pair (1, 'A100') already exists",
+            "(3) and (5) succeed: uniqueness is on the combination, not on each column",
+            "Result: store 1 -> 2 SKUs, qty 8; store 2 -> 2 SKUs, qty 8",
+            "A (store_id, sku) index is ordered by store_id first, so a filter on sku alone generally cannot use it efficiently (needs its own index on sku)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "store_id | sku_count | total_qty\n1 | 2 | 8\n2 | 2 | 8"
+            },
+            {
+              "input": "Which numbered statements fail?",
+              "expected": "(4)"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-09",
+          "topic": "Window Functions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "For each customer return their most recent order: customer_id, order_id, order_date and amount. If a customer has two orders on the same latest date, choose the one with the higher id. Use ROW_NUMBER(). Sort by customer_id.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  order_date DATE NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 1, '2024-01-05', 30.00), (2, 1, '2024-02-10', 45.00),\n (3, 2, '2024-03-01', 20.00), (4, 2, '2024-03-01', 70.00),\n (5, 3, '2023-11-20', 15.00), (6, 1, '2024-01-28', 60.00);",
+          "reference_solution": "SELECT customer_id, order_id, order_date, amount\nFROM (\n  SELECT customer_id, id AS order_id, order_date, amount,\n         ROW_NUMBER() OVER (PARTITION BY customer_id\n                            ORDER BY order_date DESC, id DESC) AS rn\n  FROM orders\n) latest\nWHERE rn = 1\nORDER BY customer_id;",
+          "evaluation_points": [
+            "ROW_NUMBER() partitioned by customer_id",
+            "Ordered by order_date DESC, then id DESC for ties",
+            "Filters rn = 1 in an outer query or CTE",
+            "One row per customer (order 4 for customer 2)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "customer_id | order_id | order_date | amount\n1 | 2 | 2024-02-10 | 45\n2 | 4 | 2024-03-01 | 70\n3 | 5 | 2023-11-20 | 15"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (7, 3, '2024-04-02', 99.00);",
+              "expected": "customer_id | order_id | order_date | amount\n1 | 2 | 2024-02-10 | 45\n2 | 4 | 2024-03-01 | 70\n3 | 7 | 2024-04-02 | 99"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S4-10",
+          "topic": "DELETE",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "An import loaded some products more than once: rows in products_import can share the same barcode. Write a single DELETE statement that removes the duplicates, keeping only the row with the lowest id for each barcode.",
+          "starter_code": "CREATE TABLE products_import (\n  id INT PRIMARY KEY,\n  barcode VARCHAR(13) NOT NULL,\n  name VARCHAR(40) NOT NULL\n);\nINSERT INTO products_import VALUES\n (1, '8901001', 'Tea 250g'), (2, '8901002', 'Coffee 200g'),\n (3, '8901001', 'Tea 250g'), (4, '8901003', 'Sugar 1kg'),\n (5, '8901002', 'Coffee 200g'), (6, '8901001', 'Tea 250g');",
+          "reference_solution": "DELETE FROM products_import\nWHERE id NOT IN (\n  SELECT MIN(id)\n  FROM products_import\n  GROUP BY barcode\n);",
+          "evaluation_points": [
+            "Keeps MIN(id) per barcode using GROUP BY barcode in a subquery",
+            "Deletes every other row (NOT IN / correlated EXISTS with a lower id)",
+            "Does not delete rows that have no duplicate (Sugar)",
+            "Single DELETE statement, no hard-coded ids"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code. Then check with: SELECT id, barcode FROM products_import ORDER BY id;",
+              "expected": "id | barcode\n1 | 8901001\n2 | 8901002\n4 | 8901003"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO products_import VALUES (7, '8901003', 'Sugar 1kg'); Then check with: SELECT id, barcode FROM products_import ORDER BY id;",
+              "expected": "id | barcode\n1 | 8901001\n2 | 8901002\n4 | 8901003"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-SQL-S5-01",
+          "topic": "SELECT / WHERE",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Return product, quantity, unit_price and a calculated column line_total (quantity multiplied by unit_price) for every row in order_items, sorted by line_total from highest to lowest.",
+          "starter_code": "CREATE TABLE order_items (\n  id INT PRIMARY KEY,\n  product VARCHAR(40) NOT NULL,\n  quantity INT NOT NULL,\n  unit_price DECIMAL(8,2) NOT NULL\n);\nINSERT INTO order_items VALUES\n (1, 'Folder', 10, 1.50), (2, 'Scanner', 1, 120.00),\n (3, 'Toner', 3, 45.00), (4, 'Tape', 6, 2.25);",
+          "reference_solution": "SELECT product, quantity, unit_price,\n       quantity * unit_price AS line_total\nFROM order_items\nORDER BY line_total DESC;",
+          "evaluation_points": [
+            "Computes quantity * unit_price in the SELECT list",
+            "Aliases it line_total",
+            "Sorts by the computed value descending (alias or expression)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "product | quantity | unit_price | line_total\nToner | 3 | 45 | 135\nScanner | 1 | 120 | 120\nFolder | 10 | 1.50 | 15\nTape | 6 | 2.25 | 13.50"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO order_items VALUES (5, 'Shredder', 2, 80.00);",
+              "expected": "product | quantity | unit_price | line_total\nShredder | 2 | 80 | 160\nToner | 3 | 45 | 135\nScanner | 1 | 120 | 120\nFolder | 10 | 1.50 | 15\nTape | 6 | 2.25 | 13.50"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-02",
+          "topic": "DELETE",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a DELETE statement that removes every order whose status is 'Cancelled' and leaves all other orders in place.",
+          "starter_code": "CREATE TABLE orders (\n  id INT PRIMARY KEY,\n  status VARCHAR(15) NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO orders VALUES\n (1, 'Paid', 40.00), (2, 'Cancelled', 15.00), (3, 'Pending', 22.00),\n (4, 'Cancelled', 60.00), (5, 'Paid', 18.00);",
+          "reference_solution": "DELETE FROM orders\nWHERE status = 'Cancelled';",
+          "evaluation_points": [
+            "Uses DELETE FROM orders with a WHERE clause",
+            "Condition status = 'Cancelled'",
+            "Does not delete other rows (a DELETE without WHERE empties the table)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code. Then check with: SELECT id, status FROM orders ORDER BY id;",
+              "expected": "id | status\n1 | Paid\n3 | Pending\n5 | Paid"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (6, 'Cancelled', 9.00); Then check with: SELECT id, status FROM orders ORDER BY id;",
+              "expected": "id | status\n1 | Paid\n3 | Pending\n5 | Paid"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-03",
+          "topic": "NULL Handling",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Some products have no discount (NULL). State the rows (name, net_a, net_b) returned by the query in starter_code and explain why net_a and net_b differ.",
+          "starter_code": "CREATE TABLE products (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  price DECIMAL(8,2) NOT NULL,\n  discount DECIMAL(8,2)\n);\nINSERT INTO products VALUES\n (1, 'Lamp', 40.00, 5.00), (2, 'Mat', 25.00, NULL), (3, 'Clock', 30.00, 0.00);\n\n-- Query:\nSELECT name,\n       price - discount AS net_a,\n       price - COALESCE(discount, 0) AS net_b\nFROM products\nORDER BY id;",
+          "reference_solution": "Result rows:\nname | net_a | net_b\nLamp | 35 | 35\nMat | NULL | 25\nClock | 30 | 30\n\nprice - NULL is NULL, so Mat's net_a is NULL. COALESCE(discount, 0) turns the missing discount into 0, giving 25. A stored 0.00 discount is not NULL, so Clock gives 30 in both columns.",
+          "evaluation_points": [
+            "Lamp 35 35; Mat NULL 25; Clock 30 30",
+            "Any arithmetic with NULL yields NULL (net_a for Mat)",
+            "COALESCE(discount, 0) replaces NULL with 0, so net_b is 25"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | net_a | net_b\nLamp | 35 | 35\nMat | NULL | 25\nClock | 30 | 30"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-04",
+          "topic": "GROUP BY / HAVING",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return region, sales_year and total_amount (sum of amount) for every combination of region and year that appears in the sales table. Sort by region, then sales_year.",
+          "starter_code": "CREATE TABLE sales (\n  id INT PRIMARY KEY,\n  region VARCHAR(20) NOT NULL,\n  sales_year INT NOT NULL,\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO sales VALUES\n (1, 'East', 2023, 100.00), (2, 'East', 2024, 250.00), (3, 'West', 2023, 80.00),\n (4, 'East', 2023, 40.00), (5, 'West', 2024, 60.00), (6, 'West', 2024, 90.00);",
+          "reference_solution": "SELECT region, sales_year, SUM(amount) AS total_amount\nFROM sales\nGROUP BY region, sales_year\nORDER BY region, sales_year;",
+          "evaluation_points": [
+            "GROUP BY both region and sales_year",
+            "Every non-aggregated selected column is in GROUP BY",
+            "SUM(amount) aliased total_amount",
+            "Sorted by region then year"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "region | sales_year | total_amount\nEast | 2023 | 140\nEast | 2024 | 250\nWest | 2023 | 80\nWest | 2024 | 150"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO sales VALUES (7, 'North', 2024, 300.00);",
+              "expected": "region | sales_year | total_amount\nEast | 2023 | 140\nEast | 2024 | 250\nNorth | 2024 | 300\nWest | 2023 | 80\nWest | 2024 | 150"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-05",
+          "topic": "Self Join",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "List every pair of different employees who work in the same department, each pair only once: employee_1, employee_2 and department, where employee_1 is the employee with the smaller id. Sort by department, then by the ids of employee_1 and employee_2.",
+          "starter_code": "CREATE TABLE employees (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  department VARCHAR(30) NOT NULL\n);\nINSERT INTO employees VALUES\n (1, 'Ajay', 'Ops'), (2, 'Bea', 'Ops'), (3, 'Cara', 'Finance'),\n (4, 'Dan', 'Ops'), (5, 'Eve', 'Finance'), (6, 'Finn', 'HR');",
+          "reference_solution": "SELECT e1.name AS employee_1, e2.name AS employee_2, e1.department\nFROM employees e1\nJOIN employees e2\n  ON e2.department = e1.department\n AND e1.id < e2.id\nORDER BY e1.department, e1.id, e2.id;",
+          "evaluation_points": [
+            "Self join on equal department",
+            "Uses e1.id < e2.id so no one is paired with themselves and each pair appears once",
+            "HR (only one employee) produces no pair",
+            "Correct sort"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "employee_1 | employee_2 | department\nCara | Eve | Finance\nAjay | Bea | Ops\nAjay | Dan | Ops\nBea | Dan | Ops"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO employees VALUES (7, 'Gus', 'HR');",
+              "expected": "employee_1 | employee_2 | department\nCara | Eve | Finance\nFinn | Gus | HR\nAjay | Bea | Ops\nAjay | Dan | Ops\nBea | Dan | Ops"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-06",
+          "topic": "Subqueries",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The query in starter_code should return the names of customers who have no orders, sorted by name. Some orders were entered without a customer (customer_id is NULL), and now the query returns no rows at all. Explain why and fix it.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL\n);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT REFERENCES customers(id),\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Asha'), (2, 'Bilal'), (3, 'Cleo'), (4, 'Dmitri');\nINSERT INTO orders VALUES (1, 1, 30.00), (2, NULL, 12.00), (3, 3, 45.00);\n\n-- Query to fix:\nSELECT name\nFROM customers\nWHERE id NOT IN (SELECT customer_id FROM orders)\nORDER BY name;",
+          "reference_solution": "SELECT c.name\nFROM customers c\nWHERE NOT EXISTS (\n  SELECT 1 FROM orders o WHERE o.customer_id = c.id\n)\nORDER BY c.name;",
+          "evaluation_points": [
+            "Explains that NOT IN against a list containing NULL evaluates to UNKNOWN for every row, so nothing is returned",
+            "Fixes with NOT EXISTS (or adds WHERE customer_id IS NOT NULL inside the subquery, or LEFT JOIN ... IS NULL)",
+            "Returns Bilal and Dmitri"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name\nBilal\nDmitri"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO customers VALUES (5, 'Elena');",
+              "expected": "name\nBilal\nDmitri\nElena"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-07",
+          "topic": "GROUP BY / HAVING",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Return each product_code that was bought by at least 2 different customers, together with buyer_count (the number of different customers). The same customer buying a product several times counts once. Sort by product_code.",
+          "starter_code": "CREATE TABLE order_lines (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL,\n  product_code VARCHAR(10) NOT NULL\n);\nINSERT INTO order_lines VALUES\n (1, 1, 'P-10'), (2, 1, 'P-10'), (3, 1, 'P-20'), (4, 2, 'P-20'),\n (5, 3, 'P-30'), (6, 3, 'P-30'), (7, 2, 'P-30'), (8, 4, 'P-40');",
+          "reference_solution": "SELECT product_code, COUNT(DISTINCT customer_id) AS buyer_count\nFROM order_lines\nGROUP BY product_code\nHAVING COUNT(DISTINCT customer_id) >= 2\nORDER BY product_code;",
+          "evaluation_points": [
+            "GROUP BY product_code",
+            "COUNT(DISTINCT customer_id) rather than COUNT(*)",
+            "P-10 (one customer, twice) excluded; filter in HAVING",
+            "Sorted by product_code"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "product_code | buyer_count\nP-20 | 2\nP-30 | 2"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO order_lines VALUES (9, 5, 'P-10');",
+              "expected": "product_code | buyer_count\nP-10 | 2\nP-20 | 2\nP-30 | 2"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-08",
+          "topic": "Constraints & Keys",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "The accounts table uses UNIQUE, NOT NULL and DEFAULT constraints. Each numbered INSERT runs on its own. Say which statements fail and why, and state the rows (id, code, status, credit_limit) returned by the final query, showing NULL where applicable.",
+          "starter_code": "CREATE TABLE accounts (\n  id INT PRIMARY KEY,\n  code VARCHAR(10) NOT NULL UNIQUE,\n  status VARCHAR(10) DEFAULT 'ACTIVE' NOT NULL,\n  credit_limit DECIMAL(10,2) DEFAULT 1000\n);\nINSERT INTO accounts (id, code) VALUES (1, 'AC01');                        -- (1)\nINSERT INTO accounts (id, code, status) VALUES (2, 'AC02', 'CLOSED');      -- (2)\nINSERT INTO accounts (id, code) VALUES (3, 'AC01');                        -- (3)\nINSERT INTO accounts (id, code, credit_limit) VALUES (4, 'AC04', NULL);    -- (4)\nINSERT INTO accounts (id, status) VALUES (5, 'ACTIVE');                    -- (5)\n\n-- Query:\nSELECT id, code, status, credit_limit FROM accounts ORDER BY id;",
+          "reference_solution": "Failing statements: (3), (5)\n\nResult rows:\nid | code | status | credit_limit\n1 | AC01 | ACTIVE | 1000\n2 | AC02 | CLOSED | 1000\n4 | AC04 | ACTIVE | NULL\n\n(3) violates UNIQUE on code; (5) violates NOT NULL on code because the column was omitted and has no default. DEFAULT values are used only when a column is left out of the INSERT, so row 1 gets 'ACTIVE' and 1000, row 2 keeps 'CLOSED' with the default limit, and row 4's explicit NULL is kept as NULL.",
+          "evaluation_points": [
+            "(3) fails: UNIQUE on code ('AC01' exists)",
+            "(5) fails: code is NOT NULL and has no default",
+            "Defaults apply only to omitted columns: row 1 gets ACTIVE and 1000",
+            "An explicit NULL is stored as NULL (row 4 credit_limit is NULL, not 1000)"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "id | code | status | credit_limit\n1 | AC01 | ACTIVE | 1000\n2 | AC02 | CLOSED | 1000\n4 | AC04 | ACTIVE | NULL"
+            },
+            {
+              "input": "Which numbered statements fail?",
+              "expected": "(3), (5)"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-09",
+          "topic": "Subqueries",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "For each customer who has at least one order, return name, total_spent (sum of their order amounts) and pct_of_total: their total as a percentage of the total of ALL orders, rounded to 2 decimals. Sort by total_spent, highest first.",
+          "starter_code": "CREATE TABLE customers (id INT PRIMARY KEY, name VARCHAR(40) NOT NULL);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id),\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Helix'), (2, 'Ionic'), (3, 'Juno'), (4, 'Kappa');\nINSERT INTO orders VALUES\n (1, 1, 300.00), (2, 2, 150.00), (3, 1, 200.00), (4, 3, 100.00), (5, 2, 50.00);",
+          "reference_solution": "SELECT c.name,\n       SUM(o.amount) AS total_spent,\n       ROUND(100.0 * SUM(o.amount) / (SELECT SUM(amount) FROM orders), 2) AS pct_of_total\nFROM customers c\nJOIN orders o ON o.customer_id = c.id\nGROUP BY c.id, c.name\nORDER BY total_spent DESC;",
+          "evaluation_points": [
+            "Groups orders per customer and sums amounts",
+            "Divides by the grand total from a scalar subquery (not hard-coded)",
+            "Avoids integer division (multiplies by 100.0) and rounds to 2 decimals",
+            "Customers with no orders (Kappa) are excluded; sorted by total descending"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code.",
+              "expected": "name | total_spent | pct_of_total\nHelix | 500 | 62.50\nIonic | 200 | 25\nJuno | 100 | 12.50"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (6, 4, 250.00);",
+              "expected": "name | total_spent | pct_of_total\nHelix | 500 | 47.62\nKappa | 250 | 23.81\nIonic | 200 | 19.05\nJuno | 100 | 9.52"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-SQL-S5-10",
+          "topic": "UPDATE",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "customers.total_spent is out of date. Write a single UPDATE statement that sets total_spent for every customer to the sum of that customer's order amounts, or 0 for customers who have no orders.",
+          "starter_code": "CREATE TABLE customers (\n  id INT PRIMARY KEY,\n  name VARCHAR(40) NOT NULL,\n  total_spent DECIMAL(10,2)\n);\nCREATE TABLE orders (\n  id INT PRIMARY KEY,\n  customer_id INT NOT NULL REFERENCES customers(id),\n  amount DECIMAL(10,2) NOT NULL\n);\nINSERT INTO customers VALUES (1, 'Lyra', 5.00), (2, 'Milo', NULL), (3, 'Nia', 999.00);\nINSERT INTO orders VALUES (1, 1, 40.00), (2, 1, 35.50), (3, 3, 120.00);",
+          "reference_solution": "UPDATE customers\nSET total_spent = COALESCE(\n  (SELECT SUM(o.amount) FROM orders o WHERE o.customer_id = customers.id),\n  0\n);",
+          "evaluation_points": [
+            "Uses a correlated subquery in SET linked on customer_id = customers.id",
+            "COALESCE(..., 0) so customers without orders get 0 instead of NULL",
+            "Updates all customers (no WHERE that skips anyone)",
+            "Single statement, no hard-coded values"
+          ],
+          "test_cases": [
+            {
+              "input": "Sample data from starter_code. Then check with: SELECT id, total_spent FROM customers ORDER BY id;",
+              "expected": "id | total_spent\n1 | 75.50\n2 | 0\n3 | 120"
+            },
+            {
+              "input": "Sample data from starter_code, plus: INSERT INTO orders VALUES (4, 2, 10.00); Then check with: SELECT id, total_spent FROM customers ORDER BY id;",
+              "expected": "id | total_spent\n1 | 75.50\n2 | 10\n3 | 120"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

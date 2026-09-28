@@ -1,0 +1,1637 @@
+{
+  "language": "java",
+  "label": "Java",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-JAVA-S1-01",
+          "topic": "Variables & Types",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static double averageOfThree(int a, int b, int c)` that returns the exact average of the three integers as a double. For example averageOfThree(1, 2, 2) must return 1.6666666666666667, not 1.0. Make sure integer division does not truncate the result.",
+          "starter_code": "",
+          "reference_solution": "public static double averageOfThree(int a, int b, int c) {\n    return (a + b + c) / 3.0;\n}",
+          "evaluation_points": [
+            "Return type is double",
+            "Avoids integer division (divides by 3.0 or casts before dividing)",
+            "Correct for negative values",
+            "Simple one-expression solution; no unnecessary rounding"
+          ],
+          "test_cases": [
+            {
+              "input": "averageOfThree(1, 2, 2)",
+              "expected": "1.6666666666666667"
+            },
+            {
+              "input": "averageOfThree(2, 4, 6)",
+              "expected": "4.0"
+            },
+            {
+              "input": "averageOfThree(-1, 0, 0)",
+              "expected": "-0.3333333333333333"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-02",
+          "topic": "Variables & Types",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "The program below mixes int arithmetic, the modulo operator and casting to double. Write down exactly what it prints, line by line, and explain why the second and fourth lines differ.",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        int a = 7;\n        int b = 2;\n        System.out.println(a / b);\n        System.out.println((double) a / b);\n        System.out.println(a % b);\n        System.out.println((double) (a / b));\n    }\n}",
+          "reference_solution": "Output:\n3\n3.5\n1\n3.0\n\nExplanation: a / b is integer division (7 / 2 = 3). In (double) a / b the cast applies to a first, so the division is done in floating point: 3.5. a % b is the remainder, 1. In (double) (a / b) the integer division happens first (3) and only the result is converted, giving 3.0.",
+          "evaluation_points": [
+            "Gives all four lines exactly: 3, 3.5, 1, 3.0",
+            "Explains integer division truncation",
+            "Explains that the cast binds before division in line 2 but after it in line 4",
+            "Explains % as remainder"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "3\n3.5\n1\n3.0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-03",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static int sumOfDigits(int n)` that returns the sum of the decimal digits of a non-negative integer n using a loop (do not convert the number to a String). Example: sumOfDigits(1234) returns 10.",
+          "starter_code": "",
+          "reference_solution": "public static int sumOfDigits(int n) {\n    int sum = 0;\n    while (n > 0) {\n        sum += n % 10;\n        n /= 10;\n    }\n    return sum;\n}",
+          "evaluation_points": [
+            "Uses % 10 to extract the last digit and / 10 to drop it",
+            "Loop terminates correctly",
+            "Returns 0 for n = 0",
+            "Handles zeros inside the number (e.g. 9005)"
+          ],
+          "test_cases": [
+            {
+              "input": "sumOfDigits(1234)",
+              "expected": "10"
+            },
+            {
+              "input": "sumOfDigits(0)",
+              "expected": "0"
+            },
+            {
+              "input": "sumOfDigits(9005)",
+              "expected": "14"
+            },
+            {
+              "input": "sumOfDigits(7)",
+              "expected": "7"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-04",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static boolean isPalindrome(String s)` that returns true if s reads the same forwards and backwards when you ignore letter case and ignore every character that is not a letter or digit. An empty string counts as a palindrome. Example: \"A man, a plan, a canal: Panama\" returns true.",
+          "starter_code": "",
+          "reference_solution": "public static boolean isPalindrome(String s) {\n    int left = 0;\n    int right = s.length() - 1;\n    while (left < right) {\n        char l = s.charAt(left);\n        char r = s.charAt(right);\n        if (!Character.isLetterOrDigit(l)) {\n            left++;\n        } else if (!Character.isLetterOrDigit(r)) {\n            right--;\n        } else {\n            if (Character.toLowerCase(l) != Character.toLowerCase(r)) {\n                return false;\n            }\n            left++;\n            right--;\n        }\n    }\n    return true;\n}",
+          "evaluation_points": [
+            "Ignores non letter/digit characters",
+            "Case-insensitive comparison",
+            "Empty string returns true",
+            "Correct loop bounds (no index out of range)",
+            "Two-pointer or cleaned-string-reverse approach both acceptable"
+          ],
+          "test_cases": [
+            {
+              "input": "\"A man, a plan, a canal: Panama\"",
+              "expected": "true"
+            },
+            {
+              "input": "\"hello\"",
+              "expected": "false"
+            },
+            {
+              "input": "\"\"",
+              "expected": "true"
+            },
+            {
+              "input": "\"No lemon, no melon\"",
+              "expected": "true"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-05",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static char firstNonRepeating(String s)` that returns the first character in s that appears exactly once. If every character repeats (or s is empty), return '_'. Use a HashMap (or LinkedHashMap) to count characters. Example: firstNonRepeating(\"swiss\") returns 'w'.",
+          "starter_code": "",
+          "reference_solution": "public static char firstNonRepeating(String s) {\n    Map<Character, Integer> counts = new HashMap<>();\n    for (char c : s.toCharArray()) {\n        counts.put(c, counts.getOrDefault(c, 0) + 1);\n    }\n    for (char c : s.toCharArray()) {\n        if (counts.get(c) == 1) {\n            return c;\n        }\n    }\n    return '_';\n}",
+          "evaluation_points": [
+            "Counts occurrences with a map",
+            "Second pass over the string (or insertion-ordered map) to respect original order",
+            "Returns '_' when no unique character exists",
+            "O(n) time rather than nested loops"
+          ],
+          "test_cases": [
+            {
+              "input": "\"swiss\"",
+              "expected": "w"
+            },
+            {
+              "input": "\"aabb\"",
+              "expected": "_"
+            },
+            {
+              "input": "\"leetcode\"",
+              "expected": "l"
+            },
+            {
+              "input": "\"\"",
+              "expected": "_"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-06",
+          "topic": "Arrays",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below should return the largest value in a non-empty int array, but it returns the wrong answer for some inputs (for example when every value is negative). Identify the bug, explain why it happens, and write the corrected method.",
+          "starter_code": "public static int findMax(int[] nums) {\n    int max = 0;\n    for (int i = 0; i < nums.length; i++) {\n        if (nums[i] > max) {\n            max = nums[i];\n        }\n    }\n    return max;\n}",
+          "reference_solution": "public static int findMax(int[] nums) {\n    int max = nums[0];\n    for (int i = 1; i < nums.length; i++) {\n        if (nums[i] > max) {\n            max = nums[i];\n        }\n    }\n    return max;\n}",
+          "evaluation_points": [
+            "Identifies that initialising max to 0 is wrong when all values are negative",
+            "Initialises max to nums[0] (or Integer.MIN_VALUE)",
+            "Loop still covers every element",
+            "Explanation is clear"
+          ],
+          "test_cases": [
+            {
+              "input": "[3, 9, 2]",
+              "expected": "9"
+            },
+            {
+              "input": "[-5, -2, -8]",
+              "expected": "-2"
+            },
+            {
+              "input": "[7]",
+              "expected": "7"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-07",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a class `BankAccount` with a private String owner and a private double balance. Provide: a constructor `BankAccount(String owner, double initialBalance)`; `boolean deposit(double amount)` that adds the amount and returns true, or returns false (no change) if amount <= 0; `boolean withdraw(double amount)` that subtracts the amount and returns true, or returns false (no change) if amount <= 0 or amount is greater than the balance; and `double getBalance()`.",
+          "starter_code": "",
+          "reference_solution": "class BankAccount {\n    private String owner;\n    private double balance;\n\n    public BankAccount(String owner, double initialBalance) {\n        this.owner = owner;\n        this.balance = initialBalance;\n    }\n\n    public boolean deposit(double amount) {\n        if (amount <= 0) {\n            return false;\n        }\n        balance += amount;\n        return true;\n    }\n\n    public boolean withdraw(double amount) {\n        if (amount <= 0 || amount > balance) {\n            return false;\n        }\n        balance -= amount;\n        return true;\n    }\n\n    public double getBalance() {\n        return balance;\n    }\n}",
+          "evaluation_points": [
+            "Fields are private (encapsulation)",
+            "Constructor initialises both fields using this.",
+            "deposit rejects non-positive amounts",
+            "withdraw rejects non-positive amounts and overdrafts without changing the balance",
+            "getBalance returns the current balance"
+          ],
+          "test_cases": [
+            {
+              "input": "new BankAccount(\"Asha\", 100.0); deposit(50)",
+              "expected": "true"
+            },
+            {
+              "input": "then withdraw(200)",
+              "expected": "false"
+            },
+            {
+              "input": "then withdraw(30)",
+              "expected": "true"
+            },
+            {
+              "input": "then getBalance()",
+              "expected": "120.0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-08",
+          "topic": "Strings",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "This program compares String objects using == and using equals(). Predict each printed line exactly and explain the difference between comparing references and comparing contents, including what happens with a string created with new String(...).",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        String s1 = \"java\";\n        String s2 = \"java\";\n        String s3 = new String(\"java\");\n        System.out.println(s1 == s2);\n        System.out.println(s1 == s3);\n        System.out.println(s1.equals(s3));\n        System.out.println(s1.equalsIgnoreCase(\"JAVA\"));\n    }\n}",
+          "reference_solution": "Output:\ntrue\nfalse\ntrue\ntrue\n\nExplanation: s1 and s2 are the same literal, so they refer to the same pooled String object and == is true. new String(\"java\") always creates a new object, so s1 == s3 compares two different references and is false. equals() compares the characters, so s1.equals(s3) is true. equalsIgnoreCase ignores case, so it is also true.",
+          "evaluation_points": [
+            "Correct output: true, false, true, true",
+            "Explains == compares references",
+            "Explains equals compares content",
+            "Mentions the string pool / literals being shared and new String creating a separate object"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "true\nfalse\ntrue\ntrue"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-09",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write an iterative method `public static int binarySearch(int[] sorted, int target)` that returns the index of target in an array sorted in ascending order, or -1 if it is not present. It must run in O(log n) time; do not use Arrays.binarySearch or any library search.",
+          "starter_code": "",
+          "reference_solution": "public static int binarySearch(int[] sorted, int target) {\n    int low = 0;\n    int high = sorted.length - 1;\n    while (low <= high) {\n        int mid = low + (high - low) / 2;\n        if (sorted[mid] == target) {\n            return mid;\n        } else if (sorted[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return -1;\n}",
+          "evaluation_points": [
+            "Maintains low/high bounds and loops while low <= high",
+            "Moves bounds past mid (mid + 1 / mid - 1) so the loop terminates",
+            "Returns -1 when not found, including for an empty array",
+            "O(log n); no linear scan",
+            "Bonus: overflow-safe midpoint low + (high - low) / 2"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 3, 5, 7, 9, 11], 7",
+              "expected": "3"
+            },
+            {
+              "input": "[1, 3, 5, 7, 9, 11], 4",
+              "expected": "-1"
+            },
+            {
+              "input": "[], 5",
+              "expected": "-1"
+            },
+            {
+              "input": "[2, 4], 2",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S1-10",
+          "topic": "Arrays",
+          "task_type": "complete_code",
+          "difficulty": "Hard",
+          "question": "Complete the method mergeSorted so that it merges two int arrays that are each already sorted in ascending order into one new sorted array containing all elements of both (duplicates kept). Fill in the two TODO sections using the indexes i, j and k; do not call Arrays.sort.",
+          "starter_code": "public static int[] mergeSorted(int[] a, int[] b) {\n    int[] result = new int[a.length + b.length];\n    int i = 0, j = 0, k = 0;\n    // TODO 1: while both arrays still have elements, copy the smaller one\n\n    // TODO 2: copy whatever is left in a or b\n\n    return result;\n}",
+          "reference_solution": "public static int[] mergeSorted(int[] a, int[] b) {\n    int[] result = new int[a.length + b.length];\n    int i = 0, j = 0, k = 0;\n    while (i < a.length && j < b.length) {\n        if (a[i] <= b[j]) {\n            result[k++] = a[i++];\n        } else {\n            result[k++] = b[j++];\n        }\n    }\n    while (i < a.length) {\n        result[k++] = a[i++];\n    }\n    while (j < b.length) {\n        result[k++] = b[j++];\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Main loop runs while both indexes are in range and picks the smaller element",
+            "Copies remaining elements of both arrays afterwards",
+            "Handles an empty input array",
+            "Keeps duplicates",
+            "Runs in O(n + m) without sorting"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 3, 5], [2, 4, 6]",
+              "expected": "[1, 2, 3, 4, 5, 6]"
+            },
+            {
+              "input": "[], [1, 2]",
+              "expected": "[1, 2]"
+            },
+            {
+              "input": "[1, 1, 9], [1, 2]",
+              "expected": "[1, 1, 1, 2, 9]"
+            },
+            {
+              "input": "[4, 8], []",
+              "expected": "[4, 8]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-JAVA-S2-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static String letterGrade(int score)` that converts an exam score to a grade: 90-100 is \"A\", 80-89 is \"B\", 70-79 is \"C\", 60-69 is \"D\", 0-59 is \"F\". Any score below 0 or above 100 returns \"Invalid\".",
+          "starter_code": "",
+          "reference_solution": "public static String letterGrade(int score) {\n    if (score < 0 || score > 100) {\n        return \"Invalid\";\n    } else if (score >= 90) {\n        return \"A\";\n    } else if (score >= 80) {\n        return \"B\";\n    } else if (score >= 70) {\n        return \"C\";\n    } else if (score >= 60) {\n        return \"D\";\n    }\n    return \"F\";\n}",
+          "evaluation_points": [
+            "Validates the 0-100 range first",
+            "Boundary values (90, 80, 70, 60) map to the higher grade",
+            "Uses an if / else-if chain in a sensible order",
+            "Every path returns a value"
+          ],
+          "test_cases": [
+            {
+              "input": "95",
+              "expected": "A"
+            },
+            {
+              "input": "80",
+              "expected": "B"
+            },
+            {
+              "input": "59",
+              "expected": "F"
+            },
+            {
+              "input": "101",
+              "expected": "Invalid"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-02",
+          "topic": "Loops",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "The program below uses nested for loops together with a continue statement. Write the exact output it produces and explain what continue does to the outer loop on the iteration where i equals 3.",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 1; i <= 4; i++) {\n            if (i == 3) {\n                continue;\n            }\n            for (int j = 1; j <= i; j++) {\n                System.out.print(j);\n            }\n            System.out.println();\n        }\n    }\n}",
+          "reference_solution": "Output:\n1\n12\n1234\n\nExplanation: For each i the inner loop prints 1..i on one line. When i is 3, continue skips the rest of that outer iteration, so neither the inner loop nor the println runs and no line (not even an empty one) is printed for 3.",
+          "evaluation_points": [
+            "Correct three lines: 1, 12, 1234",
+            "States that no line (not even a blank line) is printed for i = 3",
+            "Explains that continue jumps to the next iteration of the loop it is in",
+            "Explains the inner loop prints 1..i"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "1\n12\n1234"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-03",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static int countEvens(int[] nums)` that returns how many values in the array are even. Zero and negative even numbers count as even. An empty array returns 0.",
+          "starter_code": "",
+          "reference_solution": "public static int countEvens(int[] nums) {\n    int count = 0;\n    for (int n : nums) {\n        if (n % 2 == 0) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Uses n % 2 == 0 (works for negatives; n % 2 == 1 style checks for odd would fail on negatives)",
+            "Iterates over every element",
+            "Returns 0 for an empty array"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 2, 3, 4]",
+              "expected": "2"
+            },
+            {
+              "input": "[]",
+              "expected": "0"
+            },
+            {
+              "input": "[-2, 0, 7]",
+              "expected": "2"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-04",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static String reverseWords(String sentence)` that returns the words of the sentence in reverse order, separated by exactly one space. The input may have leading, trailing or repeated spaces between words; the result must not. Example: \"  hello   world java \" returns \"java world hello\". A blank input returns \"\".",
+          "starter_code": "",
+          "reference_solution": "public static String reverseWords(String sentence) {\n    String trimmed = sentence.trim();\n    if (trimmed.isEmpty()) {\n        return \"\";\n    }\n    String[] words = trimmed.split(\"\\\\s+\");\n    StringBuilder sb = new StringBuilder();\n    for (int i = words.length - 1; i >= 0; i--) {\n        sb.append(words[i]);\n        if (i > 0) {\n            sb.append(' ');\n        }\n    }\n    return sb.toString();\n}",
+          "evaluation_points": [
+            "Trims and splits on one-or-more whitespace (\\\\s+)",
+            "Iterates words from last to first",
+            "No leading/trailing or double spaces in the result",
+            "Handles blank input",
+            "Uses StringBuilder or String.join rather than repeated concatenation (preferred)"
+          ],
+          "test_cases": [
+            {
+              "input": "\"  hello   world java \"",
+              "expected": "java world hello"
+            },
+            {
+              "input": "\"one\"",
+              "expected": "one"
+            },
+            {
+              "input": "\"   \"",
+              "expected": ""
+            },
+            {
+              "input": "\"a b c\"",
+              "expected": "c b a"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-05",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static Map<String, Integer> wordCount(String text)` that counts how many times each word occurs. Words are separated by one or more spaces and counting is case-insensitive (store keys in lower case). A blank string returns an empty map. Example: wordCount(\"The cat and the hat\") maps \"the\" to 2 and every other word to 1.",
+          "starter_code": "",
+          "reference_solution": "public static Map<String, Integer> wordCount(String text) {\n    Map<String, Integer> counts = new HashMap<>();\n    if (text.trim().isEmpty()) {\n        return counts;\n    }\n    for (String word : text.trim().toLowerCase().split(\"\\\\s+\")) {\n        counts.put(word, counts.getOrDefault(word, 0) + 1);\n    }\n    return counts;\n}",
+          "evaluation_points": [
+            "Uses a HashMap<String, Integer>",
+            "Lower-cases words so counting is case-insensitive",
+            "Uses getOrDefault / merge / containsKey to handle first occurrence",
+            "Splits on repeated spaces and handles blank input"
+          ],
+          "test_cases": [
+            {
+              "input": "\"The cat and the hat\" -> get(\"the\")",
+              "expected": "2"
+            },
+            {
+              "input": "\"The cat and the hat\" -> get(\"cat\")",
+              "expected": "1"
+            },
+            {
+              "input": "\"The cat and the hat\" -> size()",
+              "expected": "4"
+            },
+            {
+              "input": "\"\" -> size()",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-06",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "countVowels should return the number of vowels (a, e, i, o, u) in a string, counting both upper and lower case. The current version throws StringIndexOutOfBoundsException and also miscounts words with capital vowels. Find both bugs and write the corrected method.",
+          "starter_code": "public static int countVowels(String s) {\n    int count = 0;\n    for (int i = 0; i <= s.length(); i++) {\n        char c = s.charAt(i);\n        if (\"aeiou\".indexOf(c) != -1) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "reference_solution": "public static int countVowels(String s) {\n    int count = 0;\n    for (int i = 0; i < s.length(); i++) {\n        char c = Character.toLowerCase(s.charAt(i));\n        if (\"aeiou\".indexOf(c) != -1) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Fixes the loop condition from <= to < (off-by-one)",
+            "Makes the check case-insensitive (toLowerCase or \"aeiouAEIOU\")",
+            "Explains why charAt(s.length()) throws",
+            "Empty string returns 0"
+          ],
+          "test_cases": [
+            {
+              "input": "\"Hello World\"",
+              "expected": "3"
+            },
+            {
+              "input": "\"AEIOU\"",
+              "expected": "5"
+            },
+            {
+              "input": "\"\"",
+              "expected": "0"
+            },
+            {
+              "input": "\"rhythm\"",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-07",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Given `interface Shape { double area(); }`, write two classes that implement it: `Circle` (constructor takes a double radius; area = Math.PI * r * r) and `Rectangle` (constructor takes double width and height). Then write `public static double totalArea(List<Shape> shapes)` inside a class `ShapeUtils` that returns the sum of the areas of all shapes (0.0 for an empty list).",
+          "starter_code": "interface Shape {\n    double area();\n}",
+          "reference_solution": "class Circle implements Shape {\n    private final double radius;\n\n    Circle(double radius) {\n        this.radius = radius;\n    }\n\n    @Override\n    public double area() {\n        return Math.PI * radius * radius;\n    }\n}\n\nclass Rectangle implements Shape {\n    private final double width;\n    private final double height;\n\n    Rectangle(double width, double height) {\n        this.width = width;\n        this.height = height;\n    }\n\n    @Override\n    public double area() {\n        return width * height;\n    }\n}\n\nclass ShapeUtils {\n    public static double totalArea(List<Shape> shapes) {\n        double total = 0.0;\n        for (Shape s : shapes) {\n            total += s.area();\n        }\n        return total;\n    }\n}",
+          "evaluation_points": [
+            "Both classes use implements Shape and override area() as public",
+            "Constructors store the dimensions in fields",
+            "totalArea works through the Shape interface (polymorphism), no instanceof checks",
+            "Returns 0.0 for an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "new Rectangle(2, 3).area()",
+              "expected": "6.0"
+            },
+            {
+              "input": "new Circle(1).area()",
+              "expected": "3.141592653589793"
+            },
+            {
+              "input": "totalArea([Rectangle(2,3), Rectangle(1,1)])",
+              "expected": "7.0"
+            },
+            {
+              "input": "totalArea([])",
+              "expected": "0.0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-08",
+          "topic": "OOP Basics",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "The Ticket class below has one static field and one instance field. After three tickets are created, what does main print? Explain how a static field differs from an instance field and why a.issued prints what it does.",
+          "starter_code": "class Ticket {\n    static int issued = 0;\n    int number;\n\n    Ticket() {\n        issued++;\n        number = issued;\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Ticket a = new Ticket();\n        Ticket b = new Ticket();\n        Ticket c = new Ticket();\n        System.out.println(a.number);\n        System.out.println(c.number);\n        System.out.println(Ticket.issued);\n        System.out.println(a.issued);\n    }\n}",
+          "reference_solution": "Output:\n1\n3\n3\n3\n\nExplanation: issued is static, so there is a single copy shared by all Ticket objects; each constructor call increments it. number is an instance field, so each object keeps the value issued had at its creation: a gets 1, b gets 2, c gets 3. Ticket.issued is 3 after three objects. a.issued is the same shared static field (accessing it through an instance is allowed but misleading), so it is also 3.",
+          "evaluation_points": [
+            "Correct output: 1, 3, 3, 3",
+            "Explains a static field is shared by all instances",
+            "Explains each object has its own number",
+            "Explains a.issued refers to the same static variable"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "1\n3\n3\n3"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-09",
+          "topic": "Recursion",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a recursive method `public static List<String> permutations(String s)` that returns all permutations of a string whose characters are all distinct. Build them by choosing each character in turn (left to right) as the first character and recursively permuting the rest, so permutations(\"abc\") returns [abc, acb, bac, bca, cab, cba] in that order. For a string of length 0 or 1, return a list containing just that string.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> permutations(String s) {\n    List<String> result = new ArrayList<>();\n    if (s.length() <= 1) {\n        result.add(s);\n        return result;\n    }\n    for (int i = 0; i < s.length(); i++) {\n        char first = s.charAt(i);\n        String rest = s.substring(0, i) + s.substring(i + 1);\n        for (String p : permutations(rest)) {\n            result.add(first + p);\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Correct base case for length 0/1",
+            "Removes the chosen character correctly with substring",
+            "Recursive call on the remaining characters and prefixes the chosen char",
+            "Produces n! results in the required order",
+            "No duplicates for distinct input characters"
+          ],
+          "test_cases": [
+            {
+              "input": "\"abc\"",
+              "expected": "[abc, acb, bac, bca, cab, cba]"
+            },
+            {
+              "input": "\"a\"",
+              "expected": "[a]"
+            },
+            {
+              "input": "\"abcd\" -> size()",
+              "expected": "24"
+            },
+            {
+              "input": "\"ab\"",
+              "expected": "[ab, ba]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S2-10",
+          "topic": "Sorting/Searching",
+          "task_type": "complete_code",
+          "difficulty": "Hard",
+          "question": "Complete the insertion sort below so that it sorts the array in place in ascending order. For each position i, the variable key holds arr[i]; shift every larger element of the already-sorted part arr[0..i-1] one place to the right, then drop key into the gap. Do not use Arrays.sort.",
+          "starter_code": "public static void insertionSort(int[] arr) {\n    for (int i = 1; i < arr.length; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        // TODO 1: shift elements greater than key one position to the right\n\n        // TODO 2: place key in its correct position\n    }\n}",
+          "reference_solution": "public static void insertionSort(int[] arr) {\n    for (int i = 1; i < arr.length; i++) {\n        int key = arr[i];\n        int j = i - 1;\n        while (j >= 0 && arr[j] > key) {\n            arr[j + 1] = arr[j];\n            j--;\n        }\n        arr[j + 1] = key;\n    }\n}",
+          "evaluation_points": [
+            "Inner while loop checks j >= 0 before accessing arr[j]",
+            "Shifts with arr[j + 1] = arr[j] and decrements j",
+            "Places key at arr[j + 1] after the loop",
+            "Stable: uses > (not >=) so equal elements keep their order",
+            "Works for empty and single-element arrays"
+          ],
+          "test_cases": [
+            {
+              "input": "[5, 2, 9, 1, 5]",
+              "expected": "[1, 2, 5, 5, 9]"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            },
+            {
+              "input": "[3, -1, 2]",
+              "expected": "[-1, 2, 3]"
+            },
+            {
+              "input": "[1, 2, 3]",
+              "expected": "[1, 2, 3]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-JAVA-S3-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static boolean isLeapYear(int year)` using the Gregorian rules: a year is a leap year if it is divisible by 4, except years divisible by 100, which are leap years only if they are also divisible by 400. Examples: 2024 is a leap year, 1900 is not, 2000 is.",
+          "starter_code": "",
+          "reference_solution": "public static boolean isLeapYear(int year) {\n    return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;\n}",
+          "evaluation_points": [
+            "Divisible by 4 rule",
+            "Century exception (divisible by 100 is not a leap year)",
+            "400 exception (2000 is a leap year)",
+            "Correct operator precedence / parentheses"
+          ],
+          "test_cases": [
+            {
+              "input": "2024",
+              "expected": "true"
+            },
+            {
+              "input": "1900",
+              "expected": "false"
+            },
+            {
+              "input": "2000",
+              "expected": "true"
+            },
+            {
+              "input": "2023",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-02",
+          "topic": "Strings",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Strings in Java are immutable. Using that fact, predict exactly what this program prints and explain why the first line is not in upper case even though toUpperCase() was called.",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        String s = \"hello\";\n        s.toUpperCase();\n        System.out.println(s);\n        s = s.concat(\" world\");\n        System.out.println(s);\n        System.out.println(s.length());\n        System.out.println(s.indexOf('o'));\n    }\n}",
+          "reference_solution": "Output:\nhello\nhello world\n11\n4\n\nExplanation: String methods never modify the original object; they return a new String. s.toUpperCase() returns \"HELLO\" but the result is discarded, so s is still \"hello\". concat also returns a new string, but this time it is assigned back to s, giving \"hello world\" (11 characters including the space). indexOf('o') returns the first position of 'o', which is index 4.",
+          "evaluation_points": [
+            "Correct output: hello, hello world, 11, 4",
+            "Explains String immutability and that the toUpperCase result was discarded",
+            "Explains the reassignment s = s.concat(...)",
+            "Counts length and zero-based index correctly"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "hello\nhello world\n11\n4"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-03",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write an iterative (loop-based, not recursive) method `public static long factorial(int n)` that returns n! for 0 <= n <= 20. factorial(0) is 1. If n is negative, throw an IllegalArgumentException.",
+          "starter_code": "",
+          "reference_solution": "public static long factorial(int n) {\n    if (n < 0) {\n        throw new IllegalArgumentException(\"n must be non-negative\");\n    }\n    long result = 1;\n    for (int i = 2; i <= n; i++) {\n        result *= i;\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Uses long so 20! does not overflow",
+            "Returns 1 for 0 (and 1)",
+            "Throws IllegalArgumentException for negative input",
+            "Uses a loop, not recursion"
+          ],
+          "test_cases": [
+            {
+              "input": "0",
+              "expected": "1"
+            },
+            {
+              "input": "5",
+              "expected": "120"
+            },
+            {
+              "input": "20",
+              "expected": "2432902008176640000"
+            },
+            {
+              "input": "-1 -> exception",
+              "expected": "IllegalArgumentException"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-04",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static String compress(String s)` that performs run-length encoding using a StringBuilder: each run of the same character is replaced by the character followed by the length of the run. Example: \"aaabccdddd\" returns \"a3b1c2d4\". An empty string returns \"\".",
+          "starter_code": "",
+          "reference_solution": "public static String compress(String s) {\n    StringBuilder sb = new StringBuilder();\n    int i = 0;\n    while (i < s.length()) {\n        char c = s.charAt(i);\n        int run = 0;\n        while (i < s.length() && s.charAt(i) == c) {\n            run++;\n            i++;\n        }\n        sb.append(c).append(run);\n    }\n    return sb.toString();\n}",
+          "evaluation_points": [
+            "Uses StringBuilder rather than repeated String concatenation",
+            "Counts consecutive runs correctly, including the final run",
+            "Single characters get count 1",
+            "Empty string handled without errors"
+          ],
+          "test_cases": [
+            {
+              "input": "\"aaabccdddd\"",
+              "expected": "a3b1c2d4"
+            },
+            {
+              "input": "\"\"",
+              "expected": ""
+            },
+            {
+              "input": "\"abc\"",
+              "expected": "a1b1c1"
+            },
+            {
+              "input": "\"zzzzzz\"",
+              "expected": "z6"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-05",
+          "topic": "Collections",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static List<String> removeDuplicates(List<String> items)` that returns a new ArrayList containing each distinct item once, in the order of its first appearance. The original list must not be modified. Example: [apple, pear, apple, fig, pear] returns [apple, pear, fig].",
+          "starter_code": "",
+          "reference_solution": "public static List<String> removeDuplicates(List<String> items) {\n    List<String> result = new ArrayList<>();\n    Set<String> seen = new HashSet<>();\n    for (String item : items) {\n        if (seen.add(item)) {\n            result.add(item);\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Returns a new list and leaves the input untouched",
+            "Preserves first-occurrence order",
+            "Uses a HashSet / LinkedHashSet (or contains check) to detect duplicates",
+            "Handles an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "[apple, pear, apple, fig, pear]",
+              "expected": "[apple, pear, fig]"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            },
+            {
+              "input": "original list unchanged",
+              "expected": "[b, a, b]"
+            },
+            {
+              "input": "[x, x, x]",
+              "expected": "[x]"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-06",
+          "topic": "Maps/Dictionaries",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "countOrdersByCustomer should return a map from customer name to the number of orders that customer placed. Instead it crashes with a NullPointerException on the very first order. Explain the cause and write a corrected version.",
+          "starter_code": "public static Map<String, Integer> countOrdersByCustomer(String[] customers) {\n    Map<String, Integer> counts = new HashMap<>();\n    for (String c : customers) {\n        counts.put(c, counts.get(c) + 1);\n    }\n    return counts;\n}",
+          "reference_solution": "public static Map<String, Integer> countOrdersByCustomer(String[] customers) {\n    Map<String, Integer> counts = new HashMap<>();\n    for (String c : customers) {\n        counts.put(c, counts.getOrDefault(c, 0) + 1);\n    }\n    return counts;\n}",
+          "evaluation_points": [
+            "Explains get returns null for a missing key and auto-unboxing null to int throws NullPointerException",
+            "Uses getOrDefault(c, 0), merge(c, 1, Integer::sum) or a containsKey check",
+            "Counts are correct for repeated customers",
+            "Empty array returns an empty map"
+          ],
+          "test_cases": [
+            {
+              "input": "[ana, raj, ana] -> get(\"ana\")",
+              "expected": "2"
+            },
+            {
+              "input": "[ana, raj, ana] -> get(\"raj\")",
+              "expected": "1"
+            },
+            {
+              "input": "[] -> size()",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-07",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static int parseOrDefault(String text, int defaultValue)` that converts text to an int using Integer.parseInt after trimming surrounding spaces. If text is null or is not a valid integer, return defaultValue instead of throwing. Example: parseOrDefault(\" 7 \", 0) returns 7; parseOrDefault(\"abc\", 0) returns 0.",
+          "starter_code": "",
+          "reference_solution": "public static int parseOrDefault(String text, int defaultValue) {\n    if (text == null) {\n        return defaultValue;\n    }\n    try {\n        return Integer.parseInt(text.trim());\n    } catch (NumberFormatException e) {\n        return defaultValue;\n    }\n}",
+          "evaluation_points": [
+            "Uses try/catch around Integer.parseInt",
+            "Catches NumberFormatException specifically (not a bare catch of Throwable)",
+            "Handles null without a NullPointerException",
+            "Trims whitespace before parsing"
+          ],
+          "test_cases": [
+            {
+              "input": "\"42\", 0",
+              "expected": "42"
+            },
+            {
+              "input": "\" 7 \", 0",
+              "expected": "7"
+            },
+            {
+              "input": "\"abc\", 0",
+              "expected": "0"
+            },
+            {
+              "input": "null, 5",
+              "expected": "5"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-08",
+          "topic": "Exceptions",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Trace the try / catch / finally flow in this program, which reads past the end of an array. Write the exact output and explain which statements run, which are skipped, and why the finally block and the last println both execute.",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        int[] data = {10, 20, 30};\n        try {\n            System.out.println(\"A\");\n            System.out.println(data[3]);\n            System.out.println(\"B\");\n        } catch (ArrayIndexOutOfBoundsException e) {\n            System.out.println(\"C\");\n        } finally {\n            System.out.println(\"D\");\n        }\n        System.out.println(\"E\");\n    }\n}",
+          "reference_solution": "Output:\nA\nC\nD\nE\n\nExplanation: \"A\" prints first. data[3] is out of bounds (valid indexes are 0-2), so an ArrayIndexOutOfBoundsException is thrown before anything is printed for that line, and the rest of the try block (\"B\") is skipped. The matching catch prints \"C\". finally always runs, printing \"D\". Because the exception was handled, execution continues normally and \"E\" prints.",
+          "evaluation_points": [
+            "Correct output: A, C, D, E",
+            "Explains B is skipped once the exception is thrown",
+            "Explains finally always runs",
+            "Explains the program continues after a caught exception"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "A\nC\nD\nE"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-09",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Using the Employee class shown, write `public static void sortEmployees(List<Employee> list)` inside a class `EmployeeSorter` that sorts the list in place by salary from highest to lowest; employees with equal salary must be ordered by name alphabetically (A to Z). Use a Comparator (lambda, method references or an anonymous class).",
+          "starter_code": "class Employee {\n    private final String name;\n    private final double salary;\n\n    Employee(String name, double salary) {\n        this.name = name;\n        this.salary = salary;\n    }\n\n    String getName() { return name; }\n    double getSalary() { return salary; }\n}",
+          "reference_solution": "class EmployeeSorter {\n    public static void sortEmployees(List<Employee> list) {\n        list.sort((a, b) -> {\n            int bySalary = Double.compare(b.getSalary(), a.getSalary());\n            if (bySalary != 0) {\n                return bySalary;\n            }\n            return a.getName().compareTo(b.getName());\n        });\n    }\n}",
+          "evaluation_points": [
+            "Sorts by salary descending (Double.compare(b, a) or .reversed())",
+            "Tie-break by name ascending with compareTo / thenComparing",
+            "Sorts in place (list.sort or Collections.sort)",
+            "Does not subtract doubles and cast to int for comparison",
+            "Handles an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "[Ravi 50000, Anu 70000, Bala 50000]",
+              "expected": "[Anu, Bala, Ravi]"
+            },
+            {
+              "input": "[Zed 100.5, Amy 100.25]",
+              "expected": "[Zed, Amy]"
+            },
+            {
+              "input": "[]",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S3-10",
+          "topic": "Recursion",
+          "task_type": "complete_code",
+          "difficulty": "Hard",
+          "question": "Complete the recursive Tower of Hanoi method. It must add to moves, in order, every move needed to transfer n disks from peg `from` to peg `to` using peg `via`, where each move is recorded as a string like \"A->C\". For example hanoi(2, 'A', 'C', 'B', moves) produces [A->B, A->C, B->C]. Only the TODO part needs to be written.",
+          "starter_code": "public static void hanoi(int n, char from, char to, char via, List<String> moves) {\n    if (n == 0) {\n        return;\n    }\n    // TODO: move n-1 disks out of the way, record the move of the largest disk,\n    //       then move the n-1 disks on top of it\n}",
+          "reference_solution": "public static void hanoi(int n, char from, char to, char via, List<String> moves) {\n    if (n == 0) {\n        return;\n    }\n    hanoi(n - 1, from, via, to, moves);\n    moves.add(from + \"->\" + to);\n    hanoi(n - 1, via, to, from, moves);\n}",
+          "evaluation_points": [
+            "First recursive call moves n-1 disks from 'from' to 'via'",
+            "Records the move from 'from' to 'to'",
+            "Second recursive call moves n-1 disks from 'via' to 'to'",
+            "Produces 2^n - 1 moves",
+            "Builds the move string correctly (not char arithmetic)"
+          ],
+          "test_cases": [
+            {
+              "input": "n=2, A->C via B",
+              "expected": "[A->B, A->C, B->C]"
+            },
+            {
+              "input": "n=1, A->C via B",
+              "expected": "[A->C]"
+            },
+            {
+              "input": "n=3 -> number of moves",
+              "expected": "7"
+            },
+            {
+              "input": "n=3 -> 4th move",
+              "expected": "A->C"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-JAVA-S4-01",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static void reverseInPlace(int[] arr)` that reverses the order of the elements of the array itself (do not create a second array). Example: {1, 2, 3, 4} becomes {4, 3, 2, 1}.",
+          "starter_code": "",
+          "reference_solution": "public static void reverseInPlace(int[] arr) {\n    int left = 0;\n    int right = arr.length - 1;\n    while (left < right) {\n        int temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n        left++;\n        right--;\n    }\n}",
+          "evaluation_points": [
+            "Swaps elements from both ends using a temporary variable",
+            "Stops at the middle (left < right) so elements are not swapped back",
+            "No second array",
+            "Works for odd, even, empty and single-element arrays"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 2, 3, 4]",
+              "expected": "[4, 3, 2, 1]"
+            },
+            {
+              "input": "[5, 6, 7]",
+              "expected": "[7, 6, 5]"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-02",
+          "topic": "Functions",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "Java passes arguments to methods by value. The update method below receives an int, an int array and a String and tries to change all three. What does main print afterwards? Explain why only one of the three changes is visible to the caller.",
+          "starter_code": "public class Main {\n    static void update(int count, int[] totals, String label) {\n        count = 100;\n        totals[0] = 100;\n        label = \"changed\";\n    }\n\n    public static void main(String[] args) {\n        int count = 5;\n        int[] totals = {5, 6};\n        String label = \"original\";\n        update(count, totals, label);\n        System.out.println(count);\n        System.out.println(totals[0]);\n        System.out.println(label);\n    }\n}",
+          "reference_solution": "Output:\n5\n100\noriginal\n\nExplanation: Java copies each argument into the parameter. count is a primitive, so the method changes only its own copy: main still sees 5. For the array, the copied value is a reference to the same array object, so totals[0] = 100 modifies the shared array and main sees 100. label = \"changed\" only points the local parameter at a different String; main's variable still refers to \"original\".",
+          "evaluation_points": [
+            "Correct output: 5, 100, original",
+            "Explains primitives are copied",
+            "Explains the array reference is copied but points to the same object, so element changes are visible",
+            "Explains reassigning a reference parameter does not affect the caller's variable"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "5\n100\noriginal"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-03",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static int countChar(String s, char target)` that returns how many times target occurs in s. The comparison is case-sensitive. Example: countChar(\"banana\", 'a') returns 3.",
+          "starter_code": "",
+          "reference_solution": "public static int countChar(String s, char target) {\n    int count = 0;\n    for (int i = 0; i < s.length(); i++) {\n        if (s.charAt(i) == target) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Iterates over every character with correct bounds",
+            "Compares chars with == (appropriate for primitives)",
+            "Case-sensitive as required",
+            "Returns 0 for an empty string"
+          ],
+          "test_cases": [
+            {
+              "input": "\"banana\", 'a'",
+              "expected": "3"
+            },
+            {
+              "input": "\"\", 'x'",
+              "expected": "0"
+            },
+            {
+              "input": "\"Apple\", 'a'",
+              "expected": "0"
+            },
+            {
+              "input": "\"Mississippi\", 's'",
+              "expected": "4"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-04",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static int[] twoSum(int[] nums, int target)` that returns the indexes {i, j} (with i < j) of the two elements that add up to target. Exactly one valid pair exists. Solve it in a single pass using a HashMap from value to index (O(n) time), not with nested loops.",
+          "starter_code": "",
+          "reference_solution": "public static int[] twoSum(int[] nums, int target) {\n    Map<Integer, Integer> indexByValue = new HashMap<>();\n    for (int i = 0; i < nums.length; i++) {\n        int needed = target - nums[i];\n        if (indexByValue.containsKey(needed)) {\n            return new int[]{indexByValue.get(needed), i};\n        }\n        indexByValue.put(nums[i], i);\n    }\n    return new int[0];\n}",
+          "evaluation_points": [
+            "Uses a HashMap from value to index",
+            "Checks for the complement before inserting the current value (so an element is not paired with itself)",
+            "Returns indexes in order i < j",
+            "O(n) single pass",
+            "Handles duplicate values such as {3, 3}"
+          ],
+          "test_cases": [
+            {
+              "input": "[2, 7, 11, 15], 9",
+              "expected": "[0, 1]"
+            },
+            {
+              "input": "[3, 2, 4], 6",
+              "expected": "[1, 2]"
+            },
+            {
+              "input": "[3, 3], 6",
+              "expected": "[0, 1]"
+            },
+            {
+              "input": "[-4, 10, 1, 8], 4",
+              "expected": "[0, 3]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-05",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a class `Product` with private fields name (String), price (double) and quantity (int). The constructor `Product(String name, double price, int quantity)` must throw IllegalArgumentException if price or quantity is negative. Add `double getPrice()`, `double getInventoryValue()` (price x quantity) and `void applyDiscount(double percent)` which reduces the price by that percentage and throws IllegalArgumentException if percent is outside 0-100.",
+          "starter_code": "",
+          "reference_solution": "class Product {\n    private final String name;\n    private double price;\n    private final int quantity;\n\n    public Product(String name, double price, int quantity) {\n        if (price < 0 || quantity < 0) {\n            throw new IllegalArgumentException(\"price and quantity must be non-negative\");\n        }\n        this.name = name;\n        this.price = price;\n        this.quantity = quantity;\n    }\n\n    public double getPrice() {\n        return price;\n    }\n\n    public double getInventoryValue() {\n        return price * quantity;\n    }\n\n    public void applyDiscount(double percent) {\n        if (percent < 0 || percent > 100) {\n            throw new IllegalArgumentException(\"percent must be between 0 and 100\");\n        }\n        price = price * (100 - percent) / 100;\n    }\n}",
+          "evaluation_points": [
+            "Private fields with a constructor that assigns them",
+            "Constructor validates and throws IllegalArgumentException",
+            "getInventoryValue multiplies price by quantity",
+            "applyDiscount validates the range and updates price correctly",
+            "Invalid discount leaves the price unchanged"
+          ],
+          "test_cases": [
+            {
+              "input": "new Product(\"Pen\", 2.0, 10).getInventoryValue()",
+              "expected": "20.0"
+            },
+            {
+              "input": "Pen 2.0 x10, applyDiscount(25) -> getPrice()",
+              "expected": "1.5"
+            },
+            {
+              "input": "new Product(\"X\", -1, 1)",
+              "expected": "IllegalArgumentException"
+            },
+            {
+              "input": "applyDiscount(150)",
+              "expected": "IllegalArgumentException"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-06",
+          "topic": "Debugging",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "countMatches should count how many product codes in the array equal target. When the codes are read from a file at runtime it often returns fewer matches than expected, even though printing the values shows identical text. The method must also tolerate null entries in the array (target is never null). Explain the bug and fix it.",
+          "starter_code": "public static int countMatches(String[] codes, String target) {\n    int count = 0;\n    for (String code : codes) {\n        if (code == target) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "reference_solution": "public static int countMatches(String[] codes, String target) {\n    int count = 0;\n    for (String code : codes) {\n        if (target.equals(code)) {\n            count++;\n        }\n    }\n    return count;\n}",
+          "evaluation_points": [
+            "Identifies that == compares references, not string content",
+            "Replaces it with equals()",
+            "Calls equals on target (or uses Objects.equals) so null entries do not throw",
+            "Explains why literals may appear to work while runtime strings fail"
+          ],
+          "test_cases": [
+            {
+              "input": "[new String(\"A1\"), \"B2\", new String(\"A1\")], \"A1\"",
+              "expected": "2"
+            },
+            {
+              "input": "[null, \"X9\"], \"X9\"",
+              "expected": "1"
+            },
+            {
+              "input": "[], \"A1\"",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-07",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static boolean isPrime(int n)` that returns true if n is a prime number. Numbers less than 2 are not prime. Only test divisors up to the square root of n (i * i <= n) instead of checking every number below n.",
+          "starter_code": "",
+          "reference_solution": "public static boolean isPrime(int n) {\n    if (n < 2) {\n        return false;\n    }\n    for (int i = 2; (long) i * i <= n; i++) {\n        if (n % i == 0) {\n            return false;\n        }\n    }\n    return true;\n}",
+          "evaluation_points": [
+            "Returns false for n < 2 (0, 1 and negatives)",
+            "Loop bound i * i <= n (or i <= Math.sqrt(n))",
+            "Returns false as soon as a divisor is found",
+            "2 and 3 are prime",
+            "Perfect squares such as 49 are detected as not prime"
+          ],
+          "test_cases": [
+            {
+              "input": "1",
+              "expected": "false"
+            },
+            {
+              "input": "2",
+              "expected": "true"
+            },
+            {
+              "input": "17",
+              "expected": "true"
+            },
+            {
+              "input": "21",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-08",
+          "topic": "OOP Basics",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "All three objects below are stored in variables declared as Vehicle, but they are instances of different classes in an inheritance chain. Predict the output exactly and explain how method overriding, dynamic dispatch and the super.describe() call determine each line.",
+          "starter_code": "class Vehicle {\n    String describe() {\n        return \"Vehicle\";\n    }\n\n    int wheels() {\n        return 0;\n    }\n}\n\nclass Car extends Vehicle {\n    @Override\n    String describe() {\n        return \"Car with \" + wheels() + \" wheels\";\n    }\n\n    @Override\n    int wheels() {\n        return 4;\n    }\n}\n\nclass SportsCar extends Car {\n    @Override\n    String describe() {\n        return \"Sports \" + super.describe();\n    }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        Vehicle v1 = new Vehicle();\n        Vehicle v2 = new Car();\n        Vehicle v3 = new SportsCar();\n        System.out.println(v1.describe());\n        System.out.println(v2.describe());\n        System.out.println(v3.describe());\n        System.out.println(v3 instanceof Car);\n    }\n}",
+          "reference_solution": "Output:\nVehicle\nCar with 4 wheels\nSports Car with 4 wheels\ntrue\n\nExplanation: The method that runs is chosen by the object's actual class, not the variable's declared type (dynamic dispatch). v1 is a Vehicle, so \"Vehicle\". v2 is a Car; Car.describe calls wheels(), which Car overrides to return 4. v3 is a SportsCar; its describe prefixes \"Sports \" to super.describe(), which is Car's version, and wheels() still resolves to Car's override (4). A SportsCar is a Car, so instanceof is true.",
+          "evaluation_points": [
+            "Correct output: Vehicle / Car with 4 wheels / Sports Car with 4 wheels / true",
+            "Explains dynamic dispatch uses the runtime type",
+            "Explains super.describe() calls the parent (Car) implementation",
+            "Explains instanceof is true for subclasses"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "Vehicle\nCar with 4 wheels\nSports Car with 4 wheels\ntrue"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-09",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a method `public static int[][] rotateClockwise(int[][] matrix)` that returns a new matrix equal to the input rotated 90 degrees clockwise. The input has R rows and C columns (R, C >= 1, not necessarily square), so the result has C rows and R columns. Example: {{1, 2}, {3, 4}} becomes {{3, 1}, {4, 2}}.",
+          "starter_code": "",
+          "reference_solution": "public static int[][] rotateClockwise(int[][] matrix) {\n    int rows = matrix.length;\n    int cols = matrix[0].length;\n    int[][] result = new int[cols][rows];\n    for (int r = 0; r < rows; r++) {\n        for (int c = 0; c < cols; c++) {\n            result[c][rows - 1 - r] = matrix[r][c];\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Allocates the result as [cols][rows]",
+            "Correct index mapping result[c][rows - 1 - r] = matrix[r][c]",
+            "Works for non-square matrices",
+            "Does not modify the input matrix"
+          ],
+          "test_cases": [
+            {
+              "input": "[[1, 2], [3, 4]]",
+              "expected": "[[3, 1], [4, 2]]"
+            },
+            {
+              "input": "[[1, 2, 3]]",
+              "expected": "[[1], [2], [3]]"
+            },
+            {
+              "input": "[[1, 2, 3], [4, 5, 6]]",
+              "expected": "[[4, 1], [5, 2], [6, 3]]"
+            },
+            {
+              "input": "[[1,2,3],[4,5,6],[7,8,9]]",
+              "expected": "[[7, 4, 1], [8, 5, 2], [9, 6, 3]]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S4-10",
+          "topic": "Collections",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a method `public static boolean isBalanced(String s)` that returns true if every bracket in s is correctly matched and nested. The bracket pairs are (), [] and {}; all other characters are ignored. Use a stack (Deque<Character> / ArrayDeque). Examples: \"{[()]}\" and \"a(b)c\" are balanced; \"([)]\", \"((\" and \")(\" are not.",
+          "starter_code": "",
+          "reference_solution": "public static boolean isBalanced(String s) {\n    Deque<Character> stack = new ArrayDeque<>();\n    for (char c : s.toCharArray()) {\n        if (c == '(' || c == '[' || c == '{') {\n            stack.push(c);\n        } else if (c == ')' || c == ']' || c == '}') {\n            if (stack.isEmpty()) {\n                return false;\n            }\n            char open = stack.pop();\n            if ((c == ')' && open != '(')\n                    || (c == ']' && open != '[')\n                    || (c == '}' && open != '{')) {\n                return false;\n            }\n        }\n    }\n    return stack.isEmpty();\n}",
+          "evaluation_points": [
+            "Pushes opening brackets onto a stack",
+            "On a closing bracket, returns false if the stack is empty or the top does not match",
+            "Returns stack.isEmpty() at the end (unclosed brackets fail)",
+            "Ignores non-bracket characters",
+            "O(n) single pass"
+          ],
+          "test_cases": [
+            {
+              "input": "\"{[()]}\"",
+              "expected": "true"
+            },
+            {
+              "input": "\"([)]\"",
+              "expected": "false"
+            },
+            {
+              "input": "\"((\"",
+              "expected": "false"
+            },
+            {
+              "input": "\"a(b)c\"",
+              "expected": "true"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-JAVA-S5-01",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static String classifyTriangle(int a, int b, int c)` that returns \"Invalid\" if the three side lengths cannot form a triangle (any side <= 0, or the sum of two sides is not greater than the third), otherwise \"Equilateral\" (all sides equal), \"Isosceles\" (exactly two equal) or \"Scalene\" (all different).",
+          "starter_code": "",
+          "reference_solution": "public static String classifyTriangle(int a, int b, int c) {\n    if (a <= 0 || b <= 0 || c <= 0 || a + b <= c || a + c <= b || b + c <= a) {\n        return \"Invalid\";\n    }\n    if (a == b && b == c) {\n        return \"Equilateral\";\n    }\n    if (a == b || b == c || a == c) {\n        return \"Isosceles\";\n    }\n    return \"Scalene\";\n}",
+          "evaluation_points": [
+            "Checks validity first, including non-positive sides",
+            "Checks all three triangle inequalities",
+            "Equilateral checked before Isosceles",
+            "Isosceles covers all three pairs"
+          ],
+          "test_cases": [
+            {
+              "input": "3, 3, 3",
+              "expected": "Equilateral"
+            },
+            {
+              "input": "3, 4, 3",
+              "expected": "Isosceles"
+            },
+            {
+              "input": "3, 4, 5",
+              "expected": "Scalene"
+            },
+            {
+              "input": "1, 2, 3",
+              "expected": "Invalid"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-02",
+          "topic": "Collections",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "The program below builds an ArrayList of office items and then inserts at an index and removes by value. Write the four lines it prints and explain what add(1, ...) and remove(\"pen\") each do to the list.",
+          "starter_code": "import java.util.ArrayList;\nimport java.util.List;\n\npublic class Main {\n    public static void main(String[] args) {\n        List<String> items = new ArrayList<>();\n        items.add(\"pen\");\n        items.add(\"book\");\n        items.add(\"lamp\");\n        items.add(1, \"cup\");\n        items.remove(\"pen\");\n        System.out.println(items);\n        System.out.println(items.size());\n        System.out.println(items.get(1));\n        System.out.println(items.indexOf(\"desk\"));\n    }\n}",
+          "reference_solution": "Output:\n[cup, book, lamp]\n3\nbook\n-1\n\nExplanation: After the three add calls the list is [pen, book, lamp]. add(1, \"cup\") inserts at index 1 and shifts the rest right: [pen, cup, book, lamp]. remove(\"pen\") removes the first element equal to \"pen\": [cup, book, lamp]. size() is 3, get(1) is \"book\", and indexOf returns -1 for an element that is not present.",
+          "evaluation_points": [
+            "Correct output: [cup, book, lamp], 3, book, -1",
+            "Explains add(index, value) inserts and shifts elements",
+            "Explains remove(Object) removes by value",
+            "Explains indexOf returns -1 when absent"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "[cup, book, lamp]\n3\nbook\n-1"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-03",
+          "topic": "Arrays",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write a method `public static int[] runningTotals(int[] amounts)` that returns a new array of the same length where element i is the sum of amounts[0] through amounts[i]. Example: {1, 2, 3, 4} returns {1, 3, 6, 10}. An empty array returns an empty array.",
+          "starter_code": "",
+          "reference_solution": "public static int[] runningTotals(int[] amounts) {\n    int[] totals = new int[amounts.length];\n    int sum = 0;\n    for (int i = 0; i < amounts.length; i++) {\n        sum += amounts[i];\n        totals[i] = sum;\n    }\n    return totals;\n}",
+          "evaluation_points": [
+            "Creates a new array of the same length",
+            "Keeps a running sum instead of re-summing with a nested loop",
+            "Handles negative values and an empty array",
+            "Does not modify the input"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 2, 3, 4]",
+              "expected": "[1, 3, 6, 10]"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            },
+            {
+              "input": "[5, -2, 7]",
+              "expected": "[5, 3, 10]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-04",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a method `public static boolean isAnagram(String a, String b)` that returns true if the two strings contain exactly the same letters with the same counts, ignoring case and ignoring spaces. Examples: (\"Listen\", \"Silent\") and (\"Dormitory\", \"Dirty room\") return true; (\"aab\", \"abb\") returns false.",
+          "starter_code": "",
+          "reference_solution": "public static boolean isAnagram(String a, String b) {\n    char[] x = a.replace(\" \", \"\").toLowerCase().toCharArray();\n    char[] y = b.replace(\" \", \"\").toLowerCase().toCharArray();\n    if (x.length != y.length) {\n        return false;\n    }\n    Arrays.sort(x);\n    Arrays.sort(y);\n    return Arrays.equals(x, y);\n}",
+          "evaluation_points": [
+            "Removes spaces and normalises case",
+            "Compares character counts (sorting or a frequency map/array)",
+            "Uses Arrays.equals / count comparison, not == on arrays",
+            "Different counts of the same letters return false"
+          ],
+          "test_cases": [
+            {
+              "input": "\"Listen\", \"Silent\"",
+              "expected": "true"
+            },
+            {
+              "input": "\"Dormitory\", \"Dirty room\"",
+              "expected": "true"
+            },
+            {
+              "input": "\"abc\", \"abd\"",
+              "expected": "false"
+            },
+            {
+              "input": "\"aab\", \"abb\"",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-05",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Given the abstract class Worker below, write two subclasses. `FullTimeWorker(String name, double annualSalary)` pays annualSalary / 12 per month. `Contractor(String name, double hoursWorked, double hourlyRate)` pays hoursWorked x hourlyRate per month. Both constructors must pass the name to the Worker constructor using super, and both must override monthlyPay().",
+          "starter_code": "abstract class Worker {\n    protected final String name;\n\n    Worker(String name) {\n        this.name = name;\n    }\n\n    abstract double monthlyPay();\n\n    String summary() {\n        return name + \": \" + monthlyPay();\n    }\n}",
+          "reference_solution": "class FullTimeWorker extends Worker {\n    private final double annualSalary;\n\n    FullTimeWorker(String name, double annualSalary) {\n        super(name);\n        this.annualSalary = annualSalary;\n    }\n\n    @Override\n    double monthlyPay() {\n        return annualSalary / 12;\n    }\n}\n\nclass Contractor extends Worker {\n    private final double hoursWorked;\n    private final double hourlyRate;\n\n    Contractor(String name, double hoursWorked, double hourlyRate) {\n        super(name);\n        this.hoursWorked = hoursWorked;\n        this.hourlyRate = hourlyRate;\n    }\n\n    @Override\n    double monthlyPay() {\n        return hoursWorked * hourlyRate;\n    }\n}",
+          "evaluation_points": [
+            "Both classes extend Worker",
+            "Constructors call super(name) as the first statement",
+            "monthlyPay is overridden with the correct formula",
+            "Subclass-specific data stored in private fields",
+            "summary() works without being rewritten (inherited)"
+          ],
+          "test_cases": [
+            {
+              "input": "new FullTimeWorker(\"Mira\", 60000).monthlyPay()",
+              "expected": "5000.0"
+            },
+            {
+              "input": "new Contractor(\"Leo\", 80, 25.5).monthlyPay()",
+              "expected": "2040.0"
+            },
+            {
+              "input": "new FullTimeWorker(\"Mira\", 60000).summary()",
+              "expected": "Mira: 5000.0"
+            },
+            {
+              "input": "Worker w = new Contractor(\"Ivy\", 10, 30); w.summary()",
+              "expected": "Ivy: 300.0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-06",
+          "topic": "Recursion",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "sumFrom is meant to recursively return the sum of nums[index] through the end of the array, so sumFrom(nums, 0) sums the whole array. Calling it on any non-empty array ends in a StackOverflowError. Explain why the recursion never reaches its base case and write the corrected method.",
+          "starter_code": "public static int sumFrom(int[] nums, int index) {\n    if (index == nums.length) {\n        return 0;\n    }\n    return nums[index] + sumFrom(nums, index);\n}",
+          "reference_solution": "public static int sumFrom(int[] nums, int index) {\n    if (index >= nums.length) {\n        return 0;\n    }\n    return nums[index] + sumFrom(nums, index + 1);\n}",
+          "evaluation_points": [
+            "Identifies that index is never advanced, so the same call repeats forever",
+            "Fix passes index + 1 in the recursive call",
+            "Base case returns 0 at the end of the array",
+            "Explains StackOverflowError as unbounded recursion depth"
+          ],
+          "test_cases": [
+            {
+              "input": "[1, 2, 3], 0",
+              "expected": "6"
+            },
+            {
+              "input": "[], 0",
+              "expected": "0"
+            },
+            {
+              "input": "[5, -2, 4], 1",
+              "expected": "2"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-07",
+          "topic": "Collections",
+          "task_type": "complete_code",
+          "difficulty": "Medium",
+          "question": "Complete expensiveProductNames using a single Java Stream pipeline. It must return the names of all products whose price is greater than or equal to minPrice, converted to upper case and sorted alphabetically, as a List<String>. The Product class (with getName() and getPrice()) is shown in the starter code.",
+          "starter_code": "class Product {\n    private final String name;\n    private final double price;\n\n    Product(String name, double price) {\n        this.name = name;\n        this.price = price;\n    }\n\n    String getName() { return name; }\n    double getPrice() { return price; }\n}\n\npublic static List<String> expensiveProductNames(List<Product> products, double minPrice) {\n    return products.stream()\n            // TODO: keep products with price >= minPrice\n            // TODO: map each product to its name in upper case\n            // TODO: sort alphabetically and collect into a List\n            ;\n}",
+          "reference_solution": "public static List<String> expensiveProductNames(List<Product> products, double minPrice) {\n    return products.stream()\n            .filter(p -> p.getPrice() >= minPrice)\n            .map(p -> p.getName().toUpperCase())\n            .sorted()\n            .collect(Collectors.toList());\n}",
+          "evaluation_points": [
+            "filter with >= minPrice (inclusive)",
+            "map to getName().toUpperCase()",
+            "sorted() before collecting",
+            "collect(Collectors.toList()) or .toList()",
+            "Correct operation order; no loops mixed in"
+          ],
+          "test_cases": [
+            {
+              "input": "[mouse 25, laptop 900, desk 150, cable 5], 100",
+              "expected": "[DESK, LAPTOP]"
+            },
+            {
+              "input": "[pen 10], 10 (boundary)",
+              "expected": "[PEN]"
+            },
+            {
+              "input": "[], 1",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-08",
+          "topic": "Strings",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Unlike String, StringBuilder is mutable. Follow each call on the StringBuilder below (append, insert, reverse, deleteCharAt) and write the exact output of the program, showing the builder's contents after every step.",
+          "starter_code": "public class Main {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder(\"code\");\n        sb.append(\"r\");\n        System.out.println(sb);\n        sb.insert(0, \"en\");\n        System.out.println(sb);\n        sb.reverse();\n        System.out.println(sb);\n        sb.deleteCharAt(0);\n        System.out.println(sb.length());\n        System.out.println(sb);\n    }\n}",
+          "reference_solution": "Output:\ncoder\nencoder\nredocne\n6\nedocne\n\nExplanation: StringBuilder methods change the same object. append(\"r\") gives \"coder\". insert(0, \"en\") puts \"en\" at the start: \"encoder\". reverse() reverses in place: \"redocne\". deleteCharAt(0) removes 'r', leaving \"edocne\" with length 6.",
+          "evaluation_points": [
+            "Correct output: coder, encoder, redocne, 6, edocne",
+            "Explains StringBuilder is modified in place (mutable)",
+            "Correct handling of insert at index 0",
+            "Correct result of reverse and deleteCharAt"
+          ],
+          "test_cases": [
+            {
+              "input": "(run main)",
+              "expected": "coder\nencoder\nredocne\n6\nedocne"
+            }
+          ],
+          "expected_minutes": 4,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-09",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a method `public static int[][] mergeIntervals(int[][] intervals)` where each element is {start, end} with start <= end. Merge every group of overlapping intervals and return the result sorted by start. Intervals that touch (e.g. {1, 4} and {4, 5}) count as overlapping. The input may be in any order. Example: {{1,3},{8,10},{2,6},{15,18}} returns {{1,6},{8,10},{15,18}}.",
+          "starter_code": "",
+          "reference_solution": "public static int[][] mergeIntervals(int[][] intervals) {\n    if (intervals.length == 0) {\n        return new int[0][];\n    }\n    int[][] sorted = intervals.clone();\n    Arrays.sort(sorted, (x, y) -> Integer.compare(x[0], y[0]));\n    List<int[]> merged = new ArrayList<>();\n    int[] current = {sorted[0][0], sorted[0][1]};\n    for (int i = 1; i < sorted.length; i++) {\n        if (sorted[i][0] <= current[1]) {\n            current[1] = Math.max(current[1], sorted[i][1]);\n        } else {\n            merged.add(current);\n            current = new int[]{sorted[i][0], sorted[i][1]};\n        }\n    }\n    merged.add(current);\n    return merged.toArray(new int[0][]);\n}",
+          "evaluation_points": [
+            "Sorts intervals by start first",
+            "Merges when next start <= current end (touching included)",
+            "Extends the end with Math.max (handles fully contained intervals)",
+            "Adds the last interval after the loop",
+            "Handles empty input"
+          ],
+          "test_cases": [
+            {
+              "input": "[[1,3],[8,10],[2,6],[15,18]]",
+              "expected": "[[1, 6], [8, 10], [15, 18]]"
+            },
+            {
+              "input": "[[1,4],[4,5]]",
+              "expected": "[[1, 5]]"
+            },
+            {
+              "input": "[[1,10],[2,3]]",
+              "expected": "[[1, 10]]"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-JAVA-S5-10",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a checked exception class `OutOfStockException` (extends Exception, constructor takes a String message) and a class `Inventory` backed by a HashMap<String, Integer>. Inventory needs: `void addStock(String item, int qty)`; `void removeStock(String item, int qty) throws OutOfStockException`, which throws OutOfStockException with the message \"Not enough <item>: requested <qty>, available <n>\" when there is not enough stock (leaving stock unchanged); and `int getQuantity(String item)`, which returns 0 for unknown items. Both addStock and removeStock throw IllegalArgumentException if qty <= 0.",
+          "starter_code": "",
+          "reference_solution": "class OutOfStockException extends Exception {\n    public OutOfStockException(String message) {\n        super(message);\n    }\n}\n\nclass Inventory {\n    private final Map<String, Integer> stock = new HashMap<>();\n\n    public void addStock(String item, int qty) {\n        if (qty <= 0) {\n            throw new IllegalArgumentException(\"qty must be positive\");\n        }\n        stock.put(item, getQuantity(item) + qty);\n    }\n\n    public void removeStock(String item, int qty) throws OutOfStockException {\n        if (qty <= 0) {\n            throw new IllegalArgumentException(\"qty must be positive\");\n        }\n        int available = getQuantity(item);\n        if (qty > available) {\n            throw new OutOfStockException(\"Not enough \" + item + \": requested \" + qty + \", available \" + available);\n        }\n        stock.put(item, available - qty);\n    }\n\n    public int getQuantity(String item) {\n        return stock.getOrDefault(item, 0);\n    }\n}",
+          "evaluation_points": [
+            "OutOfStockException extends Exception and passes the message to super",
+            "removeStock declares throws OutOfStockException",
+            "Stock is unchanged when the exception is thrown",
+            "Exact message format",
+            "IllegalArgumentException for qty <= 0; getQuantity returns 0 for unknown items"
+          ],
+          "test_cases": [
+            {
+              "input": "addStock(bolt,10); removeStock(bolt,4); getQuantity(bolt)",
+              "expected": "6"
+            },
+            {
+              "input": "then removeStock(bolt,10)",
+              "expected": "OutOfStockException"
+            },
+            {
+              "input": "exception message",
+              "expected": "Not enough bolt: requested 10, available 6"
+            },
+            {
+              "input": "stock unchanged after failure",
+              "expected": "6"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

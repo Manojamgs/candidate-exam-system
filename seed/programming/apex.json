@@ -1,0 +1,1335 @@
+{
+  "language": "apex",
+  "label": "Salesforce Apex",
+  "sets": [
+    {
+      "set_number": 1,
+      "questions": [
+        {
+          "code": "PRG-APEX-S1-01",
+          "topic": "Variables & Types",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write an Apex method `public static Decimal applyDiscount(Decimal amount, Integer percent)` that returns the invoice amount after deducting `percent` percent, rounded to 2 decimal places using half-up rounding. Rules: if `amount` is null return 0; if `percent` is null or negative treat it as 0; if `percent` is greater than 100 treat it as 100.",
+          "starter_code": "",
+          "reference_solution": "public static Decimal applyDiscount(Decimal amount, Integer percent) {\n    if (amount == null) {\n        return 0;\n    }\n    Integer p = (percent == null || percent < 0) ? 0 : Math.min(percent, 100);\n    Decimal discounted = amount - (amount * p / 100);\n    return discounted.setScale(2, RoundingMode.HALF_UP);\n}",
+          "evaluation_points": [
+            "Returns 0 when amount is null",
+            "Clamps percent to the 0..100 range and treats null as 0",
+            "Uses Decimal arithmetic (not Integer division) for the discount",
+            "Rounds to 2 decimals with setScale(2, RoundingMode.HALF_UP) or equivalent"
+          ],
+          "test_cases": [
+            {
+              "input": "applyDiscount(200.00, 15)",
+              "expected": "170.00"
+            },
+            {
+              "input": "applyDiscount(99.99, 10)",
+              "expected": "89.99"
+            },
+            {
+              "input": "applyDiscount(null, 10)",
+              "expected": "0"
+            },
+            {
+              "input": "applyDiscount(50, 150)",
+              "expected": "0.00"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-02",
+          "topic": "Variables & Types",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following anonymous Apex print (each System.debug line in order)? Briefly explain each result, in particular why the two 'Total' lines differ.",
+          "starter_code": "Integer a = 7;\nInteger b = 2;\nDecimal d = 7;\nInteger c;\nSystem.debug(a / b);\nSystem.debug(d / b);\nSystem.debug(Math.mod(a, b));\nSystem.debug(c == null);\nSystem.debug('Total: ' + a + b);\nSystem.debug('Total: ' + (a + b));",
+          "reference_solution": "Output:\n3\n3.5\n1\ntrue\nTotal: 72\nTotal: 9\n\nExplanation:\n- a / b is Integer / Integer, so the fraction is truncated: 3.\n- d / b is Decimal / Integer, so the result is Decimal: 3.5.\n- Math.mod(7, 2) is the remainder: 1.\n- An Integer declared without a value is null (not 0), so c == null is true.\n- 'Total: ' + a + b is evaluated left to right: the String is concatenated with 7, then with 2, giving 'Total: 72'.\n- In 'Total: ' + (a + b) the parentheses force numeric addition first (9), then concatenation: 'Total: 9'.",
+          "evaluation_points": [
+            "Integer division truncates to 3",
+            "Decimal division gives 3.5",
+            "Uninitialised Integer is null, not 0",
+            "Explains left-to-right String concatenation (72) vs parenthesised addition (9)"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-03",
+          "topic": "Arrays/Lists",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static List<Integer> getEvenQuantities(List<Integer> quantities)` that returns a new list containing only the even numbers from `quantities`, in their original order. Null elements must be skipped. If the input list itself is null, return an empty list (never null).",
+          "starter_code": "",
+          "reference_solution": "public static List<Integer> getEvenQuantities(List<Integer> quantities) {\n    List<Integer> result = new List<Integer>();\n    if (quantities == null) {\n        return result;\n    }\n    for (Integer n : quantities) {\n        if (n != null && Math.mod(n, 2) == 0) {\n            result.add(n);\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Uses Math.mod (Apex has no % operator) to test evenness",
+            "Preserves original order",
+            "Skips null elements without throwing",
+            "Returns an empty list (not null) for null input"
+          ],
+          "test_cases": [
+            {
+              "input": "[4, 7, 10, null, 3, -2]",
+              "expected": "[4, 10, -2]"
+            },
+            {
+              "input": "[1, 3, 5]",
+              "expected": "[]"
+            },
+            {
+              "input": "null",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-04",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static Map<String, Integer> countByIndustry(List<Account> accounts)` that returns how many Accounts belong to each Industry value. Accounts whose Industry is null or blank must be counted under the key 'Unknown'. Do not run any SOQL; the list is already loaded.",
+          "starter_code": "",
+          "reference_solution": "public static Map<String, Integer> countByIndustry(List<Account> accounts) {\n    Map<String, Integer> counts = new Map<String, Integer>();\n    for (Account acc : accounts) {\n        String key = String.isBlank(acc.Industry) ? 'Unknown' : acc.Industry;\n        if (counts.containsKey(key)) {\n            counts.put(key, counts.get(key) + 1);\n        } else {\n            counts.put(key, 1);\n        }\n    }\n    return counts;\n}",
+          "evaluation_points": [
+            "Initialises the Map before use",
+            "Uses containsKey/get/put correctly to increment counts",
+            "Maps null or blank Industry to 'Unknown'",
+            "No SOQL or DML inside the method"
+          ],
+          "test_cases": [
+            {
+              "input": "Accounts: [Banking, Banking, Retail, null]",
+              "expected": "{Banking=2, Retail=1, Unknown=1}"
+            },
+            {
+              "input": "empty list",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-05",
+          "topic": "SOQL Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static List<Contact> getContactsWithEmail(Id accountId)` that returns the Contacts of the given Account that have an Email address. Return the fields Id, FirstName, LastName and Email, sorted by LastName ascending, and at most 50 records. Use a bind variable for the Account Id.",
+          "starter_code": "",
+          "reference_solution": "public static List<Contact> getContactsWithEmail(Id accountId) {\n    return [\n        SELECT Id, FirstName, LastName, Email\n        FROM Contact\n        WHERE AccountId = :accountId AND Email != null\n        ORDER BY LastName ASC\n        LIMIT 50\n    ];\n}",
+          "evaluation_points": [
+            "Uses a bind variable (:accountId) rather than string concatenation",
+            "Filters on AccountId and Email != null",
+            "Includes ORDER BY LastName and LIMIT 50",
+            "Selects the four requested fields"
+          ],
+          "test_cases": [
+            {
+              "input": "Account with 3 contacts, 1 without email",
+              "expected": "2 contacts, sorted by LastName"
+            },
+            {
+              "input": "Account with no contacts",
+              "expected": "empty list"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-06",
+          "topic": "Governor Limits & Bulkification",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below sets Description = 'No contacts' on each Account that has no Contacts (the caller performs the update). It works in a small test but fails with 'System.LimitException: Too many SOQL queries: 101' when called with 150 Accounts. Explain the problem and rewrite the method so it is bulk-safe.",
+          "starter_code": "public static void flagAccountsWithoutContacts(List<Account> accounts) {\n    for (Account acc : accounts) {\n        List<Contact> cons = [SELECT Id FROM Contact WHERE AccountId = :acc.Id];\n        if (cons.isEmpty()) {\n            acc.Description = 'No contacts';\n        }\n    }\n}",
+          "reference_solution": "// Problem: a SOQL query runs once per Account inside the loop. The synchronous\n// limit is 100 SOQL queries per transaction, so 101+ Accounts fail.\n// Fix: collect the Ids, run ONE query outside the loop, then check membership.\npublic static void flagAccountsWithoutContacts(List<Account> accounts) {\n    Set<Id> accountIds = new Set<Id>();\n    for (Account acc : accounts) {\n        accountIds.add(acc.Id);\n    }\n    Set<Id> withContacts = new Set<Id>();\n    for (Contact c : [SELECT AccountId FROM Contact WHERE AccountId IN :accountIds]) {\n        withContacts.add(c.AccountId);\n    }\n    for (Account acc : accounts) {\n        if (!withContacts.contains(acc.Id)) {\n            acc.Description = 'No contacts';\n        }\n    }\n}",
+          "evaluation_points": [
+            "Identifies SOQL inside a loop and the 100-query limit",
+            "Collects Account Ids into a Set first",
+            "Runs a single query with IN :accountIds outside the loop",
+            "Uses a Set/Map lookup to decide which Accounts to flag"
+          ],
+          "test_cases": [
+            {
+              "input": "150 Accounts, 60 without contacts",
+              "expected": "60 Accounts flagged, only 1 SOQL query used"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-07",
+          "topic": "DML & Database Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static List<String> insertContacts(List<Contact> contacts)` that inserts the Contacts with partial success allowed (valid records are saved even if some fail). Return a list of error strings in the format 'Row <index>: <error message>' for every failed record, where <index> is the position in the input list. Return an empty list if all succeed.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> insertContacts(List<Contact> contacts) {\n    List<String> errors = new List<String>();\n    List<Database.SaveResult> results = Database.insert(contacts, false);\n    for (Integer i = 0; i < results.size(); i++) {\n        if (!results[i].isSuccess()) {\n            for (Database.Error err : results[i].getErrors()) {\n                errors.add('Row ' + i + ': ' + err.getMessage());\n            }\n        }\n    }\n    return errors;\n}",
+          "evaluation_points": [
+            "Uses Database.insert(list, false) (allOrNone = false) instead of the insert statement",
+            "Iterates SaveResults by index, relying on results matching input order",
+            "Uses isSuccess() and getErrors()/getMessage()",
+            "Single DML call, not one per record"
+          ],
+          "test_cases": [
+            {
+              "input": "3 Contacts, second has no LastName",
+              "expected": "['Row 1: Required fields are missing: [LastName]'], rows 0 and 2 inserted"
+            },
+            {
+              "input": "2 valid Contacts",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-08",
+          "topic": "Exceptions",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "What does `Demo.run()` print? Then state what it would print if the line `Integer x = nums[5];` were replaced by `Integer y; Integer x = y + 1;`. Explain which catch block runs in each case and why.",
+          "starter_code": "public class Demo {\n    public static void run() {\n        List<Integer> nums = new List<Integer>{10, 20};\n        try {\n            System.debug('A');\n            Integer x = nums[5];\n            System.debug('B');\n        } catch (ListException e) {\n            System.debug('C');\n        } catch (Exception e) {\n            System.debug('D');\n        } finally {\n            System.debug('E');\n        }\n        System.debug('F');\n    }\n}",
+          "reference_solution": "Original code prints: A, C, E, F\n- nums[5] throws System.ListException (List index out of bounds: 5), so 'B' is skipped.\n- The first matching catch is ListException -> 'C'. Only one catch block runs.\n- finally always runs -> 'E'. The exception was handled, so execution continues -> 'F'.\n\nWith `Integer y; Integer x = y + 1;` it prints: A, D, E, F\n- y is null, so y + 1 throws System.NullPointerException.\n- It is not a ListException, so the generic catch (Exception e) handles it -> 'D'.\n- finally -> 'E', then 'F'.",
+          "evaluation_points": [
+            "Correct order A, C, E, F for the original code",
+            "Recognises the ListException and that 'B' is skipped",
+            "Correct order A, D, E, F for the null case (NullPointerException)",
+            "Explains that catch blocks are checked in order and finally always runs"
+          ],
+          "test_cases": [],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-09",
+          "topic": "Triggers",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a trigger `OpportunityStageTrigger` on Opportunity (before update) that only acts when StageName has CHANGED in this update: (1) if the new StageName is 'Closed Won' and CloseDate is in the future, set CloseDate to today; (2) if the new StageName is 'Closed Lost' and Description is blank, set Description to 'Lost - reason pending'. The trigger must be bulk-safe and must not perform any DML or SOQL.",
+          "starter_code": "",
+          "reference_solution": "trigger OpportunityStageTrigger on Opportunity (before update) {\n    for (Opportunity opp : Trigger.new) {\n        Opportunity oldOpp = (Opportunity) Trigger.oldMap.get(opp.Id);\n        if (opp.StageName == oldOpp.StageName) {\n            continue;\n        }\n        if (opp.StageName == 'Closed Won' && opp.CloseDate > Date.today()) {\n            opp.CloseDate = Date.today();\n        } else if (opp.StageName == 'Closed Lost' && String.isBlank(opp.Description)) {\n            opp.Description = 'Lost - reason pending';\n        }\n    }\n}",
+          "evaluation_points": [
+            "Uses Trigger.oldMap to detect that StageName actually changed",
+            "Loops over all of Trigger.new (bulk-safe)",
+            "Modifies fields directly on Trigger.new records without an update statement (before trigger)",
+            "Handles both the Closed Won and Closed Lost rules correctly"
+          ],
+          "test_cases": [
+            {
+              "input": "Stage Prospecting -> Closed Won, CloseDate = today + 10",
+              "expected": "CloseDate becomes today"
+            },
+            {
+              "input": "Stage Closed Won -> Closed Won (no change), CloseDate in future",
+              "expected": "No change"
+            },
+            {
+              "input": "Stage Negotiation -> Closed Lost, Description blank",
+              "expected": "Description = 'Lost - reason pending'"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S1-10",
+          "topic": "Async Apex",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a Queueable class `CaseEscalationJob` that receives a Set<Id> of Account Ids through its constructor. When executed it must find all open Cases (IsClosed = false) for those Accounts whose Priority is 'Medium', change their Priority to 'High', and save them with a single DML statement. Also show the one line of code that enqueues the job and captures the job Id.",
+          "starter_code": "",
+          "reference_solution": "public class CaseEscalationJob implements Queueable {\n    private Set<Id> accountIds;\n\n    public CaseEscalationJob(Set<Id> accountIds) {\n        this.accountIds = accountIds;\n    }\n\n    public void execute(QueueableContext context) {\n        List<Case> cases = [\n            SELECT Id, Priority\n            FROM Case\n            WHERE AccountId IN :accountIds\n            AND IsClosed = false\n            AND Priority = 'Medium'\n        ];\n        for (Case c : cases) {\n            c.Priority = 'High';\n        }\n        if (!cases.isEmpty()) {\n            update cases;\n        }\n    }\n}\n\n// Enqueue:\nId jobId = System.enqueueJob(new CaseEscalationJob(accountIds));",
+          "evaluation_points": [
+            "Class implements Queueable and defines public void execute(QueueableContext)",
+            "Stores the Set<Id> passed in the constructor in a member variable",
+            "One SOQL with IN :accountIds, IsClosed = false and Priority = 'Medium'; one update outside the loop",
+            "Enqueues with System.enqueueJob and captures the returned Id"
+          ],
+          "test_cases": [
+            {
+              "input": "2 Accounts with 3 open Medium cases and 1 closed Medium case",
+              "expected": "3 cases updated to High, closed case untouched"
+            },
+            {
+              "input": "Accounts with no matching cases",
+              "expected": "No DML performed"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 2,
+      "questions": [
+        {
+          "code": "PRG-APEX-S2-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static String getInitials(String fullName)` that returns the upper-case initials of each word in a name. Words may be separated by one or more spaces and the input may have leading/trailing spaces. Return an empty string for null or blank input.",
+          "starter_code": "",
+          "reference_solution": "public static String getInitials(String fullName) {\n    if (String.isBlank(fullName)) {\n        return '';\n    }\n    String initials = '';\n    for (String part : fullName.trim().split('\\\\s+')) {\n        initials += part.substring(0, 1).toUpperCase();\n    }\n    return initials;\n}",
+          "evaluation_points": [
+            "Handles null/blank with String.isBlank",
+            "Trims and splits on one-or-more whitespace (split('\\\\s+'))",
+            "Takes the first character of each word and upper-cases it",
+            "Does not produce errors for multiple spaces"
+          ],
+          "test_cases": [
+            {
+              "input": "'john ronald smith'",
+              "expected": "'JRS'"
+            },
+            {
+              "input": "'  mary   ann '",
+              "expected": "'MA'"
+            },
+            {
+              "input": "null",
+              "expected": "''"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-02",
+          "topic": "Loops",
+          "task_type": "fix_bug",
+          "difficulty": "Easy",
+          "question": "The method below should return the total Amount of the given Opportunities, ignoring Opportunities with no Amount, and return 0 for an empty list. It currently throws exceptions. Find all three bugs and write the corrected method.",
+          "starter_code": "public static Decimal sumAmounts(List<Opportunity> opps) {\n    Decimal total;\n    for (Integer i = 0; i <= opps.size(); i++) {\n        total += opps[i].Amount;\n    }\n    return total;\n}",
+          "reference_solution": "// Bug 1: total is never initialised, so it is null and 'total +=' throws NullPointerException.\n// Bug 2: i <= opps.size() reads one element past the end -> ListException (index out of bounds).\n// Bug 3: a null Amount added to the total throws NullPointerException.\npublic static Decimal sumAmounts(List<Opportunity> opps) {\n    Decimal total = 0;\n    for (Integer i = 0; i < opps.size(); i++) {\n        if (opps[i].Amount != null) {\n            total += opps[i].Amount;\n        }\n    }\n    return total;\n}",
+          "evaluation_points": [
+            "Initialises total to 0",
+            "Changes the loop condition to i < opps.size()",
+            "Skips Opportunities whose Amount is null",
+            "Returns 0 for an empty list"
+          ],
+          "test_cases": [
+            {
+              "input": "Amounts [100, null, 250.50]",
+              "expected": "350.50"
+            },
+            {
+              "input": "empty list",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-03",
+          "topic": "Collections",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does this anonymous Apex print? Explain each value.",
+          "starter_code": "Set<String> regions = new Set<String>{'North', 'South'};\nregions.add('North');\nregions.add('north');\nSystem.debug(regions.size());\n\nList<String> items = new List<String>{'A', 'B'};\nitems.add('A');\nSystem.debug(items.size());\n\nMap<String, Integer> stock = new Map<String, Integer>();\nstock.put('Pen', 10);\nstock.put('Pen', 25);\nSystem.debug(stock.get('Pen'));\nSystem.debug(stock.get('Pencil'));\nSystem.debug(stock.size());",
+          "reference_solution": "Output:\n3\n3\n25\nnull\n1\n\n- A Set ignores duplicates, so adding 'North' again changes nothing, but Set<String> is case-sensitive, so 'north' is a new element: size 3.\n- A List allows duplicates: 'A', 'B', 'A' -> size 3.\n- put() with an existing key overwrites the value: 'Pen' -> 25.\n- get() on a missing key returns null (no exception).\n- Only one key ('Pen') exists: size 1.",
+          "evaluation_points": [
+            "Set ignores the duplicate but treats 'north' as different (case-sensitive): 3",
+            "List keeps duplicates: 3",
+            "Map.put overwrites existing key: 25",
+            "Map.get for a missing key returns null; size is 1"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-04",
+          "topic": "SOQL Relationships",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static List<String> getContactLabels(String industry)` that queries all Contacts whose parent Account has the given Industry (child-to-parent relationship query, one SOQL) and returns labels in the form 'LastName (Account Name)', ordered by Contact LastName.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> getContactLabels(String industry) {\n    List<String> labels = new List<String>();\n    for (Contact c : [\n        SELECT LastName, Account.Name\n        FROM Contact\n        WHERE Account.Industry = :industry\n        ORDER BY LastName\n    ]) {\n        labels.add(c.LastName + ' (' + c.Account.Name + ')');\n    }\n    return labels;\n}",
+          "evaluation_points": [
+            "Uses dot notation Account.Name / Account.Industry (child-to-parent)",
+            "Filters on the parent field with a bind variable",
+            "Exactly one SOQL query, ordered by LastName",
+            "Builds the label from c.Account.Name"
+          ],
+          "test_cases": [
+            {
+              "input": "industry = 'Banking'; Contacts Lee (Acme Bank), Adams (First Trust)",
+              "expected": "['Adams (First Trust)', 'Lee (Acme Bank)']"
+            },
+            {
+              "input": "industry with no accounts",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-05",
+          "topic": "Classes & Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a class `InvoiceLine` with private fields `quantity` (Integer) and `unitPrice` (Decimal). The constructor `InvoiceLine(Integer quantity, Decimal unitPrice)` must throw an IllegalArgumentException if quantity is null or <= 0, or unitPrice is null or negative. Add an instance method `getTotal()` returning quantity * unitPrice, and a static method `sumLines(List<InvoiceLine> lines)` returning the total of all lines.",
+          "starter_code": "",
+          "reference_solution": "public class InvoiceLine {\n    private Integer quantity;\n    private Decimal unitPrice;\n\n    public InvoiceLine(Integer quantity, Decimal unitPrice) {\n        if (quantity == null || quantity <= 0 || unitPrice == null || unitPrice < 0) {\n            throw new IllegalArgumentException('Invalid quantity or price');\n        }\n        this.quantity = quantity;\n        this.unitPrice = unitPrice;\n    }\n\n    public Decimal getTotal() {\n        return quantity * unitPrice;\n    }\n\n    public static Decimal sumLines(List<InvoiceLine> lines) {\n        Decimal total = 0;\n        for (InvoiceLine line : lines) {\n            total += line.getTotal();\n        }\n        return total;\n    }\n}",
+          "evaluation_points": [
+            "Private fields assigned via this. in the constructor",
+            "Validates inputs and throws IllegalArgumentException",
+            "getTotal is an instance method; sumLines is static",
+            "sumLines initialises the total to 0 and adds each line"
+          ],
+          "test_cases": [
+            {
+              "input": "new InvoiceLine(3, 19.99).getTotal()",
+              "expected": "59.97"
+            },
+            {
+              "input": "new InvoiceLine(0, 5)",
+              "expected": "IllegalArgumentException"
+            },
+            {
+              "input": "sumLines([ (2, 10), (1, 5.50) ])",
+              "expected": "25.50"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-06",
+          "topic": "Governor Limits & Bulkification",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "The method below should move every Case whose Origin is 'Web' and Status is 'New' to Status 'Working'. When a batch of 200 Cases is passed it fails with 'Too many DML statements: 151'. Explain why and fix it.",
+          "starter_code": "public static void startWebCases(List<Case> cases) {\n    for (Case c : cases) {\n        if (c.Origin == 'Web' && c.Status == 'New') {\n            c.Status = 'Working';\n            update c;\n        }\n    }\n}",
+          "reference_solution": "// Problem: 'update c' executes one DML statement per matching Case. The limit is\n// 150 DML statements per transaction, so more than 150 matches fails.\n// Fix: collect changed records and update them once, after the loop.\npublic static void startWebCases(List<Case> cases) {\n    List<Case> toUpdate = new List<Case>();\n    for (Case c : cases) {\n        if (c.Origin == 'Web' && c.Status == 'New') {\n            c.Status = 'Working';\n            toUpdate.add(c);\n        }\n    }\n    if (!toUpdate.isEmpty()) {\n        update toUpdate;\n    }\n}",
+          "evaluation_points": [
+            "Identifies DML inside a loop and the 150 DML statement limit",
+            "Collects records into a List inside the loop",
+            "Performs a single update after the loop",
+            "Only updates records that actually changed"
+          ],
+          "test_cases": [
+            {
+              "input": "200 Cases, 180 Web/New",
+              "expected": "180 Cases updated with 1 DML statement"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-07",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static String createAccount(String name)` that inserts an Account with the given Name. On success return 'OK:' followed by the new record Id. If the insert fails, catch the DmlException (do not let it propagate) and return 'ERROR:' followed by the first DML error message.",
+          "starter_code": "",
+          "reference_solution": "public static String createAccount(String name) {\n    Account acc = new Account(Name = name);\n    try {\n        insert acc;\n        return 'OK:' + acc.Id;\n    } catch (DmlException e) {\n        return 'ERROR:' + e.getDmlMessage(0);\n    }\n}",
+          "evaluation_points": [
+            "Wraps the insert in try/catch",
+            "Catches DmlException specifically (not only generic Exception)",
+            "Uses e.getDmlMessage(0) (or getMessage) for the error",
+            "Reads acc.Id after insert, which is populated automatically"
+          ],
+          "test_cases": [
+            {
+              "input": "createAccount('Acme Ltd')",
+              "expected": "'OK:001...'"
+            },
+            {
+              "input": "createAccount(null)",
+              "expected": "'ERROR:Required fields are missing: [Name]'"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-08",
+          "topic": "Triggers",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "A developer deploys the trigger below. What happens when a user inserts a Contact, and why? How would you fix it? In general, when should you use a before trigger and when an after trigger?",
+          "starter_code": "trigger ContactTrigger on Contact (after insert) {\n    for (Contact c : Trigger.new) {\n        c.Description = 'Created via trigger';\n    }\n}",
+          "reference_solution": "The insert fails with 'System.FinalException: Record is read-only'. In an after trigger\nthe records in Trigger.new are already saved and are read-only, so their fields cannot\nbe assigned. The whole insert is rolled back and the user sees the error.\n\nFix: change the event to (before insert). In a before trigger you can set fields on\nTrigger.new directly and they are saved automatically - no DML statement is needed.\n\nBefore triggers: validate or change values on the records being saved (defaults,\ncalculated fields, addError validation).\nAfter triggers: when you need system-set values such as the record Id or to create/update\nOTHER records (related records, child records, logging), because the record now exists.",
+          "evaluation_points": [
+            "States the error: Trigger.new is read-only in an after trigger",
+            "Fix: use before insert and assign fields without DML",
+            "Before = modify/validate the records being saved",
+            "After = need Id / work on related records"
+          ],
+          "test_cases": [],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-09",
+          "topic": "Triggers",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Implement the one-trigger-per-object handler pattern for Account. Write (a) a single trigger `AccountTrigger` for before insert, before update and after insert that contains no business logic and only delegates to (b) a class `AccountTriggerHandler` with static methods: `beforeInsert(List<Account> newList)` sets Rating to 'Warm' when blank; `beforeUpdate(List<Account> newList, Map<Id, Account> oldMap)` sets Rating to 'Hot' when AnnualRevenue changed and is now greater than 1,000,000; `afterInsert(List<Account> newList)` creates one Case per new Account with Subject 'Onboard ' + Account Name, using one DML statement.",
+          "starter_code": "",
+          "reference_solution": "trigger AccountTrigger on Account (before insert, before update, after insert) {\n    if (Trigger.isBefore && Trigger.isInsert) {\n        AccountTriggerHandler.beforeInsert(Trigger.new);\n    } else if (Trigger.isBefore && Trigger.isUpdate) {\n        AccountTriggerHandler.beforeUpdate(Trigger.new, (Map<Id, Account>) Trigger.oldMap);\n    } else if (Trigger.isAfter && Trigger.isInsert) {\n        AccountTriggerHandler.afterInsert(Trigger.new);\n    }\n}\n\npublic class AccountTriggerHandler {\n    public static void beforeInsert(List<Account> newList) {\n        for (Account a : newList) {\n            if (String.isBlank(a.Rating)) {\n                a.Rating = 'Warm';\n            }\n        }\n    }\n\n    public static void beforeUpdate(List<Account> newList, Map<Id, Account> oldMap) {\n        for (Account a : newList) {\n            Account oldA = oldMap.get(a.Id);\n            if (a.AnnualRevenue != oldA.AnnualRevenue\n                    && a.AnnualRevenue != null && a.AnnualRevenue > 1000000) {\n                a.Rating = 'Hot';\n            }\n        }\n    }\n\n    public static void afterInsert(List<Account> newList) {\n        List<Case> cases = new List<Case>();\n        for (Account a : newList) {\n            cases.add(new Case(AccountId = a.Id, Subject = 'Onboard ' + a.Name));\n        }\n        insert cases;\n    }\n}",
+          "evaluation_points": [
+            "Single trigger covering all three events, routing with Trigger.isBefore/isAfter/isInsert/isUpdate",
+            "No business logic inside the trigger body",
+            "beforeUpdate compares with oldMap to detect the AnnualRevenue change",
+            "afterInsert uses Account Ids (available after insert) and one bulk insert of Cases"
+          ],
+          "test_cases": [
+            {
+              "input": "Insert 2 Accounts, Rating blank",
+              "expected": "Both Rating = 'Warm'; 2 Cases created with 'Onboard <Name>'"
+            },
+            {
+              "input": "Update AnnualRevenue 500,000 -> 2,000,000",
+              "expected": "Rating = 'Hot'"
+            },
+            {
+              "input": "Update Name only, AnnualRevenue already 2,000,000",
+              "expected": "Rating unchanged"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S2-10",
+          "topic": "SOQL Aggregation",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write `public static Map<Id, Decimal> getWonAmountByAccount(Set<Id> accountIds)` that returns, for each Account Id in the input, the total Amount of its won Opportunities (IsWon = true). Use a single aggregate SOQL query with GROUP BY (do not loop over individual Opportunities). Every input Account Id must appear in the result; Accounts with no won Opportunities map to 0.",
+          "starter_code": "",
+          "reference_solution": "public static Map<Id, Decimal> getWonAmountByAccount(Set<Id> accountIds) {\n    Map<Id, Decimal> totals = new Map<Id, Decimal>();\n    Decimal zero = 0;\n    for (Id accId : accountIds) {\n        totals.put(accId, zero);\n    }\n    for (AggregateResult ar : [\n        SELECT AccountId, SUM(Amount) total\n        FROM Opportunity\n        WHERE IsWon = true AND AccountId IN :accountIds\n        GROUP BY AccountId\n    ]) {\n        Decimal sumAmount = (Decimal) ar.get('total');\n        if (sumAmount != null) {\n            totals.put((Id) ar.get('AccountId'), sumAmount);\n        }\n    }\n    return totals;\n}",
+          "evaluation_points": [
+            "Single aggregate query using SUM(Amount) with an alias and GROUP BY AccountId",
+            "Reads values with ar.get('alias') and casts to Id / Decimal",
+            "Pre-fills every input Id with 0",
+            "Filters IsWon = true and AccountId IN :accountIds"
+          ],
+          "test_cases": [
+            {
+              "input": "Acc1: won 1000 + 500, lost 900; Acc2: none",
+              "expected": "{Acc1=1500, Acc2=0}"
+            },
+            {
+              "input": "empty set",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 3,
+      "questions": [
+        {
+          "code": "PRG-APEX-S3-01",
+          "topic": "Loops",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static Integer reverseDigits(Integer n)` that returns the digits of `n` in reverse order using a while loop (do not convert to a String). The sign must be preserved and trailing zeros disappear (1200 -> 21). You may ignore overflow.",
+          "starter_code": "",
+          "reference_solution": "public static Integer reverseDigits(Integer n) {\n    Integer num = Math.abs(n);\n    Integer reversed = 0;\n    while (num > 0) {\n        reversed = reversed * 10 + Math.mod(num, 10);\n        num = num / 10;\n    }\n    return n < 0 ? -reversed : reversed;\n}",
+          "evaluation_points": [
+            "Uses a while loop with Math.mod(num, 10) and integer division by 10",
+            "Handles negative numbers via Math.abs and restores the sign",
+            "Returns 0 for input 0",
+            "No String conversion"
+          ],
+          "test_cases": [
+            {
+              "input": "1234",
+              "expected": "4321"
+            },
+            {
+              "input": "-560",
+              "expected": "-65"
+            },
+            {
+              "input": "0",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-02",
+          "topic": "Variables & Types",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static Integer daysUntilDue(Date invoiceDate, Integer paymentTermsDays, Date today)`. The due date is invoiceDate plus paymentTermsDays. Return the number of days from `today` until the due date (negative if the invoice is overdue). Return null if invoiceDate is null. Use Apex Date methods.",
+          "starter_code": "",
+          "reference_solution": "public static Integer daysUntilDue(Date invoiceDate, Integer paymentTermsDays, Date today) {\n    if (invoiceDate == null) {\n        return null;\n    }\n    Date dueDate = invoiceDate.addDays(paymentTermsDays);\n    return today.daysBetween(dueDate);\n}",
+          "evaluation_points": [
+            "Computes the due date with addDays",
+            "Uses today.daysBetween(dueDate) so overdue gives a negative number",
+            "Returns null when invoiceDate is null"
+          ],
+          "test_cases": [
+            {
+              "input": "2024-01-01, 30, today 2024-01-21",
+              "expected": "10"
+            },
+            {
+              "input": "2024-01-01, 30, today 2024-02-05",
+              "expected": "-5"
+            },
+            {
+              "input": "null, 30, any",
+              "expected": "null"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-03",
+          "topic": "Strings",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does the following code print? Explain the first three lines carefully - Apex string comparison differs from Java here.",
+          "starter_code": "String a = 'Acme';\nString b = 'ACME';\nSystem.debug(a == b);\nSystem.debug(a.equals(b));\nSystem.debug(a.equalsIgnoreCase(b));\nString code = '  inv-2024-007 ';\nSystem.debug(code.trim().toUpperCase());\nSystem.debug(code.trim().substringAfterLast('-'));\nSystem.debug('a,b,,c'.split(',').size());\nSystem.debug(String.isBlank('   '));",
+          "reference_solution": "Output:\ntrue\nfalse\ntrue\nINV-2024-007\n007\n4\ntrue\n\n- In Apex the == operator on Strings is case-INSENSITIVE, so 'Acme' == 'ACME' is true.\n- equals() is case-sensitive, so it returns false.\n- equalsIgnoreCase() is explicitly case-insensitive: true.\n- trim() removes surrounding spaces, toUpperCase() gives INV-2024-007.\n- substringAfterLast('-') returns the text after the last hyphen: 007 (still a String).\n- split(',') keeps the empty value between the two commas: [a, b, '', c] -> 4.\n- isBlank is true for whitespace-only strings.",
+          "evaluation_points": [
+            "States that == is case-insensitive for Apex Strings (true)",
+            "equals is case-sensitive (false), equalsIgnoreCase true",
+            "Correct trim/toUpperCase and substringAfterLast results",
+            "split keeps the middle empty element (4); isBlank true"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-04",
+          "topic": "SOQL Relationships",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static Map<String, Integer> getContactCountByAccount(Set<Id> accountIds)` that returns Account Name -> number of Contacts for the given Accounts. You must use exactly ONE SOQL query with a parent-to-child subquery (no aggregate functions, no second query). Accounts with no Contacts must appear with 0.",
+          "starter_code": "",
+          "reference_solution": "public static Map<String, Integer> getContactCountByAccount(Set<Id> accountIds) {\n    Map<String, Integer> result = new Map<String, Integer>();\n    for (Account acc : [\n        SELECT Name, (SELECT Id FROM Contacts)\n        FROM Account\n        WHERE Id IN :accountIds\n    ]) {\n        result.put(acc.Name, acc.Contacts.size());\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Uses a subquery on the child relationship name 'Contacts' (plural)",
+            "Filters Accounts with Id IN :accountIds",
+            "Reads acc.Contacts.size() - the list is empty (not null) when there are no children",
+            "Only one SOQL query"
+          ],
+          "test_cases": [
+            {
+              "input": "Acme (3 contacts), Globex (0 contacts)",
+              "expected": "{Acme=3, Globex=0}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-05",
+          "topic": "Maps/Dictionaries",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static Map<Id, List<Contact>> groupByAccount(List<Contact> contacts)` that groups the given Contacts by their AccountId. Contacts with no AccountId must be skipped. Do not use SOQL.",
+          "starter_code": "",
+          "reference_solution": "public static Map<Id, List<Contact>> groupByAccount(List<Contact> contacts) {\n    Map<Id, List<Contact>> grouped = new Map<Id, List<Contact>>();\n    for (Contact c : contacts) {\n        if (c.AccountId == null) {\n            continue;\n        }\n        if (!grouped.containsKey(c.AccountId)) {\n            grouped.put(c.AccountId, new List<Contact>());\n        }\n        grouped.get(c.AccountId).add(c);\n    }\n    return grouped;\n}",
+          "evaluation_points": [
+            "Declares Map<Id, List<Contact>> correctly",
+            "Creates a new List the first time an AccountId is seen",
+            "Adds each Contact to the list for its AccountId",
+            "Skips Contacts with null AccountId"
+          ],
+          "test_cases": [
+            {
+              "input": "C1(A1), C2(A2), C3(A1), C4(no account)",
+              "expected": "{A1=[C1, C3], A2=[C2]}"
+            },
+            {
+              "input": "empty list",
+              "expected": "{}"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-06",
+          "topic": "Triggers",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "This before update trigger should set Status to 'Escalated' for Cases whose Priority is 'High' and Status is 'New'. It throws an error on every update and the Status is never changed. Identify both bugs and write the corrected trigger.",
+          "starter_code": "trigger CaseTrigger on Case (before update) {\n    for (Case c : Trigger.old) {\n        if (c.Priority == 'High' && c.Status == 'New') {\n            c.Status = 'Escalated';\n        }\n    }\n    update Trigger.new;\n}",
+          "reference_solution": "// Bug 1: the loop modifies Trigger.old. Trigger.old holds the previous values and is\n//        read-only; changes to it are never saved. Loop over Trigger.new instead.\n// Bug 2: 'update Trigger.new' - DML on Trigger.new is not allowed in a before trigger\n//        (and is unnecessary). Changes to Trigger.new in a before trigger are saved automatically.\ntrigger CaseTrigger on Case (before update) {\n    for (Case c : Trigger.new) {\n        if (c.Priority == 'High' && c.Status == 'New') {\n            c.Status = 'Escalated';\n        }\n    }\n}",
+          "evaluation_points": [
+            "Identifies that Trigger.old is read-only and the loop must use Trigger.new",
+            "Identifies that DML on Trigger.new in a before trigger is invalid/unnecessary",
+            "Corrected trigger assigns the field with no DML"
+          ],
+          "test_cases": [
+            {
+              "input": "Update a Case with Priority High, Status New",
+              "expected": "Status saved as 'Escalated', no error"
+            },
+            {
+              "input": "Update a Case with Priority Low",
+              "expected": "Status unchanged"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-07",
+          "topic": "Test Classes",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a test class `OpportunityServiceTest` for the class below. Cover: an Opportunity with Amount above the threshold, one exactly at 100000, one below, and one with no Amount. Use @isTest, Test.startTest()/Test.stopTest() and System.assertEquals with messages.",
+          "starter_code": "public class OpportunityService {\n    public static void applyLargeDealFlag(List<Opportunity> opps) {\n        for (Opportunity opp : opps) {\n            if (opp.Amount != null && opp.Amount >= 100000) {\n                opp.Description = 'Large deal';\n            }\n        }\n    }\n}",
+          "reference_solution": "@isTest\nprivate class OpportunityServiceTest {\n    @isTest\n    static void flagsOnlyLargeDeals() {\n        Date closeDate = Date.today().addDays(30);\n        Opportunity big = new Opportunity(Name = 'Big', StageName = 'Prospecting', CloseDate = closeDate, Amount = 150000);\n        Opportunity edge = new Opportunity(Name = 'Edge', StageName = 'Prospecting', CloseDate = closeDate, Amount = 100000);\n        Opportunity small = new Opportunity(Name = 'Small', StageName = 'Prospecting', CloseDate = closeDate, Amount = 5000);\n        Opportunity noAmount = new Opportunity(Name = 'None', StageName = 'Prospecting', CloseDate = closeDate);\n\n        Test.startTest();\n        OpportunityService.applyLargeDealFlag(new List<Opportunity>{ big, edge, small, noAmount });\n        Test.stopTest();\n\n        System.assertEquals('Large deal', big.Description, 'Amount above threshold should be flagged');\n        System.assertEquals('Large deal', edge.Description, 'Amount equal to threshold should be flagged');\n        System.assertEquals(null, small.Description, 'Small amount should not be flagged');\n        System.assertEquals(null, noAmount.Description, 'Null amount should not be flagged');\n    }\n}",
+          "evaluation_points": [
+            "Class and method annotated with @isTest; test creates its own data",
+            "Calls the method between Test.startTest() and Test.stopTest()",
+            "Uses System.assertEquals(expected, actual, message) with expected value first",
+            "Covers above, boundary, below and null cases"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the test",
+              "expected": "All 4 assertions pass; 100% coverage of OpportunityService"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-08",
+          "topic": "SOSL",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static List<String> searchCustomerNames(String term)` that uses a single SOSL search to find Accounts and Contacts whose name fields match `term`, returning the Account names first, then the Contact names. If `term` is null or shorter than 2 characters, return an empty list without searching. In one sentence, state when SOSL is preferable to SOQL.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> searchCustomerNames(String term) {\n    List<String> names = new List<String>();\n    if (term == null || term.length() < 2) {\n        return names;\n    }\n    List<List<SObject>> results = [\n        FIND :term IN NAME FIELDS\n        RETURNING Account(Id, Name), Contact(Id, Name)\n    ];\n    for (Account a : (List<Account>) results[0]) {\n        names.add(a.Name);\n    }\n    for (Contact c : (List<Contact>) results[1]) {\n        names.add(c.Name);\n    }\n    return names;\n}\n// SOSL is preferable when you need a text search across several objects/fields at once\n// and do not know which object or field contains the value; SOQL is for querying one\n// object (and its relationships) with precise filters.",
+          "evaluation_points": [
+            "Uses FIND ... IN NAME FIELDS RETURNING Account(...), Contact(...)",
+            "Result is List<List<SObject>>; index 0 = Accounts, 1 = Contacts in RETURNING order",
+            "Guards against null/short search terms",
+            "Correct explanation of SOSL vs SOQL"
+          ],
+          "test_cases": [
+            {
+              "input": "term = 'acme'; Account 'Acme Corp', Contact 'Jo Acme'",
+              "expected": "['Acme Corp', 'Jo Acme']"
+            },
+            {
+              "input": "term = 'a'",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-09",
+          "topic": "Triggers",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a trigger `OpportunityTrigger` on Opportunity (after insert). For every new Opportunity with an Amount of 500,000 or more that is linked to an Account, set the parent Account's Rating to 'Hot'. Requirements: bulk-safe (one SOQL, one DML at most), each Account updated only once even if it has several large Opportunities, and Accounts already rated 'Hot' must not be updated.",
+          "starter_code": "",
+          "reference_solution": "trigger OpportunityTrigger on Opportunity (after insert) {\n    Set<Id> accountIds = new Set<Id>();\n    for (Opportunity opp : Trigger.new) {\n        if (opp.AccountId != null && opp.Amount != null && opp.Amount >= 500000) {\n            accountIds.add(opp.AccountId);\n        }\n    }\n    if (accountIds.isEmpty()) {\n        return;\n    }\n    List<Account> toUpdate = new List<Account>();\n    for (Account acc : [SELECT Id, Rating FROM Account WHERE Id IN :accountIds]) {\n        if (acc.Rating != 'Hot') {\n            acc.Rating = 'Hot';\n            toUpdate.add(acc);\n        }\n    }\n    if (!toUpdate.isEmpty()) {\n        update toUpdate;\n    }\n}",
+          "evaluation_points": [
+            "Collects AccountIds in a Set (de-duplicates Accounts)",
+            "One SOQL outside the loop, one update after the loop",
+            "Skips Accounts already rated 'Hot' and Opportunities without Account/Amount",
+            "Uses an after trigger because it updates related (parent) records"
+          ],
+          "test_cases": [
+            {
+              "input": "2 Opps of 600,000 on the same Account (Rating 'Warm')",
+              "expected": "Account updated once to 'Hot'"
+            },
+            {
+              "input": "Opp of 100,000",
+              "expected": "No Account updated"
+            },
+            {
+              "input": "Opp of 700,000, Account already 'Hot'",
+              "expected": "No DML"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S3-10",
+          "topic": "Async Apex",
+          "task_type": "fix_bug",
+          "difficulty": "Hard",
+          "question": "The class below is supposed to mark Contacts as synced asynchronously. It does not even compile, and it would also break governor limits for large volumes. Explain every problem and rewrite it correctly. Also show how the caller should invoke it when it has a List<Contact> named contactList.",
+          "starter_code": "public class ContactSyncService {\n    @future\n    public static void markContactsSynced(List<Contact> contacts) {\n        for (Contact c : contacts) {\n            Contact fresh = [SELECT Id, Description FROM Contact WHERE Id = :c.Id];\n            fresh.Description = 'Synced';\n            update fresh;\n        }\n    }\n}",
+          "reference_solution": "// Problem 1 (compile error): @future methods accept only primitive types or collections of\n//   primitives (e.g. Set<Id>, List<String>); sObjects cannot be passed, because the data may\n//   change before the async method runs. Pass Ids and re-query.\n// Problem 2: SOQL inside the loop (100 query limit).\n// Problem 3: DML inside the loop (150 DML statement limit).\npublic class ContactSyncService {\n    @future\n    public static void markContactsSynced(Set<Id> contactIds) {\n        List<Contact> contacts = [SELECT Id, Description FROM Contact WHERE Id IN :contactIds];\n        for (Contact c : contacts) {\n            c.Description = 'Synced';\n        }\n        update contacts;\n    }\n}\n\n// Caller:\nContactSyncService.markContactsSynced(new Map<Id, Contact>(contactList).keySet());",
+          "evaluation_points": [
+            "Explains that @future parameters must be primitives/collections of primitives (no sObjects)",
+            "Changes the parameter to Set<Id> (or List<Id>) and re-queries inside the method",
+            "Moves SOQL and DML out of the loop (single query, single update)",
+            "Method remains static void with @future; caller passes Ids"
+          ],
+          "test_cases": [
+            {
+              "input": "500 Contacts passed as Ids",
+              "expected": "All 500 updated with 1 SOQL and 1 DML in the async transaction"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 4,
+      "questions": [
+        {
+          "code": "PRG-APEX-S4-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static List<String> buildInvoiceNumbers(Integer startNum, Integer count)` that returns `count` consecutive invoice numbers starting at `startNum`, formatted as 'INV-' followed by the number left-padded with zeros to 4 digits. Numbers with more than 4 digits are not truncated.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> buildInvoiceNumbers(Integer startNum, Integer count) {\n    List<String> numbers = new List<String>();\n    for (Integer i = 0; i < count; i++) {\n        numbers.add('INV-' + String.valueOf(startNum + i).leftPad(4, '0'));\n    }\n    return numbers;\n}",
+          "evaluation_points": [
+            "Loops exactly count times",
+            "Converts the number to a String (String.valueOf)",
+            "Uses leftPad(4, '0') or equivalent padding logic",
+            "Does not truncate numbers longer than 4 digits"
+          ],
+          "test_cases": [
+            {
+              "input": "buildInvoiceNumbers(7, 3)",
+              "expected": "['INV-0007', 'INV-0008', 'INV-0009']"
+            },
+            {
+              "input": "buildInvoiceNumbers(9999, 2)",
+              "expected": "['INV-9999', 'INV-10000']"
+            },
+            {
+              "input": "buildInvoiceNumbers(1, 0)",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-02",
+          "topic": "SOQL Basics",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static Integer countOpenHighPriorityCases(Id accountId)` that returns the number of Cases for the given Account whose Priority is 'High' and that are not closed. Let the database do the counting (do not load the records and call size()).",
+          "starter_code": "",
+          "reference_solution": "public static Integer countOpenHighPriorityCases(Id accountId) {\n    return [\n        SELECT COUNT()\n        FROM Case\n        WHERE AccountId = :accountId\n        AND Priority = 'High'\n        AND IsClosed = false\n    ];\n}",
+          "evaluation_points": [
+            "Uses SELECT COUNT(), which returns an Integer directly",
+            "Filters by AccountId with a bind variable",
+            "Filters Priority = 'High' and IsClosed = false (or Status != 'Closed')"
+          ],
+          "test_cases": [
+            {
+              "input": "Account with 2 open High, 1 closed High, 3 open Low",
+              "expected": "2"
+            },
+            {
+              "input": "Account with no cases",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-03",
+          "topic": "Loops",
+          "task_type": "explain_output",
+          "difficulty": "Easy",
+          "question": "What does this code print? Explain the effect of `continue`, `break` and the do-while loop.",
+          "starter_code": "List<Integer> qty = new List<Integer>{5, 0, 12, -1, 8, 3};\nInteger total = 0;\nfor (Integer q : qty) {\n    if (q == 0) {\n        continue;\n    }\n    if (q < 0) {\n        break;\n    }\n    total += q;\n    System.debug('Added ' + q);\n}\nSystem.debug('Total = ' + total);\n\nInteger i = 10;\ndo {\n    System.debug('i = ' + i);\n    i += 5;\n} while (i < 10);",
+          "reference_solution": "Output:\nAdded 5\nAdded 12\nTotal = 17\ni = 10\n\n- 5 is added. 0 triggers continue: the rest of that iteration is skipped. 12 is added.\n- -1 triggers break: the loop ends immediately, so 8 and 3 are never processed. Total = 5 + 12 = 17.\n- A do-while loop always runs its body at least once before checking the condition, so\n  'i = 10' is printed even though 10 < 10 is false; then i becomes 15 and the loop stops.",
+          "evaluation_points": [
+            "Correct lines Added 5, Added 12",
+            "continue skips 0; break stops at -1 so 8 and 3 are not added",
+            "Total = 17",
+            "do-while executes once: prints i = 10"
+          ],
+          "test_cases": [],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-04",
+          "topic": "DML & Database Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static Integer closeStaleOpportunities()` that finds open Opportunities (IsClosed = false) whose CloseDate is before today, sets their StageName to 'Closed Lost', and saves them with partial success allowed so that one invalid record does not block the others. Return the number of Opportunities that were successfully updated. Process at most 200 records.",
+          "starter_code": "",
+          "reference_solution": "public static Integer closeStaleOpportunities() {\n    List<Opportunity> stale = [\n        SELECT Id, StageName\n        FROM Opportunity\n        WHERE IsClosed = false AND CloseDate < TODAY\n        LIMIT 200\n    ];\n    for (Opportunity opp : stale) {\n        opp.StageName = 'Closed Lost';\n    }\n    Integer successCount = 0;\n    for (Database.SaveResult sr : Database.update(stale, false)) {\n        if (sr.isSuccess()) {\n            successCount++;\n        }\n    }\n    return successCount;\n}",
+          "evaluation_points": [
+            "SOQL filters IsClosed = false and CloseDate < TODAY (date literal) with LIMIT 200",
+            "Sets StageName on all records in a loop without DML inside the loop",
+            "Uses Database.update(list, false) and counts isSuccess() results"
+          ],
+          "test_cases": [
+            {
+              "input": "3 overdue open Opps, 1 fails a validation rule",
+              "expected": "Returns 2; 2 updated to Closed Lost"
+            },
+            {
+              "input": "No overdue Opps",
+              "expected": "Returns 0"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-05",
+          "topic": "Exceptions",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Create a custom exception `StockException` and a class `InventoryService` with `public static Integer reserve(Integer available, Integer requested)`. It returns the remaining stock (available - requested). It must throw StockException with the message 'Requested quantity must be positive' if requested is null or <= 0, and 'Only <available> units available' if requested exceeds available. Also show a short caller that catches the exception and logs its message.",
+          "starter_code": "",
+          "reference_solution": "public class StockException extends Exception {}\n\npublic class InventoryService {\n    public static Integer reserve(Integer available, Integer requested) {\n        if (requested == null || requested <= 0) {\n            throw new StockException('Requested quantity must be positive');\n        }\n        if (requested > available) {\n            throw new StockException('Only ' + available + ' units available');\n        }\n        return available - requested;\n    }\n}\n\n// Caller:\ntry {\n    Integer remaining = InventoryService.reserve(5, 8);\n} catch (StockException e) {\n    System.debug(e.getMessage());   // Only 5 units available\n}",
+          "evaluation_points": [
+            "Custom exception class extends Exception and its name ends with 'Exception'",
+            "Throws with the message constructor new StockException('...')",
+            "Validates both conditions in the right order",
+            "Caller catches StockException and uses getMessage()"
+          ],
+          "test_cases": [
+            {
+              "input": "reserve(10, 4)",
+              "expected": "6"
+            },
+            {
+              "input": "reserve(5, 8)",
+              "expected": "StockException: Only 5 units available"
+            },
+            {
+              "input": "reserve(5, 0)",
+              "expected": "StockException: Requested quantity must be positive"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-06",
+          "topic": "Governor Limits & Bulkification",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "This trigger should copy the parent Account's Phone to every new Contact that has no Phone. It works when one Contact is created in the UI but fails for Data Loader imports of many Contacts. Explain what goes wrong and rewrite the trigger so it is bulk-safe.",
+          "starter_code": "trigger ContactTrigger on Contact (before insert) {\n    Contact c = Trigger.new[0];\n    if (c.AccountId != null) {\n        Account acc = [SELECT Phone FROM Account WHERE Id = :c.AccountId];\n        if (c.Phone == null) {\n            c.Phone = acc.Phone;\n        }\n    }\n}",
+          "reference_solution": "// Problem: only Trigger.new[0] is processed, so in a batch of up to 200 records the other\n// 199 Contacts are ignored. Simply looping and querying per record would then hit the\n// 100 SOQL limit. Fix: loop over all records, collect Account Ids, query once into a Map.\ntrigger ContactTrigger on Contact (before insert) {\n    Set<Id> accountIds = new Set<Id>();\n    for (Contact c : Trigger.new) {\n        if (c.AccountId != null && String.isBlank(c.Phone)) {\n            accountIds.add(c.AccountId);\n        }\n    }\n    if (accountIds.isEmpty()) {\n        return;\n    }\n    Map<Id, Account> accounts = new Map<Id, Account>(\n        [SELECT Id, Phone FROM Account WHERE Id IN :accountIds]\n    );\n    for (Contact c : Trigger.new) {\n        if (String.isBlank(c.Phone) && accounts.containsKey(c.AccountId)) {\n            c.Phone = accounts.get(c.AccountId).Phone;\n        }\n    }\n}",
+          "evaluation_points": [
+            "Explains that Trigger.new can contain up to 200 records and [0] ignores the rest",
+            "Loops over all of Trigger.new",
+            "One SOQL using IN :accountIds loaded into a Map<Id, Account>",
+            "No DML needed because it is a before trigger"
+          ],
+          "test_cases": [
+            {
+              "input": "Import 200 Contacts without Phone across 5 Accounts",
+              "expected": "All 200 get their Account's Phone using 1 SOQL"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-07",
+          "topic": "Sharing & Security",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "A sales user can see 40 of the org's 1,000 Accounts through the sharing model. The user runs code that calls each method below directly. How many Accounts does each method see, and why? Explain `inherited sharing`, which keyword you would choose by default for a class called from a Lightning component, and whether these keywords enforce field-level security.",
+          "starter_code": "public with sharing class AccountListController {\n    public static List<Account> getAccounts() {\n        return [SELECT Id, Name FROM Account];\n    }\n}\n\npublic without sharing class AccountStatsService {\n    public static Integer countAllAccounts() {\n        return [SELECT COUNT() FROM Account];\n    }\n}\n\npublic inherited sharing class AccountQueryHelper {\n    public static List<Account> getAll() {\n        return [SELECT Id FROM Account];\n    }\n}",
+          "reference_solution": "- AccountListController.getAccounts(): 40. 'with sharing' enforces the running user's\n  record-level sharing rules, so only records the user can see are returned.\n- AccountStatsService.countAllAccounts(): 1,000. 'without sharing' ignores sharing rules\n  (system context), so all records are counted.\n- AccountQueryHelper.getAll(): depends on the caller. 'inherited sharing' runs with the\n  sharing mode of the class that called it: 40 if called from a with sharing class,\n  1,000 if called from a without sharing class. When it is the entry point (e.g. called\n  directly from a Lightning component) it behaves as with sharing -> 40.\n- Default choice for a Lightning controller: 'with sharing', using 'without sharing' only\n  for specific, justified system operations.\n- These keywords only control record-level access (sharing). They do NOT enforce object\n  permissions or field-level security; for that use WITH USER_MODE / WITH SECURITY_ENFORCED\n  in SOQL or Security.stripInaccessible.",
+          "evaluation_points": [
+            "with sharing -> 40 (user's record access)",
+            "without sharing -> 1,000 (ignores sharing)",
+            "inherited sharing follows the caller and defaults to with sharing as entry point",
+            "Recommends with sharing by default and notes sharing keywords do not enforce CRUD/FLS"
+          ],
+          "test_cases": [],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-08",
+          "topic": "OOP Basics",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Define an interface `DiscountRule` with a method `Decimal apply(Decimal amount)`. Implement two classes: `PercentDiscount` (constructor takes a percent, reduces the amount by that percent) and `FlatDiscount` (constructor takes a fixed amount to subtract, never returning less than 0). Then write `PricingService.applyAll(Decimal amount, List<DiscountRule> rules)` that applies each rule in order to the running result.",
+          "starter_code": "",
+          "reference_solution": "public interface DiscountRule {\n    Decimal apply(Decimal amount);\n}\n\npublic class PercentDiscount implements DiscountRule {\n    private Decimal percent;\n    public PercentDiscount(Decimal percent) {\n        this.percent = percent;\n    }\n    public Decimal apply(Decimal amount) {\n        return amount - (amount * percent / 100);\n    }\n}\n\npublic class FlatDiscount implements DiscountRule {\n    private Decimal flat;\n    public FlatDiscount(Decimal flat) {\n        this.flat = flat;\n    }\n    public Decimal apply(Decimal amount) {\n        Decimal result = amount - flat;\n        if (result < 0) {\n            return 0;\n        }\n        return result;\n    }\n}\n\npublic class PricingService {\n    public static Decimal applyAll(Decimal amount, List<DiscountRule> rules) {\n        Decimal result = amount;\n        for (DiscountRule rule : rules) {\n            result = rule.apply(result);\n        }\n        return result;\n    }\n}",
+          "evaluation_points": [
+            "Interface method declared without body or access modifier; implementations are public",
+            "Both classes use 'implements DiscountRule' and store constructor values in private fields",
+            "FlatDiscount never returns a negative value",
+            "applyAll works only through the interface type (polymorphism), chaining results"
+          ],
+          "test_cases": [
+            {
+              "input": "applyAll(200, [PercentDiscount(10), FlatDiscount(30)])",
+              "expected": "150"
+            },
+            {
+              "input": "applyAll(100, [FlatDiscount(500)])",
+              "expected": "0"
+            },
+            {
+              "input": "applyAll(80, [])",
+              "expected": "80"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-09",
+          "topic": "Triggers",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a trigger on Account (before delete) that prevents deletion of any Account that still has at least one open Opportunity (IsClosed = false). Blocked records must show the error 'Cannot delete an account with open opportunities.' while other Accounts in the same batch are deleted normally. Use at most one SOQL query and no DML.",
+          "starter_code": "",
+          "reference_solution": "trigger AccountTrigger on Account (before delete) {\n    Set<Id> blocked = new Set<Id>();\n    for (Opportunity opp : [\n        SELECT AccountId\n        FROM Opportunity\n        WHERE AccountId IN :Trigger.oldMap.keySet() AND IsClosed = false\n    ]) {\n        blocked.add(opp.AccountId);\n    }\n    for (Account acc : Trigger.old) {\n        if (blocked.contains(acc.Id)) {\n            acc.addError('Cannot delete an account with open opportunities.');\n        }\n    }\n}",
+          "evaluation_points": [
+            "Uses before delete and Trigger.old / Trigger.oldMap (Trigger.new is null on delete)",
+            "Single SOQL with IN :Trigger.oldMap.keySet() and IsClosed = false (or a parent-to-child subquery)",
+            "Calls addError on the specific records so only those are blocked",
+            "No DML and no SOQL inside a loop"
+          ],
+          "test_cases": [
+            {
+              "input": "Delete Acc1 (1 open Opp) and Acc2 (only closed Opps) together",
+              "expected": "Acc1 error shown, Acc2 deleted"
+            },
+            {
+              "input": "Delete Account with no Opportunities",
+              "expected": "Deleted"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S4-10",
+          "topic": "Test Classes",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a bulk test class for the trigger below. Insert 200 Cases without a Subject (100 with Origin 'Phone', 100 with Origin 'Email') plus one Phone Case that already has Subject 'Broken printer'. After the insert, re-query the records and assert that exactly 100 have 'Phone enquiry', exactly 100 have 'General enquiry', and the existing subject was not overwritten. Use Test.startTest()/Test.stopTest().",
+          "starter_code": "trigger CaseDefaultsTrigger on Case (before insert) {\n    for (Case c : Trigger.new) {\n        if (String.isBlank(c.Subject)) {\n            c.Subject = (c.Origin == 'Phone') ? 'Phone enquiry' : 'General enquiry';\n        }\n    }\n}",
+          "reference_solution": "@isTest\nprivate class CaseDefaultsTriggerTest {\n    @isTest\n    static void setsDefaultSubjectsInBulk() {\n        List<Case> cases = new List<Case>();\n        for (Integer i = 0; i < 200; i++) {\n            String origin = Math.mod(i, 2) == 0 ? 'Phone' : 'Email';\n            cases.add(new Case(Origin = origin));\n        }\n        Case withSubject = new Case(Origin = 'Phone', Subject = 'Broken printer');\n        cases.add(withSubject);\n\n        Test.startTest();\n        insert cases;\n        Test.stopTest();\n\n        Integer phoneCount = 0;\n        Integer generalCount = 0;\n        for (Case c : [SELECT Subject FROM Case WHERE Id IN :cases]) {\n            if (c.Subject == 'Phone enquiry') {\n                phoneCount++;\n            } else if (c.Subject == 'General enquiry') {\n                generalCount++;\n            }\n        }\n        System.assertEquals(100, phoneCount, 'Phone cases should get the phone subject');\n        System.assertEquals(100, generalCount, 'Other cases should get the general subject');\n\n        Case saved = [SELECT Subject FROM Case WHERE Id = :withSubject.Id];\n        System.assertEquals('Broken printer', saved.Subject, 'Existing subject must not change');\n    }\n}",
+          "evaluation_points": [
+            "Builds 200+ records in a loop and inserts them with one DML (bulk test)",
+            "Insert wrapped in Test.startTest()/Test.stopTest()",
+            "Re-queries the records from the database before asserting (values set by the trigger)",
+            "Asserts counts for both branches and the unchanged subject with System.assertEquals"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the test",
+              "expected": "All assertions pass; trigger fully covered"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    },
+    {
+      "set_number": 5,
+      "questions": [
+        {
+          "code": "PRG-APEX-S5-01",
+          "topic": "Strings",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static String maskAccountNumber(String accNum)` that hides all but the last 4 characters of an account number by replacing them with '*'. If the value is null or has 4 or fewer characters, return it unchanged.",
+          "starter_code": "",
+          "reference_solution": "public static String maskAccountNumber(String accNum) {\n    if (accNum == null || accNum.length() <= 4) {\n        return accNum;\n    }\n    Integer hidden = accNum.length() - 4;\n    return '*'.repeat(hidden) + accNum.right(4);\n}",
+          "evaluation_points": [
+            "Handles null and short values before using string methods",
+            "Keeps exactly the last 4 characters (right(4) or substring)",
+            "Replaces the rest with the correct number of '*' characters"
+          ],
+          "test_cases": [
+            {
+              "input": "'1234567890'",
+              "expected": "'******7890'"
+            },
+            {
+              "input": "'987'",
+              "expected": "'987'"
+            },
+            {
+              "input": "null",
+              "expected": "null"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-02",
+          "topic": "Collections",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static List<String> uniqueEmails(List<String> emails)` that removes duplicate email addresses. Comparison is case-insensitive and ignores surrounding spaces; blank/null entries are skipped. Return the emails trimmed and in lower case, in the order of their first occurrence. Use a Set to detect duplicates.",
+          "starter_code": "",
+          "reference_solution": "public static List<String> uniqueEmails(List<String> emails) {\n    Set<String> seen = new Set<String>();\n    List<String> result = new List<String>();\n    for (String e : emails) {\n        if (String.isBlank(e)) {\n            continue;\n        }\n        String normalized = e.trim().toLowerCase();\n        if (!seen.contains(normalized)) {\n            seen.add(normalized);\n            result.add(normalized);\n        }\n    }\n    return result;\n}",
+          "evaluation_points": [
+            "Normalises with trim() and toLowerCase() before comparison",
+            "Uses a Set<String> to track seen values",
+            "Keeps first-occurrence order using a List for the result",
+            "Skips null/blank entries"
+          ],
+          "test_cases": [
+            {
+              "input": "[' A@x.com', 'b@x.com', 'a@X.com ', '', null]",
+              "expected": "['a@x.com', 'b@x.com']"
+            },
+            {
+              "input": "[]",
+              "expected": "[]"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-03",
+          "topic": "Conditionals",
+          "task_type": "write_code",
+          "difficulty": "Easy",
+          "question": "Write `public static Boolean isLeapYear(Integer year)` without using Date.isLeapYear. A year is a leap year if it is divisible by 4, except years divisible by 100, unless they are also divisible by 400.",
+          "starter_code": "",
+          "reference_solution": "public static Boolean isLeapYear(Integer year) {\n    if (Math.mod(year, 400) == 0) {\n        return true;\n    }\n    if (Math.mod(year, 100) == 0) {\n        return false;\n    }\n    return Math.mod(year, 4) == 0;\n}",
+          "evaluation_points": [
+            "Uses Math.mod for divisibility",
+            "Checks the 400 rule before the 100 rule",
+            "Returns Boolean for all paths"
+          ],
+          "test_cases": [
+            {
+              "input": "2024",
+              "expected": "true"
+            },
+            {
+              "input": "1900",
+              "expected": "false"
+            },
+            {
+              "input": "2000",
+              "expected": "true"
+            },
+            {
+              "input": "2023",
+              "expected": "false"
+            }
+          ],
+          "expected_minutes": 3,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-04",
+          "topic": "DML & Database Methods",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write `public static Id createAccountWithContacts(String accountName, List<String> lastNames)` that inserts an Account and then one Contact per last name linked to that Account, using one DML statement for all Contacts. If any insert fails, nothing must remain saved (roll back the Account too) and the DmlException must be re-thrown to the caller. Return the new Account Id.",
+          "starter_code": "",
+          "reference_solution": "public static Id createAccountWithContacts(String accountName, List<String> lastNames) {\n    Savepoint sp = Database.setSavepoint();\n    try {\n        Account acc = new Account(Name = accountName);\n        insert acc;\n        List<Contact> contacts = new List<Contact>();\n        for (String ln : lastNames) {\n            contacts.add(new Contact(LastName = ln, AccountId = acc.Id));\n        }\n        insert contacts;\n        return acc.Id;\n    } catch (DmlException e) {\n        Database.rollback(sp);\n        throw e;\n    }\n}",
+          "evaluation_points": [
+            "Inserts the parent first and uses acc.Id to set AccountId on children",
+            "Builds all Contacts in a list and inserts them with one DML",
+            "Uses Database.setSavepoint()/Database.rollback() to undo the Account on failure",
+            "Re-throws the exception after rollback"
+          ],
+          "test_cases": [
+            {
+              "input": "'Acme', ['Lee', 'Khan']",
+              "expected": "Account Id returned; 2 Contacts linked"
+            },
+            {
+              "input": "'Acme', ['Lee', null]",
+              "expected": "DmlException thrown; no Account or Contacts saved"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-05",
+          "topic": "SOQL Basics",
+          "task_type": "explain_output",
+          "difficulty": "Medium",
+          "question": "Assume there is no Account named 'Does Not Exist' and there are exactly two Accounts named 'Acme'. For each of the three blocks below (run separately), say what is printed or what error occurs, and explain why. Which pattern is safest when a query may return zero rows?",
+          "starter_code": "// Block 1\nAccount acc = [SELECT Id, Name FROM Account WHERE Name = 'Does Not Exist'];\nSystem.debug(acc.Name);\n\n// Block 2\nList<Account> accs = [SELECT Id, Name FROM Account WHERE Name = 'Does Not Exist'];\nSystem.debug(accs.size());\nAccount first = accs.isEmpty() ? null : accs[0];\nSystem.debug(first);\n\n// Block 3\nAccount acme = [SELECT Id FROM Account WHERE Name = 'Acme'];\nSystem.debug(acme.Id);",
+          "reference_solution": "Block 1: throws System.QueryException: 'List has no rows for assignment to SObject'.\n  Assigning a query directly to a single sObject requires exactly one row; the debug line never runs.\nBlock 2: prints 0 and then null. Assigning to a List never fails - an empty list is returned -\n  and the isEmpty() check avoids an index error.\nBlock 3: throws System.QueryException: 'List has more than 1 row for assignment to SObject',\n  because two records match.\nSafest pattern: query into a List and check isEmpty()/size() (or use LIMIT 1 plus a List)\nbefore reading a record.",
+          "evaluation_points": [
+            "Block 1: QueryException for no rows",
+            "Block 2: prints 0 and null, no exception",
+            "Block 3: QueryException for more than 1 row",
+            "Recommends querying into a List and checking before access"
+          ],
+          "test_cases": [],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-06",
+          "topic": "SOQL Relationships",
+          "task_type": "fix_bug",
+          "difficulty": "Medium",
+          "question": "Both methods below fail to compile because of SOQL mistakes. Find the three errors and write the corrected queries. The first method should return Contacts of the Account with the given name, including the Account name; the second should return Accounts that have Cases, with their Cases' Id and Subject.",
+          "starter_code": "public static List<Contact> findContacts(String accName) {\n    return [\n        SELECT Id, LastName, Account__r.Name\n        FROM Contact\n        WHERE Account.Name = accName\n        ORDER BY LastName\n    ];\n}\n\npublic static List<Account> accountsWithCases() {\n    return [\n        SELECT Id, Name, (SELECT Id, Subject FROM Case)\n        FROM Account\n        WHERE Id IN (SELECT AccountId FROM Case)\n    ];\n}",
+          "reference_solution": "// Error 1: Account__r is the syntax for CUSTOM relationships. The standard Contact->Account\n//          relationship is simply Account (Account.Name).\n// Error 2: accName is an Apex variable and needs a colon to be a bind variable (:accName).\n// Error 3: a parent-to-child subquery must use the child relationship name (plural 'Cases'),\n//          not the object name 'Case'.\npublic static List<Contact> findContacts(String accName) {\n    return [\n        SELECT Id, LastName, Account.Name\n        FROM Contact\n        WHERE Account.Name = :accName\n        ORDER BY LastName\n    ];\n}\n\npublic static List<Account> accountsWithCases() {\n    return [\n        SELECT Id, Name, (SELECT Id, Subject FROM Cases)\n        FROM Account\n        WHERE Id IN (SELECT AccountId FROM Case)\n    ];\n}",
+          "evaluation_points": [
+            "Replaces Account__r.Name with Account.Name (standard relationship)",
+            "Adds the colon for the bind variable :accName",
+            "Uses the child relationship name 'Cases' in the subquery",
+            "Keeps the valid semi-join WHERE Id IN (SELECT AccountId FROM Case)"
+          ],
+          "test_cases": [
+            {
+              "input": "findContacts('Acme')",
+              "expected": "Contacts of Acme with Account.Name populated"
+            },
+            {
+              "input": "accountsWithCases()",
+              "expected": "Only Accounts having Cases, each with a Cases list"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-07",
+          "topic": "Classes & Static",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Triggers can fire more than once in a transaction (for example when a workflow updates the record again). Write a class `TriggerGuard` with a private static Set<Id> and two static methods: `Boolean isFirstTime(Id recordId)` returns true the first time an Id is seen in the transaction and false afterwards; `List<SObject> filterUnprocessed(List<SObject> records)` returns only the records not processed yet (and marks them processed). In one sentence explain why a static variable works for this.",
+          "starter_code": "",
+          "reference_solution": "public class TriggerGuard {\n    private static Set<Id> processedIds = new Set<Id>();\n\n    public static Boolean isFirstTime(Id recordId) {\n        if (processedIds.contains(recordId)) {\n            return false;\n        }\n        processedIds.add(recordId);\n        return true;\n    }\n\n    public static List<SObject> filterUnprocessed(List<SObject> records) {\n        List<SObject> result = new List<SObject>();\n        for (SObject rec : records) {\n            if (isFirstTime(rec.Id)) {\n                result.add(rec);\n            }\n        }\n        return result;\n    }\n}\n// Static variables keep their value for the whole transaction (shared by every trigger\n// execution in it) and are reset for the next transaction, so they remember which records\n// were already handled without affecting other users or requests.",
+          "evaluation_points": [
+            "Static Set<Id> initialised once at declaration",
+            "isFirstTime adds the Id and returns true only on first call",
+            "filterUnprocessed reuses isFirstTime and returns a new list",
+            "Explains that static values persist for one transaction only"
+          ],
+          "test_cases": [
+            {
+              "input": "isFirstTime(id1), isFirstTime(id1)",
+              "expected": "true, false"
+            },
+            {
+              "input": "filterUnprocessed([r1, r2]) after r1 already processed",
+              "expected": "[r2]"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-08",
+          "topic": "Test Classes",
+          "task_type": "write_code",
+          "difficulty": "Medium",
+          "question": "Write a test class `ContactServiceTest` for the class below with two test methods: (1) a positive test that creates its own Account, calls createContact and asserts, by re-querying, that the Contact was saved with the right AccountId and LastName; (2) a negative test that passes a null last name and asserts that a DmlException is thrown with status code REQUIRED_FIELD_MISSING. The negative test must fail if no exception occurs.",
+          "starter_code": "public class ContactService {\n    public static Contact createContact(Id accountId, String lastName) {\n        Contact c = new Contact(AccountId = accountId, LastName = lastName);\n        insert c;\n        return c;\n    }\n}",
+          "reference_solution": "@isTest\nprivate class ContactServiceTest {\n    @isTest\n    static void createsContact() {\n        Account acc = new Account(Name = 'Test Co');\n        insert acc;\n\n        Test.startTest();\n        Contact c = ContactService.createContact(acc.Id, 'Smith');\n        Test.stopTest();\n\n        Contact saved = [SELECT AccountId, LastName FROM Contact WHERE Id = :c.Id];\n        System.assertEquals(acc.Id, saved.AccountId, 'Contact should be linked to the account');\n        System.assertEquals('Smith', saved.LastName, 'LastName should be saved');\n    }\n\n    @isTest\n    static void missingLastNameThrows() {\n        Boolean thrown = false;\n        Test.startTest();\n        try {\n            ContactService.createContact(null, null);\n        } catch (DmlException e) {\n            thrown = true;\n            System.assertEquals(StatusCode.REQUIRED_FIELD_MISSING, e.getDmlType(0), 'Wrong error type');\n        }\n        Test.stopTest();\n        System.assertEquals(true, thrown, 'Expected a DmlException');\n    }\n}",
+          "evaluation_points": [
+            "Test data (Account) created inside the test, no reliance on org data",
+            "Positive test re-queries and asserts AccountId and LastName",
+            "Negative test uses try/catch DmlException and a flag asserted after the block so it fails when nothing is thrown",
+            "Checks e.getDmlType(0) == StatusCode.REQUIRED_FIELD_MISSING"
+          ],
+          "test_cases": [
+            {
+              "input": "Run the test class",
+              "expected": "Both methods pass; ContactService fully covered"
+            }
+          ],
+          "expected_minutes": 5,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-09",
+          "topic": "Governor Limits & Bulkification",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write `public static Integer createOnboardingCases(List<Opportunity> wonOpps)`. For the Accounts of the given Opportunities, create exactly one Case with Subject 'Onboarding' and Priority 'Medium' per Account, but skip Accounts that already have an open Case (IsClosed = false) with Subject 'Onboarding'. Several Opportunities may share an Account; Opportunities without an Account are ignored. Use at most one SOQL and one DML. Return the number of Cases created.",
+          "starter_code": "",
+          "reference_solution": "public static Integer createOnboardingCases(List<Opportunity> wonOpps) {\n    Set<Id> accountIds = new Set<Id>();\n    for (Opportunity opp : wonOpps) {\n        if (opp.AccountId != null) {\n            accountIds.add(opp.AccountId);\n        }\n    }\n    Set<Id> alreadyHasCase = new Set<Id>();\n    for (Case c : [\n        SELECT AccountId\n        FROM Case\n        WHERE AccountId IN :accountIds\n        AND Subject = 'Onboarding'\n        AND IsClosed = false\n    ]) {\n        alreadyHasCase.add(c.AccountId);\n    }\n    List<Case> newCases = new List<Case>();\n    for (Id accId : accountIds) {\n        if (!alreadyHasCase.contains(accId)) {\n            newCases.add(new Case(AccountId = accId, Subject = 'Onboarding', Priority = 'Medium'));\n        }\n    }\n    if (!newCases.isEmpty()) {\n        insert newCases;\n    }\n    return newCases.size();\n}",
+          "evaluation_points": [
+            "De-duplicates Accounts with a Set<Id> and ignores null AccountId",
+            "One SOQL outside loops to find Accounts with an open 'Onboarding' Case",
+            "Creates Cases only for Accounts without one; single insert",
+            "Returns the number of Cases created"
+          ],
+          "test_cases": [
+            {
+              "input": "3 Opps: 2 on Acc1, 1 on Acc2; Acc2 already has open Onboarding Case",
+              "expected": "1 Case created (Acc1); returns 1"
+            },
+            {
+              "input": "Opps without Account",
+              "expected": "0"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        },
+        {
+          "code": "PRG-APEX-S5-10",
+          "topic": "Sorting/Searching",
+          "task_type": "write_code",
+          "difficulty": "Hard",
+          "question": "Write a class `AccountRevenueWrapper` that wraps an Account and implements the Comparable interface so that a List of wrappers sorts by AnnualRevenue DESCENDING, with null revenue last. Add a static method `List<String> topAccountNames(List<Account> accounts, Integer n)` that returns the names of the n Accounts with the highest revenue (or fewer if the list is shorter). Do not use SOQL.",
+          "starter_code": "",
+          "reference_solution": "public class AccountRevenueWrapper implements Comparable {\n    public Account acc;\n\n    public AccountRevenueWrapper(Account acc) {\n        this.acc = acc;\n    }\n\n    public Integer compareTo(Object other) {\n        AccountRevenueWrapper that = (AccountRevenueWrapper) other;\n        Decimal a = this.acc.AnnualRevenue;\n        Decimal b = that.acc.AnnualRevenue;\n        if (a == b) {\n            return 0;\n        }\n        if (a == null) {\n            return 1;\n        }\n        if (b == null) {\n            return -1;\n        }\n        return a > b ? -1 : 1;\n    }\n\n    public static List<String> topAccountNames(List<Account> accounts, Integer n) {\n        List<AccountRevenueWrapper> wrappers = new List<AccountRevenueWrapper>();\n        for (Account acc : accounts) {\n            wrappers.add(new AccountRevenueWrapper(acc));\n        }\n        wrappers.sort();\n        List<String> names = new List<String>();\n        for (Integer i = 0; i < Math.min(n, wrappers.size()); i++) {\n            names.add(wrappers[i].acc.Name);\n        }\n        return names;\n    }\n}",
+          "evaluation_points": [
+            "Implements Comparable with public Integer compareTo(Object other) and casts the argument",
+            "Returns negative/positive values so higher revenue sorts first",
+            "Places null revenue last and handles equal values (0)",
+            "Wraps, calls List.sort(), and takes at most n names"
+          ],
+          "test_cases": [
+            {
+              "input": "[A:500, B:null, C:900, D:100], n = 2",
+              "expected": "['C', 'A']"
+            },
+            {
+              "input": "[A:500, B:null], n = 5",
+              "expected": "['A', 'B']"
+            }
+          ],
+          "expected_minutes": 6,
+          "marks": 10
+        }
+      ]
+    }
+  ]
+}

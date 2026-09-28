@@ -1,0 +1,525 @@
+{
+  "set_code": "SET-01",
+  "name": "Exam Set 01",
+  "aptitude": [
+    {
+      "code": "APT-S01-01",
+      "category": "Quantitative Aptitude",
+      "topic": "Percentage",
+      "difficulty": "Easy",
+      "question": "An office supplies store raises the price of a stapler from Rs. 250 to Rs. 300. What is the percentage increase in the price?",
+      "options": {
+        "A": "20%",
+        "B": "16.67%",
+        "C": "25%",
+        "D": "50%"
+      },
+      "correct": "A",
+      "explanation": "Increase = 300 - 250 = 50. Percentage increase = 50 / 250 x 100 = 20%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-02",
+      "category": "Quantitative Aptitude",
+      "topic": "Profit and Loss",
+      "difficulty": "Medium",
+      "question": "A retailer buys 40 notebooks at Rs. 30 each. He sells 30 of them at Rs. 40 each and the remaining 10 at Rs. 36 each. What is his overall profit percentage?",
+      "options": {
+        "A": "25%",
+        "B": "33.33%",
+        "C": "30%",
+        "D": "20%"
+      },
+      "correct": "C",
+      "explanation": "Cost = 40 x 30 = 1,200. Revenue = 30 x 40 + 10 x 36 = 1,200 + 360 = 1,560. Profit = 360. Profit % = 360 / 1,200 x 100 = 30%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-03",
+      "category": "Quantitative Aptitude",
+      "topic": "Simple Interest",
+      "difficulty": "Easy",
+      "question": "A shop owner borrows Rs. 8,000 at a simple interest rate of 6% per annum to buy new display shelves. How much interest will he pay after 3 years?",
+      "options": {
+        "A": "Rs. 1,528",
+        "B": "Rs. 1,440",
+        "C": "Rs. 1,200",
+        "D": "Rs. 480"
+      },
+      "correct": "B",
+      "explanation": "SI = P x R x T / 100 = 8,000 x 6 x 3 / 100 = Rs. 1,440.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-04",
+      "category": "Quantitative Aptitude",
+      "topic": "Time and Work",
+      "difficulty": "Medium",
+      "question": "Ravi can pack an order of office supplies in 12 days and Suresh can pack the same order in 18 days. Working together, how many days will they take to pack the order?",
+      "options": {
+        "A": "15 days",
+        "B": "6 days",
+        "C": "7.5 days",
+        "D": "7.2 days"
+      },
+      "correct": "D",
+      "explanation": "Combined rate = 1/12 + 1/18 = 3/36 + 2/36 = 5/36 of the job per day. Time = 36/5 = 7.2 days.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-05",
+      "category": "Quantitative Aptitude",
+      "topic": "Time Speed Distance",
+      "difficulty": "Hard",
+      "question": "A train crosses a signal pole in 12 seconds and crosses a 180-metre-long platform in 21 seconds, running at the same constant speed. What is the length of the train?",
+      "options": {
+        "A": "180 m",
+        "B": "240 m",
+        "C": "300 m",
+        "D": "216 m"
+      },
+      "correct": "B",
+      "explanation": "Let length = L. Speed = L/12 = (L + 180)/21. So 21L = 12L + 2,160, giving 9L = 2,160 and L = 240 m (speed 20 m/s = 72 km/h).",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-06",
+      "category": "Quantitative Aptitude",
+      "topic": "Age Problems",
+      "difficulty": "Medium",
+      "question": "The present ages of two colleagues, Anil and Bharat, are in the ratio 5 : 3. After 6 years, the ratio of their ages will be 7 : 5. What is Anil's present age?",
+      "options": {
+        "A": "15 years",
+        "B": "20 years",
+        "C": "25 years",
+        "D": "9 years"
+      },
+      "correct": "A",
+      "explanation": "Let ages be 5x and 3x. (5x + 6)/(3x + 6) = 7/5, so 25x + 30 = 21x + 42, 4x = 12, x = 3. Anil = 5 x 3 = 15 years (Bharat 9; after 6 years 21 : 15 = 7 : 5).",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-07",
+      "category": "Quantitative Aptitude",
+      "topic": "Probability",
+      "difficulty": "Hard",
+      "question": "A desk drawer contains 5 red pens and 3 blue pens. Two pens are taken out at random, one after the other, without replacement. What is the probability that both pens are of the same colour?",
+      "options": {
+        "A": "15/28",
+        "B": "5/14",
+        "C": "17/32",
+        "D": "13/28"
+      },
+      "correct": "D",
+      "explanation": "Total ways = C(8,2) = 28. Both red = C(5,2) = 10; both blue = C(3,2) = 3. Probability = (10 + 3)/28 = 13/28.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-08",
+      "category": "Quantitative Aptitude",
+      "topic": "Number Systems",
+      "difficulty": "Easy",
+      "question": "A store wants to pack items so that the total number of items can be divided exactly into groups of 12, into groups of 15 and into groups of 20. What is the smallest such number of items?",
+      "options": {
+        "A": "120",
+        "B": "180",
+        "C": "60",
+        "D": "30"
+      },
+      "correct": "C",
+      "explanation": "Required number = LCM(12, 15, 20). 12 = 2^2 x 3, 15 = 3 x 5, 20 = 2^2 x 5, so LCM = 2^2 x 3 x 5 = 60.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-09",
+      "category": "Logical Reasoning",
+      "topic": "Number Series",
+      "difficulty": "Easy",
+      "question": "Find the next number in the series: 3, 7, 15, 31, 63, ?",
+      "options": {
+        "A": "95",
+        "B": "126",
+        "C": "127",
+        "D": "131"
+      },
+      "correct": "C",
+      "explanation": "Each term is (previous term x 2) + 1: 3x2+1 = 7, 7x2+1 = 15, ..., 63x2+1 = 127.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-10",
+      "category": "Logical Reasoning",
+      "topic": "Alphabet Series",
+      "difficulty": "Medium",
+      "question": "Find the next letter in the series: B, E, I, N, ?",
+      "options": {
+        "A": "S",
+        "B": "T",
+        "C": "R",
+        "D": "U"
+      },
+      "correct": "B",
+      "explanation": "Positions are B(2), E(5), I(9), N(14). Gaps increase by one: +3, +4, +5, so the next gap is +6: 14 + 6 = 20, which is T.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-11",
+      "category": "Logical Reasoning",
+      "topic": "Coding-Decoding",
+      "difficulty": "Medium",
+      "question": "In a certain code, OFFICE is written as PGGJDF. How is PRINTER written in the same code?",
+      "options": {
+        "A": "QSJOUFT",
+        "B": "OQHMSDQ",
+        "C": "QSKOUFS",
+        "D": "QSJOUFS"
+      },
+      "correct": "D",
+      "explanation": "Each letter is replaced by the next letter in the alphabet (O->P, F->G, ...). So P->Q, R->S, I->J, N->O, T->U, E->F, R->S, giving QSJOUFS.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-12",
+      "category": "Logical Reasoning",
+      "topic": "Blood Relations",
+      "difficulty": "Medium",
+      "question": "Pointing to a man in a photograph, Neha said, \"His father is the only son of my father's father.\" How is the man related to Neha?",
+      "options": {
+        "A": "Brother",
+        "B": "Cousin",
+        "C": "Uncle",
+        "D": "Nephew"
+      },
+      "correct": "A",
+      "explanation": "The only son of Neha's father's father is Neha's father. So the man's father is Neha's father, which makes the man Neha's brother.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-13",
+      "category": "Logical Reasoning",
+      "topic": "Direction Sense",
+      "difficulty": "Hard",
+      "question": "A delivery agent starts from the warehouse and walks 10 m North, then turns right and walks 6 m, then turns right and walks 18 m, then turns left and walks 9 m. How far and in which direction is he from the warehouse?",
+      "options": {
+        "A": "17 m, South-East",
+        "B": "17 m, North-East",
+        "C": "15 m, South-East",
+        "D": "23 m, South-West"
+      },
+      "correct": "A",
+      "explanation": "Take the warehouse as (0,0). North 10 -> (0,10); right = East 6 -> (6,10); right = South 18 -> (6,-8); left = East 9 -> (15,-8). Distance = sqrt(15^2 + 8^2) = sqrt(289) = 17 m, towards the South-East.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-14",
+      "category": "Logical Reasoning",
+      "topic": "Statement and Conclusion",
+      "difficulty": "Medium",
+      "question": "Statements: All managers in the company attend the Monday review meeting. Priya is a manager in the company.\nConclusions: I. Priya attends the Monday review meeting. II. Everyone who attends the Monday review meeting is a manager.\nWhich conclusion(s) logically follow from the statements?",
+      "options": {
+        "A": "Only conclusion II follows",
+        "B": "Both conclusions I and II follow",
+        "C": "Neither conclusion I nor II follows",
+        "D": "Only conclusion I follows"
+      },
+      "correct": "D",
+      "explanation": "Since every manager attends and Priya is a manager, I follows. The statements do not say that only managers attend, so II does not follow.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-15",
+      "category": "Numerical Reasoning",
+      "topic": "Invoice Calculation",
+      "difficulty": "Easy",
+      "question": "An office orders 12 reams of printing paper at Rs. 275 per ream. GST of 18% is charged on the order value. What is the total invoice amount?",
+      "options": {
+        "A": "Rs. 3,300",
+        "B": "Rs. 3,894",
+        "C": "Rs. 3,564",
+        "D": "Rs. 3,944"
+      },
+      "correct": "B",
+      "explanation": "Order value = 12 x 275 = 3,300. GST = 18% of 3,300 = 594. Total = 3,300 + 594 = Rs. 3,894.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-16",
+      "category": "Numerical Reasoning",
+      "topic": "Discounts",
+      "difficulty": "Medium",
+      "question": "A printer listed at Rs. 5,000 is sold with two successive discounts of 20% and 10%. What is the final price paid by the customer?",
+      "options": {
+        "A": "Rs. 3,500",
+        "B": "Rs. 3,750",
+        "C": "Rs. 3,600",
+        "D": "Rs. 4,000"
+      },
+      "correct": "C",
+      "explanation": "After 20% off: 5,000 x 0.80 = 4,000. After a further 10% off: 4,000 x 0.90 = Rs. 3,600 (an effective discount of 28%, not 30%).",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-17",
+      "category": "Numerical Reasoning",
+      "topic": "Budget",
+      "difficulty": "Medium",
+      "question": "A department allocates 40% of its annual budget to equipment, 25% to travel and the rest to training. If the training allocation is Rs. 42,000, what is the department's total annual budget?",
+      "options": {
+        "A": "Rs. 1,05,000",
+        "B": "Rs. 1,68,000",
+        "C": "Rs. 1,40,000",
+        "D": "Rs. 1,20,000"
+      },
+      "correct": "D",
+      "explanation": "Training share = 100% - 40% - 25% = 35%. Total = 42,000 / 0.35 = Rs. 1,20,000.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-18",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Easy",
+      "question": "The table shows quarterly sales (in Rs. lakh) of a retail chain by region for one financial year. Which region recorded the highest total sales for the year?",
+      "table": {
+        "headers": [
+          "Region",
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "rows": [
+          [
+            "North",
+            "120",
+            "135",
+            "150",
+            "145"
+          ],
+          [
+            "South",
+            "100",
+            "110",
+            "125",
+            "140"
+          ],
+          [
+            "East",
+            "80",
+            "95",
+            "90",
+            "115"
+          ],
+          [
+            "West",
+            "110",
+            "105",
+            "120",
+            "130"
+          ]
+        ]
+      },
+      "options": {
+        "A": "South",
+        "B": "West",
+        "C": "North",
+        "D": "East"
+      },
+      "correct": "C",
+      "explanation": "Annual totals: North = 550, South = 475, West = 465, East = 380. North is the highest.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-19",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Medium",
+      "question": "The table shows quarterly sales (in Rs. lakh) of a retail chain by region for one financial year. What is the percentage increase in the South region's sales from Q1 to Q4?",
+      "table": {
+        "headers": [
+          "Region",
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "rows": [
+          [
+            "North",
+            "120",
+            "135",
+            "150",
+            "145"
+          ],
+          [
+            "South",
+            "100",
+            "110",
+            "125",
+            "140"
+          ],
+          [
+            "East",
+            "80",
+            "95",
+            "90",
+            "115"
+          ],
+          [
+            "West",
+            "110",
+            "105",
+            "120",
+            "130"
+          ]
+        ]
+      },
+      "options": {
+        "A": "40%",
+        "B": "28.57%",
+        "C": "35%",
+        "D": "45%"
+      },
+      "correct": "A",
+      "explanation": "South: Q1 = 100, Q4 = 140. Increase = 40. Percentage increase = 40 / 100 x 100 = 40%.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S01-20",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Hard",
+      "question": "The table shows quarterly sales (in Rs. lakh) of a retail chain by region for one financial year. Approximately what percentage of the total Q3 sales (all regions combined) came from the East region?",
+      "table": {
+        "headers": [
+          "Region",
+          "Q1",
+          "Q2",
+          "Q3",
+          "Q4"
+        ],
+        "rows": [
+          [
+            "North",
+            "120",
+            "135",
+            "150",
+            "145"
+          ],
+          [
+            "South",
+            "100",
+            "110",
+            "125",
+            "140"
+          ],
+          [
+            "East",
+            "80",
+            "95",
+            "90",
+            "115"
+          ],
+          [
+            "West",
+            "110",
+            "105",
+            "120",
+            "130"
+          ]
+        ]
+      },
+      "options": {
+        "A": "20.4%",
+        "B": "18.6%",
+        "C": "16.8%",
+        "D": "22.1%"
+      },
+      "correct": "B",
+      "explanation": "Total Q3 = 150 + 125 + 90 + 120 = 485. East share = 90 / 485 x 100 = 18.56%, approximately 18.6%.",
+      "marks": 1
+    }
+  ],
+  "communication": [
+    {
+      "code": "COM-S01-01",
+      "category": "Self-presentation",
+      "question": "Introduce yourself professionally to a prospective employer. Describe your background and explain two or three professional strengths you would bring to this role, supporting each with a brief example.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-02",
+      "category": "Problem Solving",
+      "question": "Describe a difficult or unexpected situation you faced at work, during an internship or in an academic project. Explain the steps you took to handle it and what the outcome was.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-03",
+      "category": "Teamwork",
+      "question": "Describe a time when you disagreed with a colleague or teammate about how a task should be done. How did you handle the disagreement, and how did you reach a resolution while maintaining a good working relationship?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-04",
+      "category": "Time Management",
+      "question": "Explain how you manage several tasks that have competing deadlines. Describe the methods or tools you use to prioritise your work, and give an example of a time you applied them.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-05",
+      "category": "Workplace Communication",
+      "question": "In your view, why is effective communication important in a professional environment? Explain how clear communication, or the lack of it, can affect productivity, relationships and results.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-06",
+      "category": "Leadership",
+      "question": "Describe a situation in which you demonstrated leadership, whether or not you held a formal leadership position. What did you do to guide or motivate others, and what was the result?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-07",
+      "category": "Workplace Communication",
+      "question": "Imagine you have discovered a problem that will affect a project your manager is responsible for. Describe how you would communicate this problem to your manager, including what information you would share and how you would propose moving forward.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-08",
+      "category": "Customer Handling",
+      "question": "A customer contacts you and is clearly unhappy with a product or service they received. Describe how you would handle the conversation, from the first response through to resolving their concern.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-09",
+      "category": "Teamwork",
+      "question": "Explain how effective teamwork contributes to the success of a business. Support your answer with an example from your own experience or from an organisation you are familiar with.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S01-10",
+      "category": "Career Goals",
+      "question": "Describe your career goals for the next few years. Explain how this position fits into those goals and how it would help you develop professionally.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    }
+  ]
+}

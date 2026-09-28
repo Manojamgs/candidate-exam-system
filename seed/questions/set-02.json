@@ -1,0 +1,528 @@
+{
+  "set_code": "SET-02",
+  "name": "Exam Set 02",
+  "aptitude": [
+    {
+      "code": "APT-S02-01",
+      "category": "Quantitative Aptitude",
+      "topic": "Compound Interest",
+      "difficulty": "Medium",
+      "question": "A retail store invests Rs. 10,000 in a deposit that pays 10% per annum compounded annually. What is the compound interest earned at the end of 2 years?",
+      "options": {
+        "A": "Rs. 2,000",
+        "B": "Rs. 2,100",
+        "C": "Rs. 2,210",
+        "D": "Rs. 1,100"
+      },
+      "correct": "B",
+      "explanation": "Amount = 10,000 x (1.10)^2 = 12,100. Compound interest = 12,100 - 10,000 = Rs. 2,100.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-02",
+      "category": "Quantitative Aptitude",
+      "topic": "Ratio",
+      "difficulty": "Easy",
+      "question": "An office supply cupboard contains pens and pencils in the ratio 3 : 5. If there are 64 items in total, how many pens are there?",
+      "options": {
+        "A": "40",
+        "B": "21",
+        "C": "32",
+        "D": "24"
+      },
+      "correct": "D",
+      "explanation": "Total parts = 3 + 5 = 8. Pens = 3/8 x 64 = 24.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-03",
+      "category": "Quantitative Aptitude",
+      "topic": "Average",
+      "difficulty": "Easy",
+      "question": "The average daily sales of a store over 5 days is Rs. 12,000. The total sales for the first 4 days is Rs. 46,000. What were the sales on the fifth day?",
+      "options": {
+        "A": "Rs. 14,000",
+        "B": "Rs. 12,000",
+        "C": "Rs. 11,500",
+        "D": "Rs. 16,000"
+      },
+      "correct": "A",
+      "explanation": "Total for 5 days = 5 x 12,000 = 60,000. Fifth day = 60,000 - 46,000 = Rs. 14,000.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-04",
+      "category": "Quantitative Aptitude",
+      "topic": "Fractions and Decimals",
+      "difficulty": "Medium",
+      "question": "A warehouse holds 1,200 cartons. On Monday, 3/8 of the cartons are dispatched. On Tuesday, 2/5 of the remaining cartons are dispatched. How many cartons are left in the warehouse?",
+      "options": {
+        "A": "300",
+        "B": "750",
+        "C": "450",
+        "D": "420"
+      },
+      "correct": "C",
+      "explanation": "Monday: 3/8 x 1,200 = 450 dispatched, leaving 750. Tuesday: 2/5 x 750 = 300 dispatched, leaving 750 - 300 = 450.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-05",
+      "category": "Quantitative Aptitude",
+      "topic": "Basic Algebra",
+      "difficulty": "Medium",
+      "question": "A stationery shop sells pens at Rs. 15 each and notebooks at Rs. 40 each. A customer buys 12 items in total and pays Rs. 330. How many notebooks did the customer buy?",
+      "options": {
+        "A": "4",
+        "B": "5",
+        "C": "6",
+        "D": "8"
+      },
+      "correct": "C",
+      "explanation": "Let notebooks = n and pens = 12 - n. 15(12 - n) + 40n = 330, so 180 + 25n = 330, 25n = 150, n = 6. Check: 6 x 15 + 6 x 40 = 90 + 240 = 330.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-06",
+      "category": "Quantitative Aptitude",
+      "topic": "Time Speed Distance",
+      "difficulty": "Hard",
+      "question": "A sales executive drives the first 120 km of a trip at 60 km/h, the next 180 km at 45 km/h and the final 100 km at 50 km/h. What is the average speed for the whole trip?",
+      "options": {
+        "A": "50 km/h",
+        "B": "51.67 km/h",
+        "C": "52 km/h",
+        "D": "48 km/h"
+      },
+      "correct": "A",
+      "explanation": "Time = 120/60 + 180/45 + 100/50 = 2 + 4 + 2 = 8 hours. Distance = 400 km. Average speed = 400 / 8 = 50 km/h (not the simple average of the speeds, 51.67).",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-07",
+      "category": "Quantitative Aptitude",
+      "topic": "Profit and Loss",
+      "difficulty": "Hard",
+      "question": "A retailer wants to earn a profit of 26% on the cost price of an item even after giving a 10% discount on its marked price. By what percentage above the cost price should the item be marked?",
+      "options": {
+        "A": "36%",
+        "B": "40%",
+        "C": "38.6%",
+        "D": "35%"
+      },
+      "correct": "B",
+      "explanation": "Let cost = 100. Required selling price = 126. Marked price x 0.90 = 126, so marked price = 140, i.e. 40% above cost.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-08",
+      "category": "Quantitative Aptitude",
+      "topic": "Probability",
+      "difficulty": "Hard",
+      "question": "A batch of 20 calculators in an office store contains 4 defective ones. If 2 calculators are selected at random without replacement, what is the probability that both are non-defective?",
+      "options": {
+        "A": "16/25",
+        "B": "4/5",
+        "C": "3/5",
+        "D": "12/19"
+      },
+      "correct": "D",
+      "explanation": "Non-defective = 16. P = C(16,2) / C(20,2) = 120 / 190 = 12/19.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-09",
+      "category": "Logical Reasoning",
+      "topic": "Number Series",
+      "difficulty": "Medium",
+      "question": "Find the next number in the series: 5, 11, 23, 47, 95, ?",
+      "options": {
+        "A": "191",
+        "B": "190",
+        "C": "189",
+        "D": "143"
+      },
+      "correct": "A",
+      "explanation": "Each term is (previous term x 2) + 1: 5x2+1 = 11, 11x2+1 = 23, ..., 95x2+1 = 191.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-10",
+      "category": "Logical Reasoning",
+      "topic": "Alphabet Series",
+      "difficulty": "Easy",
+      "question": "Find the next term in the series: AZ, BY, CX, ?",
+      "options": {
+        "A": "DV",
+        "B": "EW",
+        "C": "DX",
+        "D": "DW"
+      },
+      "correct": "D",
+      "explanation": "The first letter moves forward one step (A, B, C, D) and the second letter moves backward one step (Z, Y, X, W). Next term: DW.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-11",
+      "category": "Logical Reasoning",
+      "topic": "Coding-Decoding",
+      "difficulty": "Hard",
+      "question": "In a certain code, TABLE is written as GZYOV. How is CHAIR written in the same code?",
+      "options": {
+        "A": "XSZIR",
+        "B": "XSZRI",
+        "C": "DIBJS",
+        "D": "WRZRI"
+      },
+      "correct": "B",
+      "explanation": "Each letter is replaced by its mirror letter in the alphabet (A<->Z, B<->Y, ...): T->G, A->Z, B->Y, L->O, E->V. So C->X, H->S, A->Z, I->R, R->I, giving XSZRI.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-12",
+      "category": "Logical Reasoning",
+      "topic": "Odd One Out",
+      "difficulty": "Easy",
+      "question": "Which of the following numbers is the odd one out: 144, 169, 196, 210?",
+      "options": {
+        "A": "144",
+        "B": "169",
+        "C": "210",
+        "D": "196"
+      },
+      "correct": "C",
+      "explanation": "144 = 12^2, 169 = 13^2 and 196 = 14^2 are perfect squares; 210 is not a perfect square.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-13",
+      "category": "Logical Reasoning",
+      "topic": "Analogy",
+      "difficulty": "Medium",
+      "question": "Complete the analogy: 7 : 50 :: 9 : ?",
+      "options": {
+        "A": "81",
+        "B": "82",
+        "C": "90",
+        "D": "72"
+      },
+      "correct": "B",
+      "explanation": "The rule is n^2 + 1: 7^2 + 1 = 50, so 9^2 + 1 = 82.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-14",
+      "category": "Logical Reasoning",
+      "topic": "Statement and Conclusion",
+      "difficulty": "Medium",
+      "question": "Statement: The company reimburses travel expenses only for trips that have been approved in advance by the department head.\nConclusions: I. A trip taken without prior approval from the department head will not be reimbursed. II. Department heads travel more often than other employees.\nWhich conclusion(s) logically follow from the statement?",
+      "options": {
+        "A": "Only conclusion II follows",
+        "B": "Both conclusions I and II follow",
+        "C": "Only conclusion I follows",
+        "D": "Neither conclusion I nor II follows"
+      },
+      "correct": "C",
+      "explanation": "The word 'only' means prior approval is a necessary condition for reimbursement, so I follows. The statement says nothing about how often department heads travel, so II does not follow.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-15",
+      "category": "Numerical Reasoning",
+      "topic": "Unit Conversion",
+      "difficulty": "Easy",
+      "question": "An office needs 2.5 kg of printer toner powder. The toner is sold in packs of 250 g each. How many packs must be ordered?",
+      "options": {
+        "A": "10",
+        "B": "100",
+        "C": "25",
+        "D": "12"
+      },
+      "correct": "A",
+      "explanation": "2.5 kg = 2,500 g. Number of packs = 2,500 / 250 = 10.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-16",
+      "category": "Numerical Reasoning",
+      "topic": "Invoice Calculation",
+      "difficulty": "Medium",
+      "question": "A laptop bag is listed at Rs. 8,000. The supplier offers a 12.5% trade discount, and GST of 18% is then applied on the discounted price. What is the final invoice amount?",
+      "options": {
+        "A": "Rs. 8,440",
+        "B": "Rs. 7,000",
+        "C": "Rs. 8,000",
+        "D": "Rs. 8,260"
+      },
+      "correct": "D",
+      "explanation": "Discounted price = 8,000 x (1 - 0.125) = 7,000. GST = 18% of 7,000 = 1,260. Invoice = 7,000 + 1,260 = Rs. 8,260.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-17",
+      "category": "Numerical Reasoning",
+      "topic": "Budget",
+      "difficulty": "Medium",
+      "question": "A company reimburses employees Rs. 12 per km for official travel by personal car. An employee drives 38 km per day for official work on 22 working days in a month. What is the total reimbursement for the month?",
+      "options": {
+        "A": "Rs. 9,120",
+        "B": "Rs. 10,320",
+        "C": "Rs. 10,023",
+        "D": "Rs. 10,032"
+      },
+      "correct": "D",
+      "explanation": "Total distance = 38 x 22 = 836 km. Reimbursement = 836 x 12 = Rs. 10,032.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-18",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Easy",
+      "question": "The table shows the number of employees in each department of a company at the end of each year. What was the company's total headcount at the end of 2024?",
+      "table": {
+        "headers": [
+          "Department",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "rows": [
+          [
+            "Sales",
+            "40",
+            "48",
+            "54"
+          ],
+          [
+            "Operations",
+            "60",
+            "63",
+            "72"
+          ],
+          [
+            "Finance",
+            "20",
+            "22",
+            "25"
+          ],
+          [
+            "HR",
+            "12",
+            "15",
+            "15"
+          ],
+          [
+            "IT",
+            "28",
+            "32",
+            "34"
+          ]
+        ]
+      },
+      "options": {
+        "A": "180",
+        "B": "160",
+        "C": "200",
+        "D": "175"
+      },
+      "correct": "A",
+      "explanation": "2024 total = 48 + 63 + 22 + 15 + 32 = 180.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-19",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Medium",
+      "question": "The table shows the number of employees in each department of a company at the end of each year. Which department had the highest percentage growth in headcount from 2023 to 2025?",
+      "table": {
+        "headers": [
+          "Department",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "rows": [
+          [
+            "Sales",
+            "40",
+            "48",
+            "54"
+          ],
+          [
+            "Operations",
+            "60",
+            "63",
+            "72"
+          ],
+          [
+            "Finance",
+            "20",
+            "22",
+            "25"
+          ],
+          [
+            "HR",
+            "12",
+            "15",
+            "15"
+          ],
+          [
+            "IT",
+            "28",
+            "32",
+            "34"
+          ]
+        ]
+      },
+      "options": {
+        "A": "Finance",
+        "B": "Sales",
+        "C": "HR",
+        "D": "Operations"
+      },
+      "correct": "B",
+      "explanation": "Growth 2023->2025: Sales (54-40)/40 = 35%; Operations 12/60 = 20%; Finance 5/20 = 25%; HR 3/12 = 25%; IT 6/28 = 21.4%. Sales is highest.",
+      "marks": 1
+    },
+    {
+      "code": "APT-S02-20",
+      "category": "Data Interpretation",
+      "topic": "Table",
+      "difficulty": "Medium",
+      "question": "The table shows the number of employees in each department of a company at the end of each year. What is the ratio of the combined headcount of Sales and IT in 2025 to the combined headcount of Operations and Finance in 2023?",
+      "table": {
+        "headers": [
+          "Department",
+          "2023",
+          "2024",
+          "2025"
+        ],
+        "rows": [
+          [
+            "Sales",
+            "40",
+            "48",
+            "54"
+          ],
+          [
+            "Operations",
+            "60",
+            "63",
+            "72"
+          ],
+          [
+            "Finance",
+            "20",
+            "22",
+            "25"
+          ],
+          [
+            "HR",
+            "12",
+            "15",
+            "15"
+          ],
+          [
+            "IT",
+            "28",
+            "32",
+            "34"
+          ]
+        ]
+      },
+      "options": {
+        "A": "10 : 11",
+        "B": "9 : 8",
+        "C": "11 : 10",
+        "D": "22 : 19"
+      },
+      "correct": "C",
+      "explanation": "Sales + IT in 2025 = 54 + 34 = 88. Operations + Finance in 2023 = 60 + 20 = 80. Ratio = 88 : 80 = 11 : 10.",
+      "marks": 1
+    }
+  ],
+  "communication": [
+    {
+      "code": "COM-S02-01",
+      "category": "Adaptability",
+      "question": "Describe a time when you had to learn a new skill, tool or process quickly in order to complete a task. How did you approach the learning, and how did you apply what you learned?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-02",
+      "category": "Adaptability",
+      "question": "Describe an occasion when you received critical feedback on your work. How did you respond at the time, and what did you change as a result?",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-03",
+      "category": "Workplace Communication",
+      "question": "Explain how you would describe a complex technical or specialised idea to someone with no background in the subject. Use an example to show the approach you would take to make it clear and easy to understand.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-04",
+      "category": "Problem Solving",
+      "question": "Describe a process, routine or way of working that you improved or would like to improve. Explain what the problem was, what change you made or would propose, and how you would measure whether it worked.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-05",
+      "category": "Time Management",
+      "question": "Describe how you perform when working under significant time pressure. Give an example of a situation with a tight deadline and explain how you stayed organised and maintained the quality of your work.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-06",
+      "category": "Teamwork",
+      "question": "Imagine a new member has just joined your team. Describe how you would help them settle in, understand their responsibilities and become productive as quickly as possible.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-07",
+      "category": "Ethics & Professionalism",
+      "question": "Describe a mistake you made in your work or studies. Explain how you took responsibility for it, what you did to correct it, and what you learned from the experience.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-08",
+      "category": "Problem Solving",
+      "question": "Your manager is unavailable for the day, and two urgent requests arrive that you cannot complete at the same time. Describe how you would decide what to do first and how you would keep everyone informed.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-09",
+      "category": "Customer Handling",
+      "question": "A project you are handling for a client will be delivered one week later than promised. Write a short professional message to the client explaining the delay, its cause and the revised plan, while maintaining their confidence.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    },
+    {
+      "code": "COM-S02-10",
+      "category": "Ethics & Professionalism",
+      "question": "What does professionalism mean to you? Describe the behaviours and attitudes you consider essential for being professional at work, with examples of how you demonstrate them.",
+      "expected_words_min": 100,
+      "expected_words_max": 200,
+      "marks": 10
+    }
+  ]
+}
